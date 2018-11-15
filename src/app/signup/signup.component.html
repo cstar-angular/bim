@@ -1,3 +1,43 @@
-<p>
-  signup works!
-</p>
+<mat-grid-list cols="2">
+  <mat-grid-tile>
+    <mat-card class="auth-form">
+      <mat-card-header>
+        <mat-card-title>BIM.VU</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form class="signup-form">
+          <mat-form-field class="full-width">
+              <mat-label>Full Name</mat-label>
+              <input  matInput  placeholder="Full name"  name="fname" class="form-input"  required>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <mat-label>Company (Optional)</mat-label>
+              <input  matInput  placeholder="Company (Optional)" name="cname"  required>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <mat-label>Email</mat-label>
+              <input  matInput  placeholder="Email" name="email">
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <mat-label>Password</mat-label>
+              <input  matInput  placeholder="Password"  name="password">
+            </mat-form-field>
+            <span>Password must be 8 characters or longer</span>
+        </form>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button (click)="register()" color="primary" class="full-width">Create Account</button>
+      </mat-card-actions>
+    </mat-card>
+    <mat-divider [vertical]="true"></mat-divider>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+      <mat-card class="auth-form-social">
+          <mat-card-content>
+              <button mat-raised-button (click)="register()" color="primary" class="full-width">Sign in with Google+</button>
+              <button mat-raised-button (click)="register()" color="primary" class="full-width">Sign in with Linkedin</button>
+          </mat-card-content>
+        </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
