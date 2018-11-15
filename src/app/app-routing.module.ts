@@ -4,6 +4,7 @@ import { WrapComponent } from './wrap/wrap.component';
 import { HomeComponent } from './home/home.component';
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
   {
@@ -12,11 +13,19 @@ const routes: Routes = [
     children:[
       {
         path: '',
+        component: HomeComponent,
+      },
+      {
+        path: 'signin',
         component: SigninComponent,
       },
       {
         path: 'signup',
         component: SignupComponent,
+      },
+      {
+        path: 'settings',
+        component: SettingsComponent,
       }
     ]
   }

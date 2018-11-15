@@ -2,21 +2,40 @@
     margin: 20px 20px;
     
     .card-div{
-        padding: 10px;
+        padding: 20px;
     }
 
-    .example-card {
-    //   max-width: 400px;
+    .mat-card {
+        padding: 0;
+        position: relative;
     }
-
-    .example-header-image {
-    //   background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-      background-size: cover;
+    .mat-card-header {
+        width: 100%;
+        padding: 20px 10px;
+        position: absolute;
+        font-stretch: expanded;
+        background: rgba($color: #000000, $alpha: 0.5);
+        
+        .mat-card-title {
+            font-size: 20px;
+            color: #ffffff;
+            text-transform: uppercase;
+            clear: both;
+        }
+        .mat-card-subtitle {
+            font-size: 14px;
+            color: #ffffff;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            clear: both;
+        }
     }
-
     .mat-card-image{
-        width: 90px;
-        height: 90px;
+        width: 100%;
         margin: auto;
+    }
+
+    .add-card {
+        color: #ffffff;
     }
 }

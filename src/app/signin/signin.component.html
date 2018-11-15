@@ -1,1 +1,36 @@
-
+<mat-grid-list cols="2">
+    <mat-grid-tile>
+        <mat-card class="auth-form">
+            <mat-card-header>
+                <mat-card-title>BIM.VU</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <form class="login-form">
+                    <mat-form-field class="full-width">
+                        <mat-label>Email</mat-label>
+                        <input  matInput  placeholder="Email" name="email">
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>Password</mat-label>
+                        <input  matInput  placeholder="Password" name="password">
+                    </mat-form-field>
+                </form>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button (click)="login()" color="primary">Sign In</button>
+                <button mat-raised-button (click)="login()" color="primary">Create Account</button>
+            </mat-card-actions>
+        </mat-card>
+        <mat-divider [vertical]="true"></mat-divider>
+    </mat-grid-tile>
+      
+    <mat-grid-tile>
+        <mat-card class="auth-form-social">
+            <mat-card-content>
+                <button mat-raised-button (click)="register()" color="primary">Sign in with Google+</button>
+                <button mat-raised-button (click)="register()" color="primary">Sign in with Linkedin</button>
+            </mat-card-content>
+            </mat-card>
+    </mat-grid-tile>
+</mat-grid-list>
+    
