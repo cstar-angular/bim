@@ -1,0 +1,13 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row style="justify-content: space-between;">
+    <div>
+      <span>BIM . VU</span>
+      <span class="sp-line"> |</span> 
+      <span *ngIf="url == '/'" class="nav-item-createaccount" (click)="gotourl('/signup')">CREATE ACCOUNT</span>
+      <span *ngIf="url == '/signup'" class="nav-item-signinaccount" (click)="gotourl('/')">SIGN IN</span>
+    </div>
+    <div class="right-group">
+      <mat-icon>help</mat-icon>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
