@@ -1,4 +1,4 @@
-import { MatButtonModule, MatCheckboxModule, MatGridListModule, MatTabsModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatGridListModule, MatTabsModule, MatSortModule } from '@angular/material';
 import { MatNativeDateModule } from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -9,6 +9,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatListModule } from '@angular/material/list';
 import { NgModule } from '@angular/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+
 
 @NgModule({
     imports: [
@@ -23,7 +26,10 @@ import { NgModule } from '@angular/core';
         MatRadioModule,
         MatListModule,
         MatGridListModule,
-        MatTabsModule
+        MatTabsModule,
+        MatSelectModule,
+        MatTableModule,
+        MatSortModule,
     ],
     exports: [
         MatButtonModule,
@@ -38,7 +44,10 @@ import { NgModule } from '@angular/core';
         MatRadioModule,
         MatListModule,
         MatGridListModule,
-        MatTabsModule
+        MatTabsModule,
+        MatSelectModule,
+        MatTableModule,
+        MatSortModule
     ]
 })
 

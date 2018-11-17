@@ -5,6 +5,9 @@ import { HomeComponent } from './home/home.component';
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 import { SettingsComponent } from './settings/settings.component';
+import { ProjectComponent } from './project/project.component';
+import { LodComponent } from './lod/lod.component';
+
 
 const routes: Routes = [
   {
@@ -26,6 +29,16 @@ const routes: Routes = [
       {
         path: 'settings',
         component: SettingsComponent,
+      },
+      {
+        path: 'project',
+        component: ProjectComponent,
+        children:[
+          {
+            path: 'LOD',
+            component: LodComponent
+          }
+        ]
       }
     ]
   }
