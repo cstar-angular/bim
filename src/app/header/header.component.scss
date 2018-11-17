@@ -14,15 +14,43 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    background: #181717;
     
+    .left-group {
+        .logo a {
+            font-size: 1.5em;
+            color: #989D94;
+
+            strong {
+                font-size: 1.2em;
+            }
+        }
+    }
     .right-group{
         display: flex;
-        flex-direction: row;
+        align-items: center;
+        width: auto;
 
+        > div {
+            padding: 0 10px;
+        }
+        .small-avatar {
+            background: #2F5597;
+            border-radius: 100%;
+            padding: 8px;
+            margin-left: 10px;
+        }
+        button {
+            background: none;
+            margin: 0 5px;
+            border: 2px solid #2F5597;
+        }
         mat-icon{
-            margin: 0 10px;
-            color: #797979;
+            color: #3B3838;
             font-size: 36px;
+            width: 36px;
+            height: 36px;
+            margin: 0 5px;
             cursor: pointer;
         }
     }

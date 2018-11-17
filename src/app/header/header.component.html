@@ -1,19 +1,22 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row style="justify-content: space-between;" class="header">
     <div class=left-group>
-      <span>BIM . VU</span>
+      <span class="logo"><a href="/"><strong>BIM</strong> . VU</a></span>
       <span class="sp-line"> |</span> 
       <span class="page-title"></span>
     </div>
-    <div class="right-group">      
-      <span *ngIf="url == '/'" class="nav-item-createaccount" (click)="gotourl('/signup')">CREATE ACCOUNT</span>
-      <span *ngIf="url == '/signup'" class="nav-item-signinaccount" (click)="gotourl('/')">SIGN IN</span>
-      <span class="sp-line"> |</span> 
-      <mat-icon>setting</mat-icon>
-      <mat-icon>notifications</mat-icon>
-      <button mat-flat-button color="white">Upgrade</button>
-      <mat-icon>help</mat-icon>
-      <mat-icon>cancel</mat-icon>
+    <div class="right-group">
+        <div>
+            <span *ngIf="url == '/signin'" class="nav-item-createaccount" (click)="gotourl('/signup')">CREATE ACCOUNT</span>
+            <span *ngIf="url == '/signup'" class="nav-item-signinaccount" (click)="gotourl('/')">SIGN IN</span>
+
+            <span>Hi Billy Alonzo!</span>
+            <span class="small-avatar">BA</span>
+        </div>
+        <mat-icon>notifications</mat-icon>
+        <button mat-flat-button color="white">Upgrade</button>
+        <mat-icon>help</mat-icon>
+        <mat-icon>cancel</mat-icon>  
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
