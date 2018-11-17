@@ -1,0 +1,29 @@
+.project-page {
+    width: 100%;
+    height: calc(100vh - 85px);
+    display: flex;
+
+    .project-side-bar {
+        width: 15%;
+    }
+
+    .project-main-content {
+        width: 65%;
+        background: #ffffff;
+    }
+
+    .project-right-panel {
+        width: 20%;
+        background: #e0dfde;
+
+        app-sidebarright {
+            width: 100%;
+        }
+    }
+
+    :after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+}

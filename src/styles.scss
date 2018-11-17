@@ -33,3 +33,10 @@
   background: none;
   max-width: 300px;
 }
+
+.mat-sort-header-container {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}

@@ -12,6 +12,10 @@ import { SigninComponent } from './signin/signin.component';
 import { WrapComponent } from './wrap/wrap.component';
 import { SignupComponent } from './signup/signup.component';
 import { SettingsComponent } from './settings/settings.component';
+import { ProjectComponent } from './project/project.component';
+import { LodComponent } from './lod/lod.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { SidebarrightComponent } from './sidebarright/sidebarright.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,11 @@ import { SettingsComponent } from './settings/settings.component';
     SigninComponent,
     WrapComponent,
     SignupComponent,
-    SettingsComponent
+    SettingsComponent,
+    ProjectComponent,
+    LodComponent,
+    SidebarComponent,
+    SidebarrightComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,111 @@
+<div class="main-content">
+    <div class="content-search">
+        <div class="lod-form">
+          <div>
+            <mat-form-field color="white" class="">
+                <input matInput placeholder="Search" value="">
+            </mat-form-field>
+      
+            <mat-form-field color="white">
+                <mat-select placeholder="Stage">
+                  <mat-option *ngFor="let stage of stages" [value]="stage.value">
+                    {{stage.viewValue}} 
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+      
+            <mat-form-field color="white">
+                  <mat-select placeholder="Lod">
+                    <mat-option *ngFor="let lod of lods" [value]="lod.value">
+                      {{lod.viewValue}}
+                    </mat-option>
+                  </mat-select>
+            </mat-form-field>
+          </div>
+          <div>
+              <button mat-button>Edit</button>
+          </div>
+          
+        </div>
+      </div>
+    
+    <div class="table-container mat-elevation-z8">
+        <table mat-table color="white" [dataSource]="dataSource" matSort>
+      
+          <!-- No. Column -->
+          <ng-container matColumnDef="position" sticky>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+            <td mat-cell *matCellDef="let element"> <span>{{element.position}}</span> </td>
+          </ng-container>
+    
+          <!-- Disciple Column -->
+          <ng-container matColumnDef="disciple" sticky>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Disciple </th>
+            <td mat-cell *matCellDef="let element"> <span>{{element.disciple}}</span> </td>
+          </ng-container>
+    
+          <!-- Code Column -->
+          <ng-container matColumnDef="code" sticky>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
+            <td mat-cell *matCellDef="let element"> <span class="color">{{element.code}}</span> </td>
+          </ng-container>
+      
+          <!-- s01 Column -->
+          <ng-container matColumnDef="s01">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> s01 </th>
+            <td mat-cell *matCellDef="let element"> <span class="gray-100">{{element.s01}}</span> </td>
+          </ng-container>
+      
+          <!-- s02 Column -->
+          <ng-container matColumnDef="s02">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> s02 </th>
+            <td mat-cell *matCellDef="let element"> <span class="gray-200">{{element.s02}}</span> </td>
+          </ng-container>
+      
+          <!-- s03 Column -->
+          <ng-container matColumnDef="s03">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>s03</th>
+            <td mat-cell *matCellDef="let element"> <span class="gray-300">{{element.s03}}</span></td>
+          </ng-container>
+      
+          <!-- s04 Column -->
+          <ng-container matColumnDef="s04">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> s04 </th>
+              <td mat-cell *matCellDef="let element"> <span class="gray-300">{{element.s04}}</span></td>
+            </ng-container>
+        
+            <!-- s05 Column -->
+            <ng-container matColumnDef="s05">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> s05 </th>
+              <td mat-cell *matCellDef="let element"> <span class="gray-300">{{element.s05}}</span> </td>
+            </ng-container>
+        
+            <!-- s06 Column -->
+            <ng-container matColumnDef="s06">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>s06</th>
+              <td mat-cell *matCellDef="let element"><span class="gray-300">{{element.s06}}</span></td>
+            </ng-container>
+      
+          <!-- s07 Column -->
+          <ng-container matColumnDef="s07">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> s07 </th>
+              <td mat-cell *matCellDef="let element"> <span class="gray-300">{{element.s07}}</span> </td>
+            </ng-container>
+        
+            <!-- s08 Column -->
+            <ng-container matColumnDef="s08">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> s08 </th>
+              <td mat-cell *matCellDef="let element"> <span class="gray-300">{{element.s08}}</span> </td>
+            </ng-container>
+        
+            <!-- s09 Column -->
+            <ng-container matColumnDef="s09">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>s09</th>
+              <td mat-cell *matCellDef="let element"><span class="gray-300">{{element.s09}}</span></td>
+            </ng-container>
+          
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>
