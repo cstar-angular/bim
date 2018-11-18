@@ -16,6 +16,8 @@ import { ProjectComponent } from './project/project.component';
 import { LodComponent } from './lod/lod.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { SidebarrightComponent } from './sidebarright/sidebarright.component';
+import { ProjectprofileComponent } from './projectprofile/projectprofile.component';
+import { ProjectstageComponent } from './projectstage/projectstage.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { SidebarrightComponent } from './sidebarright/sidebarright.component';
     ProjectComponent,
     LodComponent,
     SidebarComponent,
-    SidebarrightComponent
+    SidebarrightComponent,
+    ProjectprofileComponent,
+    ProjectstageComponent
   ],
   imports: [
     BrowserModule,

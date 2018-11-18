@@ -51,6 +51,76 @@ ul li {
   width: 100%;
 }
 
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: none; 
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+.mat-sort-header-container {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat-sort-header-button {
+  text-transform: capitalize;
+}
+
+.mat-form-field-flex {
+  background: #F2F2F2;
+  border-bottom: 1px solid #F2F2F2;
+}
+
+.mat-form-field .mat-input-element {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.mat-form-field-label {
+  color: #000000;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.mat-form-field-flex {
+  border-bottom: 1px solid;
+}
+
+.mat-hint {
+  color: #000000;
+}
+
+.mat-stroked-button.mat-blue {
+  border: 1px solid #3b5998;
+  border-radius: 0;
+}
+.mat-stroked-button.mat-blue span {
+  color: #3b5998;
+}
+
+.mat-raised-button.mat-blue {
+  background: #3b5998;
+  border-radius: 0;
+}
+.mat-raised-button.mat-blue span {
+  color: #ffffff;
+}
+
+button.primary {
+  background: none;
+  color: #3b5998;
+  border: 1px solid #3b5998;
+  border-radius: 0;
+}
+
 .authentication {
   display: flex;
   justify-content: center;
@@ -76,10 +146,6 @@ ul li {
   font-size: 1em;
   color: #ffffff
 }
-.auth-form .mat-form-field-flex {
-  background: #3B3838;
-  border-bottom: 1px solid #3B3838;
-}
 .auth-form .mat-card-actions {
   width: 100%;
   margin-left: 0;
@@ -95,6 +161,11 @@ ul li {
 .auth-form .mat-card-actions .mat-button-wrapper {
   color: #ffffff;
 }
+.auth-form .mat-form-field-flex {
+  background: #3B3838;
+  border-bottom: 1px solid #3B3838;
+}
+
 
 .auth-form-social.mat-card {
   background: none;
@@ -117,30 +188,4 @@ ul li {
 
 .auth-form-social .linkedin-sign {
   background: #2876B4;
-}
-
-.mat-sort-header-container {
-  display: flex;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-}
-
-.mat-sort-header-button {
-  text-transform: capitalize;
-}
-
-.mat-form-field .mat-input-element {
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.mat-form-field-label {
-  color: #000000;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.mat-form-field-flex {
-  border-bottom: 1px solid;
 }

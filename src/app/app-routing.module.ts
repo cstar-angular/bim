@@ -7,6 +7,7 @@ import { SignupComponent } from './signup/signup.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ProjectComponent } from './project/project.component';
 import { LodComponent } from './lod/lod.component';
+import { ProjectprofileComponent } from './projectprofile/projectprofile.component';
 
 
 const routes: Routes = [
@@ -34,6 +35,14 @@ const routes: Routes = [
         path: 'project',
         component: ProjectComponent,
         children:[
+          {
+            path: 'profile',
+            component: ProjectprofileComponent
+          },
+          {
+            path: 'profile/:id',
+            component: ProjectprofileComponent
+          },
           {
             path: 'LOD',
             component: LodComponent
