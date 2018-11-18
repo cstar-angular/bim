@@ -12,6 +12,7 @@ import { NgModule } from '@angular/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 
+
 @NgModule({
     imports: [
         MatButtonModule,
@@ -20,6 +21,7 @@ import { MatTableModule } from '@angular/material/table';
         MatCardModule,
         MatIconModule,        
         MatNativeDateModule,
+        MatDatepickerModule,
         MatFormFieldModule,
         MatInputModule,
         MatRadioModule,

@@ -8,6 +8,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { ProjectComponent } from './project/project.component';
 import { LodComponent } from './lod/lod.component';
 import { ProjectprofileComponent } from './projectprofile/projectprofile.component';
+import { ProjectstageComponent } from './projectstage/projectstage.component';
 
 
 const routes: Routes = [
@@ -44,7 +45,15 @@ const routes: Routes = [
             component: ProjectprofileComponent
           },
           {
-            path: 'LOD',
+            path: 'stage',
+            component: ProjectstageComponent
+          },
+          {
+            path: 'stage/:id',
+            component: ProjectstageComponent
+          },
+          {
+            path: 'lod/:id',
             component: LodComponent
           }
         ]
