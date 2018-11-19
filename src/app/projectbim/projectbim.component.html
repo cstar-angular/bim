@@ -1,0 +1,82 @@
+<div class="main-content">
+    <div class="content-search">
+        <div class="bim-form">
+          <div>
+            <mat-form-field color="white" class="">
+                <input matInput placeholder="Search" value="">
+            </mat-form-field>
+      
+            <mat-form-field color="white">
+                <mat-select placeholder="Stage">
+                  <mat-option *ngFor="let stage of stages" [value]="stage.value">
+                    {{stage.viewValue}} 
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+      
+            <mat-form-field color="white">
+                  <mat-select placeholder="Lod">
+                    <mat-option *ngFor="let lod of lods" [value]="lod.value">
+                      {{lod.viewValue}}
+                    </mat-option>
+                  </mat-select>
+            </mat-form-field>
+          </div>
+          <div>
+              <button mat-raised-button color="blue">Edit</button>
+          </div>          
+        </div>
+
+        <div class="tool-bar">
+            <div class="insert"><mat-icon>keyboard_arrow_down</mat-icon>Move down</div>
+            <div class="insert"><mat-icon>keyboard_arrow_up</mat-icon>Move up</div>
+            <div class="insert"><mat-icon>add</mat-icon>Insert</div>
+            <div class="delete"><mat-icon>clear</mat-icon>Delete</div>
+            <div class="edit"><mat-icon>edit</mat-icon>Edit</div>
+          </div>
+      </div>
+    
+    <div class="table-container mat-elevation-z8">
+        <table mat-table color="white" [dataSource]="dataSource" matSort>
+      
+          <!-- No. Column -->
+          <ng-container matColumnDef="no">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+            <td mat-cell *matCellDef="let element"> <span>{{element.no}}</span> </td>
+          </ng-container>
+    
+          <!-- Disciple Column -->
+          <ng-container matColumnDef="bim_use">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> BIM Use </th>
+            <td mat-cell *matCellDef="let element"> <span>{{element.bim_use}}</span> </td>
+          </ng-container>
+    
+          <!-- Code Column -->
+          <ng-container matColumnDef="check">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Check </th>
+            <td mat-cell *matCellDef="let element"> <span class="color">{{element.check}}</span> </td>
+          </ng-container>
+      
+          <!-- s01 Column -->
+          <ng-container matColumnDef="software">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Software </th>
+            <td mat-cell *matCellDef="let element"> <span class="gray-100">{{element.software}}</span> </td>
+          </ng-container>
+      
+          <!-- s02 Column -->
+          <ng-container matColumnDef="version">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Version </th>
+            <td mat-cell *matCellDef="let element"> <span class="gray-200">{{element.version}}</span> </td>
+          </ng-container>
+      
+          <!-- s03 Column -->
+          <ng-container matColumnDef="format">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Formats</th>
+            <td mat-cell *matCellDef="let element"> <span class="gray-300">{{element.format}}</span></td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>

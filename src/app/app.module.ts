@@ -18,6 +18,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { SidebarrightComponent } from './sidebarright/sidebarright.component';
 import { ProjectprofileComponent } from './projectprofile/projectprofile.component';
 import { ProjectstageComponent } from './projectstage/projectstage.component';
+import { ProjectbimComponent } from './projectbim/projectbim.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ProjectstageComponent } from './projectstage/projectstage.component';
     SidebarComponent,
     SidebarrightComponent,
     ProjectprofileComponent,
-    ProjectstageComponent
+    ProjectstageComponent,
+    ProjectbimComponent
   ],
   imports: [
     BrowserModule,

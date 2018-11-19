@@ -9,6 +9,7 @@ import { ProjectComponent } from './project/project.component';
 import { LodComponent } from './lod/lod.component';
 import { ProjectprofileComponent } from './projectprofile/projectprofile.component';
 import { ProjectstageComponent } from './projectstage/projectstage.component';
+import { ProjectbimComponent } from './projectbim/projectbim.component';
 
 
 const routes: Routes = [
@@ -51,6 +52,14 @@ const routes: Routes = [
           {
             path: 'stage/:id',
             component: ProjectstageComponent
+          },
+          {
+            path: 'bim',
+            component: ProjectbimComponent
+          },
+          {
+            path: 'bim/:id',
+            component: ProjectbimComponent
           },
           {
             path: 'lod/:id',
