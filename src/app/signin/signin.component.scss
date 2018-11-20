@@ -1,3 +1,11 @@
-.auth-form-social button {
-    margin-bottom: 15px;
+.forgot-password {
+    margin-bottom: 35px;
 }
+.auth-form .mat-card-actions button.create-account {
+    background: none;
+    border: 1px solid #3b5998;
+}
+.auth-form .mat-card-actions button.create-account strong {
+    color: #3b5998;
+  }
+  

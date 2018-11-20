@@ -1,0 +1,69 @@
+.project-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 100%;
+    padding: 50px;
+    overflow-y: scroll;
+
+    mat-label {
+        padding: 10px;
+    }
+    .mat-form-field {
+        width: 100%;
+        padding: 10px;
+    }
+    .row {
+        display: flex;
+    }
+
+    .general-info {
+        padding: 30px;
+
+        .project-name {
+            flex: 100%;
+        }
+
+        .project-type {
+            width: 100%;
+        }
+
+        .contract-type {
+            width: 100%;
+        }
+
+        .address {
+            width: 100%;
+        }
+
+        .country {
+            width: 100%;
+        }
+
+        .time-zone {
+            width: 100%;
+        }
+    }
+
+    .details {
+        padding: 30px;
+
+        .row > * {
+            flex: 1 1 100%;
+        }
+
+        .geo-location {
+            flex: 3 1 auto;
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: row-reverse;
+            margin-top: 30px;
+            
+            button {
+                margin-left: 20px;
+            }
+        }
+    }
+}

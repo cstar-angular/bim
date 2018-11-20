@@ -21,6 +21,7 @@ import { MatTableModule } from '@angular/material/table';
         MatCardModule,
         MatIconModule,        
         MatNativeDateModule,
+        MatDatepickerModule,
         MatFormFieldModule,
         MatInputModule,
         MatRadioModule,
@@ -47,7 +48,7 @@ import { MatTableModule } from '@angular/material/table';
         MatTabsModule,
         MatSelectModule,
         MatTableModule,
-        MatSortModule
+        MatSortModule,
     ]
 })
 

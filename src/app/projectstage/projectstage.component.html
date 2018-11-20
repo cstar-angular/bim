@@ -1,0 +1,69 @@
+<div class="main-content">
+  <div class="content-search">
+      <div class="stage-form">
+        <div>
+          <mat-form-field color="white" class="">
+              <input matInput placeholder="Search" value="">
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-raised-button color="blue">Edit</button>
+        </div>        
+      </div>
+
+      <div class="tool-bar">
+        <div class="insert"><mat-icon>keyboard_arrow_down</mat-icon>Move down</div>
+        <div class="insert"><mat-icon>keyboard_arrow_up</mat-icon>Move up</div>
+        <div class="insert"><mat-icon>add</mat-icon>Insert</div>
+        <div class="delete"><mat-icon>clear</mat-icon>Delete</div>
+        <div class="edit"><mat-icon>edit</mat-icon>Edit</div>
+      </div>
+    </div>
+  
+  <div class="table-container mat-elevation-z8">
+      <table mat-table color="white" [dataSource]="dataSource" matSort>
+    
+        <!-- No. Column -->
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+          <td mat-cell *matCellDef="let element"> <span>{{element.position}}</span> </td>
+        </ng-container>
+  
+        <!-- Disciple Column -->
+        <ng-container matColumnDef="stage">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Stage </th>
+          <td mat-cell *matCellDef="let element"> <span>{{element.stage}}</span> </td>
+        </ng-container>
+  
+        <!-- Code Column -->
+        <ng-container matColumnDef="start">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Start </th>
+          <td mat-cell *matCellDef="let element"> <span class="color">{{element.start}}</span> </td>
+        </ng-container>
+    
+        <!-- s01 Column -->
+        <ng-container matColumnDef="end">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> End </th>
+          <td mat-cell *matCellDef="let element"> 
+            <span class="gray-100">{{element.end}}</span>
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field> </td>
+        </ng-container>
+    
+        <!-- s02 Column -->
+        <ng-container matColumnDef="remarks">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Remarks </th>
+          <td mat-cell *matCellDef="let element"> <span class="gray-200">{{element.remarks}}</span> </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+  </div>
+
+  
+
+</div>
