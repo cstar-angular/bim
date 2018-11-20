@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { WrapComponent } from './wrap/wrap.component';
 import { HomeComponent } from './home/home.component';
 import { SigninComponent } from './signin/signin.component';
@@ -10,7 +10,6 @@ import { LodComponent } from './lod/lod.component';
 import { ProjectprofileComponent } from './projectprofile/projectprofile.component';
 import { ProjectstageComponent } from './projectstage/projectstage.component';
 import { ProjectbimComponent } from './projectbim/projectbim.component';
-
 
 const routes: Routes = [
   {
@@ -24,25 +23,25 @@ const routes: Routes = [
       {
         path: 'signin',
         component: SigninComponent,
+        canActivate: []
       },
       {
         path: 'signup',
         component: SignupComponent,
+        canActivate: []
       },
       {
         path: 'settings',
         component: SettingsComponent,
+        canActivate: []
       },
       {
-        path: 'project',
+        path: 'project/:id',
         component: ProjectComponent,
+        // canActivate: [AuthGuard],
         children:[
           {
             path: 'profile',
-            component: ProjectprofileComponent
-          },
-          {
-            path: 'profile/:id',
             component: ProjectprofileComponent
           },
           {
@@ -50,19 +49,11 @@ const routes: Routes = [
             component: ProjectstageComponent
           },
           {
-            path: 'stage/:id',
-            component: ProjectstageComponent
-          },
-          {
             path: 'bim',
             component: ProjectbimComponent
           },
           {
-            path: 'bim/:id',
-            component: ProjectbimComponent
-          },
-          {
-            path: 'lod/:id',
+            path: 'lod',
             component: LodComponent
           }
         ]

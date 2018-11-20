@@ -10,11 +10,11 @@
         <form class="signup-form">
           <mat-form-field class="full-width">
               <mat-label>Full Name</mat-label>
-              <input  matInput  placeholder="Full name"  name="fname" class="form-input"  required>
+              <input  matInput  placeholder="Full name"  name="fname" class="form-input" [(ngModel)]="user.fname"  required>
             </mat-form-field>
             <mat-form-field class="full-width">
               <mat-label>Company (Optional)</mat-label>
-              <input  matInput  placeholder="Company (Optional)" name="cname"  required>
+              <input  matInput  placeholder="Company (Optional)" name="cname" [(ngModel)]="user.cname"  required>
             </mat-form-field>
             <mat-form-field class="full-width">
               <mat-label>Email</mat-label>
@@ -28,7 +28,7 @@
         </form>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button (click)="register()" color="primary" class="full-width">Create Account</button>
+        <button mat-raised-button (click)="tryRegister()" color="primary" class="full-width">Create Account</button>
         <div class="go-to-signin">
             <a href="/signin">Go to Sign in</a>
         </div>
