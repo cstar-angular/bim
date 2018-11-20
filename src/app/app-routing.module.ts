@@ -10,6 +10,9 @@ import { LodComponent } from './lod/lod.component';
 import { ProjectprofileComponent } from './projectprofile/projectprofile.component';
 import { ProjectstageComponent } from './projectstage/projectstage.component';
 import { ProjectbimComponent } from './projectbim/projectbim.component';
+import { AuthGuard } from './_guards/auth.guard';
+import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
+
 
 const routes: Routes = [
   {
@@ -22,23 +25,36 @@ const routes: Routes = [
       },
       {
         path: 'signin',
-        component: SigninComponent,
-        canActivate: []
+        component: SigninComponent
       },
       {
         path: 'signup',
-        component: SignupComponent,
-        canActivate: []
+        component: SignupComponent
+      },      
+      {
+        path: 'forgetpassword',
+        component: ForgetpasswordComponent
       },
       {
         path: 'settings',
         component: SettingsComponent,
-        canActivate: []
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'project',
+        component: ProjectComponent,
+        canActivate: [AuthGuard],
+        children:[
+          {
+            path: 'new',
+            component: ProjectprofileComponent
+          }
+        ]
       },
       {
         path: 'project/:id',
         component: ProjectComponent,
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         children:[
           {
             path: 'profile',

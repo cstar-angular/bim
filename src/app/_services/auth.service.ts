@@ -22,12 +22,48 @@ export class AuthService {
     })
   }
 
+  doLinkedinLogin(){
+    
+  }
+
   doRegister(value){
     return new Promise<any>((resolve, reject) => {
       firebase.auth().createUserWithEmailAndPassword(value.email, value.password)
       .then(res => {
+        let user:any = firebase.auth().currentUser;
+        console.log(user);
+
+        if ( user.emailVerified == false ) {
+          this.sendEmailVerification();
+        }
+
         resolve(res);
       }, err => reject(err))
     })
+  }
+
+  doSignin(value){
+    return new Promise<any>((resolve, reject) => {
+      firebase.auth().signInWithEmailAndPassword (value.email, value.password)
+      .then(res => {
+        resolve(res);
+      }, err => reject(err))
+    })
+  }
+
+  sendEmailVerification() {
+    let user:any = firebase.auth().currentUser;
+    return new Promise<any>((resolve, reject) => {
+      user.sendEmailVerification().then(
+        (success) => {
+          console.log("please verify your email");
+          resolve(success);
+        } 
+      ).catch(
+        (err) => {
+          reject(err)
+        }
+      )
+    })    
   }
 }

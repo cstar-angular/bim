@@ -8,18 +8,18 @@
                 <form class="login-form">
                     <mat-form-field class="full-width">
                         <mat-label>Email</mat-label>
-                        <input  matInput  placeholder="Email" name="email">
+                        <input  matInput  placeholder="Email" name="email" [(ngModel)]="user.email">
                     </mat-form-field>
                     <mat-form-field class="full-width">
                         <mat-label>Password</mat-label>
-                        <input  matInput  placeholder="Password" name="password">
+                        <input  matInput type="password"  placeholder="Password" name="password" [(ngModel)]="user.password">
                     </mat-form-field>
                 </form>
             </mat-card-content>
             <mat-card-actions>
                 <button mat-raised-button (click)="login()" color="primary" class="full-width">Sign In</button>
                 <div class="forgot-password">
-                    <a href="/signin">Forgot password?</a>
+                    <a (click)="gotoForgotPassword()">Forgot password?</a>
                 </div>
                 <button mat-raised-button (click)="gotoSignin()" color="primary" class="full-width create-account"><strong>Create Account</strong></button>
             </mat-card-actions>
@@ -33,8 +33,8 @@
             </mat-card-header>
 
             <mat-card-content>
-                <button mat-raised-button (click)="register()" color="primary" class="full-width google-sign">Sign in with Google+</button>
-                <button mat-raised-button (click)="register()" color="primary" class="full-width linkedin-sign">Sign in with Linkedin</button>
+                <button mat-raised-button (click)="tryGoogleLogin()" color="primary" class="full-width google-sign"><mat-icon svgIcon="google-plus"></mat-icon>Sign in with Google+</button>
+                <button mat-raised-button (click)="register()" color="primary" class="full-width linkedin-sign"><mat-icon svgIcon="linkedin"></mat-icon>Sign in with Linkedin</button>
             </mat-card-content>
         </mat-card>
 </div>
