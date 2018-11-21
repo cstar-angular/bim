@@ -99,8 +99,9 @@ ul li {
 }
 
 .mat-stroked-button.mat-blue {
-  border: 1px solid #3b5998;
+  border: 2px solid #3b5998;
   border-radius: 0;
+  min-width: 120px;
 }
 .mat-stroked-button.mat-blue span {
   color: #3b5998;
@@ -109,6 +110,7 @@ ul li {
 .mat-raised-button.mat-blue {
   background: #3b5998;
   border-radius: 0;
+  min-width: 120px;
 }
 .mat-raised-button.mat-blue span {
   color: #ffffff;
@@ -125,6 +127,22 @@ button.primary {
   border-radius: 0;
 }
 
+.mat-select-panel {
+  background: #484848;
+}
+.mat-form-field .mat-input-element,
+.mat-select-value-text span {
+  font-family: "AvenirNextLTPro-Bold";
+  font-size: 1.5em;
+  color: #000000;
+}
+.mat-select-arrow {
+  color: #717171;
+}
+
+app-header .mat-toolbar-multiple-rows {
+  min-height: 50px;
+}
 .authentication {
   display: flex;
   justify-content: center;
