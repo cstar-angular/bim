@@ -22,6 +22,7 @@ const routes: Routes = [
       {
         path: '',
         component: HomeComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: 'signin',
@@ -48,28 +49,21 @@ const routes: Routes = [
           {
             path: 'new',
             component: ProjectprofileComponent
-          }
-        ]
-      },
-      {
-        path: 'project/:id',
-        component: ProjectComponent,
-        canActivate: [AuthGuard],
-        children:[
+          },
           {
-            path: 'profile',
+            path: 'profile/:id',
             component: ProjectprofileComponent
           },
           {
-            path: 'stage',
+            path: 'stage/:id',
             component: ProjectstageComponent
           },
           {
-            path: 'bim',
+            path: 'bim/:id',
             component: ProjectbimComponent
           },
           {
-            path: 'lod',
+            path: 'lod/:id',
             component: LodComponent
           }
         ]

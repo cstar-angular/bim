@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,21 +7,29 @@ import { Router } from '@angular/router';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-  url = '';
-
+  activate;
+  projectKey;
+  r_e;
   constructor(
-    private router: Router
-    ) { 
-      this.router.events.subscribe((val) => {
-        this.url = val['url'];
-      });
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+    ) {
+      this.r_e = this.router.events.subscribe((val) => {
+        if(val['url']) {
+          this.activate = val['url'].split('/')[2];
+        }
+      });      
     }
 
   ngOnInit() {
+    this.projectKey = localStorage.getItem('pKey');
   }
 
   gotourl(url){
     this.router.navigate([url]);
   }
 
+  ngOnDestroy() {
+    this.r_e.unsubscribe();
+  }
 }

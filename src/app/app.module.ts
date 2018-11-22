@@ -29,6 +29,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment } from '../environments/environment';
 import { UserComponent } from './user/user.component';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.compone
     ProjectstageComponent,
     ProjectbimComponent,
     UserComponent,
-    ForgetpasswordComponent
+    ForgetpasswordComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

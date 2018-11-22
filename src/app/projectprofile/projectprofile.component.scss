@@ -20,8 +20,14 @@
     .general-info {
         padding: 50px;
 
+        .project-number input {
+            text-transform: uppercase;
+        }
         .project-name {
             flex: 100%;
+        }
+        .project-name input {
+            text-transform: uppercase;
         }
 
         .project-type {
@@ -64,6 +70,21 @@
             button {
                 margin-left: 20px;
             }
+        }
+
+        .save-project {
+            flex-direction: row-reverse;
+            display: flex;
+            margin-top: 20px;
+            text-decoration: underline;
+        }
+
+        .archive-project {
+            flex-direction: row-reverse;
+            display: flex;
+            margin-top: 20px;
+            text-decoration: underline;
+            color: #FF3960;
         }
     }
 }

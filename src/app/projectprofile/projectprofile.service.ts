@@ -15,8 +15,8 @@ export class ProjectprofileService {
     this.projectsRef = db.list(this.dbPath);
   }
  
-  createProject(project: ProjectProfile): void {
-    this.projectsRef.push(project);
+  createProject(project: ProjectProfile): any {
+    return this.projectsRef.push(project);
   }
  
   updateProject(key: string, value: any): void {
@@ -33,6 +33,10 @@ export class ProjectprofileService {
  
   deleteAll(): void {
     this.projectsRef.remove().catch(error => this.handleError(error));
+  }
+
+  getProjectProfile(key: string): any {
+    return  this.db.object(this.dbPath + "/" + key);
   }
  
   private handleError(error) {
