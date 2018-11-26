@@ -1,21 +1,20 @@
-<div>
-    {{profileId}}
-</div>
-
-<div class="project-wrap">
-  <div class="general-info">
+<div class="project-wrap" *ngIf="project">
+    <app-loading *ngIf="!project"></app-loading>
+    <div *ngIf="message" class="row message">{{ message }}</div>           
+            
+    <div class="general-info">
       <div class="row">
           <div class="project-num">
               <mat-label>* Project Number</mat-label>
               <mat-form-field>
-                  <input matInput  placeholder="">
+                  <input matInput name="number"  placeholder="" [(ngModel)]="project.number" required  [disabled]="!isEditable"> 
               </mat-form-field>
           </div>
 
           <div class="project-name">
               <mat-label>* Project Name</mat-label>
               <mat-form-field>
-                  <input matInput  placeholder="">
+                  <input matInput name="name"  placeholder="" [(ngModel)]="project.name" required [disabled]="!isEditable">
               </mat-form-field>
           </div>
       </div>
@@ -24,8 +23,8 @@
           <div class="project-type">
               <mat-label>* Project Type</mat-label>
               <mat-form-field>
-                  <mat-select placeholder="Select">
-                      <mat-option value="option">Option</mat-option>
+                  <mat-select name="project_type" placeholder="Select" [(ngModel)]="project.project_type" aria-required="true" [disabled]="!isEditable">
+                      <mat-option *ngFor="let project_type of projectTypes | async" [value]="project_type">{{ project_type }}</mat-option>
                   </mat-select>
               </mat-form-field>
           </div>
@@ -35,8 +34,8 @@
           <div class="contract-type">
               <mat-label>Contract Type</mat-label>
               <mat-form-field>
-                  <mat-select placeholder="Select">
-                      <mat-option value="option">Option</mat-option>
+                  <mat-select name="contract_type" placeholder="Select" [(ngModel)]="project.contract_type" [disabled]="!isEditable">
+                    <mat-option *ngFor="let contract_type of contractTypes | async" [value]="contract_type">{{ contract_type }}</mat-option>
                   </mat-select>
               </mat-form-field>
           </div>
@@ -46,23 +45,23 @@
           <div class="address">
               <mat-label>Address</mat-label>
               <mat-form-field>
-                  <input matInput  placeholder="">
+                  <input matInput name="address"  placeholder="" [(ngModel)]="project.address" [disabled]="!isEditable">
               </mat-form-field>
           </div>
       </div>
 
       <div class="row">
           <div class="province">
-              <mat-label>Stage/Province</mat-label>
+              <mat-label>State/Province</mat-label>
               <mat-form-field>
-                  <input matInput  placeholder="">
+                  <input matInput name="state"  placeholder="" [(ngModel)]="project.state" [disabled]="!isEditable">
               </mat-form-field>
           </div>
 
           <div class="zip-code">
               <mat-label>Zip Code</mat-label>
               <mat-form-field>
-                  <input matInput  placeholder="">
+                  <input matInput name="zipcode"  placeholder="" [(ngModel)]="project.zipcode" [disabled]="!isEditable">
               </mat-form-field>
           </div>
       </div>
@@ -71,8 +70,10 @@
           <div class="country">
               <mat-label>* Country</mat-label>
               <mat-form-field>
-                  <mat-select placeholder="Select">
-                      <mat-option value="option">Option</mat-option>
+                  <mat-select name="country" placeholder="Select" [value]="project.country" [(ngModel)]="project.country" aria-required="true" [disabled]="!isEditable">
+                      <mat-option value="1">United States</mat-option>
+                      <mat-option value="2">United Kingdom</mat-option>
+                    <mat-option *ngFor="let country of countries | async" [value]="country">{{ country }}</mat-option>
                   </mat-select>
             </mat-form-field>
           </div>
@@ -82,8 +83,10 @@
           <div class="time-zone">
               <mat-label>* Project Time zone</mat-label>
               <mat-form-field>
-                  <mat-select placeholder="Select">
-                      <mat-option value="option">Option</mat-option>
+                  <mat-select name="timezone" placeholder="Select" [(ngModel)]="project.timezone" aria-required="true" [disabled]="!isEditable">
+                      <mat-option value="1">GMT -08</mat-option>
+                      <mat-option value="2">GMT -05</mat-option>
+                    <mat-option *ngFor="let timezone of timezones | async" [value]="timezone">{{ timezone }}</mat-option>
                   </mat-select>
               </mat-form-field>
           </div>
@@ -103,73 +106,73 @@
       
       <div class="row">
           <mat-form-field>
-              <mat-select placeholder="Select">
-                  <mat-option value="option">Option</mat-option>
+              <mat-select name="length" placeholder="Select" [(ngModel)]="project.length" [disabled]="!isEditable">
+                <mat-option *ngFor="let length of lengths | async" [value]="length">{{ length }}</mat-option>
               </mat-select>
           </mat-form-field>
 
           <mat-form-field>
-              <mat-select placeholder="Select">
-                  <mat-option value="option">Option</mat-option>
+              <mat-select name="length_rounding" placeholder="Select" [(ngModel)]="project.length_rounding" [disabled]="!isEditable">
+                <mat-option *ngFor="let rounding of roundings | async" [value]="rounding">{{ rounding }}</mat-option>
               </mat-select>
           </mat-form-field>
 
           <mat-form-field class="geo-location">
-              <input matInput placeholder="Input">
+              <input matInput name="geolocation_1" placeholder="" [(ngModel)]="project.geolocation_1" [disabled]="!isEditable">
           </mat-form-field>
       </div>
       
       <div class="row">
           <mat-form-field>
-              <mat-select placeholder="Select">
-                  <mat-option value="option">Option</mat-option>
+              <mat-select name="area" placeholder="Select" [(ngModel)]="project.area" [disabled]="!isEditable">
+                <mat-option *ngFor="let area of areas | async" [value]="area">{{ area }}</mat-option>
               </mat-select>
           </mat-form-field>
 
           <mat-form-field>
-              <mat-select placeholder="Select">
-                <mat-option value="option">Option</mat-option>
+              <mat-select name="area_rounding" placeholder="Select" [(ngModel)]="project.area_rounding" [disabled]="!isEditable">
+                <mat-option *ngFor="let rounding of roundings | async" [value]="rounding">{{ rounding }}</mat-option>
               </mat-select>
           </mat-form-field>
 
           <mat-form-field class="geo-location">
-            <input matInput placeholder="Input">
+            <input matInput name="geolocation_2" placeholder="" [(ngModel)]="project.geolocation_2" [disabled]="!isEditable">
           </mat-form-field>
       </div>
       
       <div class="row">
           <mat-form-field>
-              <mat-select placeholder="Select">
-                  <mat-option value="option">Option</mat-option>
+              <mat-select name="volumn" placeholder="Select" [(ngModel)]="project.volumn" [disabled]="!isEditable">
+                <mat-option *ngFor="let volumn of volumns | async" [value]="volumn">{{ volumn }}</mat-option>
               </mat-select>
           </mat-form-field>
 
           <mat-form-field>
-              <mat-select placeholder="Select">
-                <mat-option value="option">Option</mat-option>
+              <mat-select name="volumn_rounding" placeholder="Select" [(ngModel)]="project.volumn_rounding" [disabled]="!isEditable">
+                <mat-option *ngFor="let rounding of roundings | async" [value]="rounding">{{ rounding }}</mat-option>
               </mat-select>
           </mat-form-field>
 
           <mat-form-field class="geo-location">
-              <input matInput placeholder="Input">
+              <input matInput name="geolocation_3" placeholder="" [(ngModel)]="project.geolocation_3" [disabled]="!isEditable">
           </mat-form-field>
       </div>
       
       <div class="row">
           <mat-form-field>
-              <mat-select placeholder="">
-                  <mat-option value="option">Option</mat-option>
+              <mat-select name="angle" placeholder="Select" [(ngModel)]="project.angle" [disabled]="!isEditable">
+                <mat-option *ngFor="let angle of angles | async" [value]="angle">{{ angle }}</mat-option>
               </mat-select>
           </mat-form-field>
 
           <mat-form-field>
-              <mat-select placeholder="">
-                <mat-option value="option">Option</mat-option>
+              <mat-select name="angle_rounding" placeholder="Select" [(ngModel)]="project.angle_rounding" [disabled]="!isEditable">
+                <mat-option *ngFor="let rounding of roundings | async" [value]="rounding">{{ rounding }}</mat-option>
               </mat-select>
           </mat-form-field>
 
           <mat-form-field class="geo-location">
-              <input matInput placeholder="Input">
+              <input matInput name="geolocation_4" placeholder="" [(ngModel)]="project.geolocation_4" [disabled]="!isEditable">
           </mat-form-field>
       </div>
 
@@ -177,17 +180,26 @@
         <div class="bim-standard">
           <mat-label>BIM Standard</mat-label>
           <mat-form-field>
-              <mat-select placeholder="">
+              <mat-select name="bim_template" placeholder="Default" [(ngModel)]="project.bim_template">
                 <mat-option value="option">Default</mat-option>
+                <mat-option *ngFor="let template of templates | async" [value]="template">{{ template }}</mat-option>
               </mat-select>
               <mat-hint align="end">Note : BIM Standard can not be changed ones saved !</mat-hint>
           </mat-form-field>
         </div>
       </div>
 
+      <div class="row" *ngIf="isEditable">
+          <div class="open-dialogs">
+                <a class="save-project" (click)="saveTemplateDialog()">Save Project as Template</a>
+                <a class="archive-project" (click)="archiveProjectDialog()">Archive Project</a>
+          </div>
+      </div>
+  
       <div class="actions">
-        <button mat-raised-button color="blue">Save Project</button>
-        <button mat-stroked-button color="blue">Cancel</button>
+        <button mat-raised-button color="blue" *ngIf="isEditable" (click)="saveProject()">Save Project</button>
+        <button mat-stroked-button color="blue" *ngIf="isEditable" (click)="cancel()">Cancel</button>
+        <button mat-stroked-button color="blue" *ngIf="!isEditable" (click)="switchEditable()">Edit</button>
       </div>
   </div>
 </div>

@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>TEMPLATE NAME</h1>
+<div mat-dialog-content>
+  <mat-form-field class="full-width">
+    <input matInput [(ngModel)]="data.title" class="full-width template-title">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button color="blue" [mat-dialog-close]="data.title" cdkFocusInitial>Save</button>
+    <button mat-stroked-button color="blue" (click)="onNoClick()">Cancel</button>
+</div>

@@ -4,15 +4,15 @@
     </div>
 
     <ul class="sidebar-list">
-        <li class="sidebar-item" (click)="gotourl('project/profile')">Profile</li>
-        <li class="sidebar-item" (click)="gotourl('project/stage')">Stages</li>
-        <li class="sidebar-item" (click)="gotourl('project/bim')">Bim Uses</li>
-        <li class="sidebar-item active" (click)="gotourl('project/lod')">Lod</li>
-        <li class="sidebar-item" (click)="gotourl('project/matrix')">Clash Matrix</li>
-        <li class="sidebar-item" (click)="gotourl('project/conf')">Configuration</li>
-        <li class="sidebar-item" (click)="gotourl('project/team')">Team</li>
-        <li class="sidebar-item" (click)="gotourl('project/meeting')">Meetings</li>
-        <li class="sidebar-item" (click)="gotourl('project/quality')">Quality</li>
+        <li class="sidebar-item" [ngClass]="{'active' : (activate == 'new' || activate == 'profile')}" (click)="gotourl('project/profile/' + projectKey)"><span>Profile</span></li>
+        <li class="sidebar-item" [ngClass]="{'active' : (activate == 'stage')}" (click)="gotourl('project/stage/' + projectKey)"><span>Stages</span></li>
+        <li class="sidebar-item" [ngClass]="{'active' : (activate == 'bim')}" (click)="gotourl('project/bim/' + projectKey)"><span>Bim Uses</span></li>
+        <li class="sidebar-item" [ngClass]="{'active' : (activate == 'lod')}" (click)="gotourl('project/lod/' + projectKey)"><span>Lod</span></li>
+        <li class="sidebar-item" [ngClass]="{'active' : (activate == 'matrix')}" (click)="gotourl('project/matrix/' + projectKey)"><span>Clash Matrix</span></li>
+        <li class="sidebar-item" [ngClass]="{'active' : (activate == 'conf')}" (click)="gotourl('project/conf/' + projectKey)"><span>Configuration</span></li>
+        <li class="sidebar-item" [ngClass]="{'active' : (activate == 'team')}" (click)="gotourl('project/team/' + projectKey)"><span>Team</span></li>
+        <li class="sidebar-item" [ngClass]="{'active' : (activate == 'meeting')}" (click)="gotourl('project/meeting/' + projectKey)"><span>Meetings</span></li>
+        <li class="sidebar-item" [ngClass]="{'active' : (activate == 'quality')}" (click)="gotourl('project/quality/' + projectKey)"><span>Quality</span></li>
     </ul>
 </div>
   

@@ -11,7 +11,7 @@ import { MatListModule } from '@angular/material/list';
 import { NgModule } from '@angular/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
-
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
     imports: [
@@ -31,6 +31,7 @@ import { MatTableModule } from '@angular/material/table';
         MatSelectModule,
         MatTableModule,
         MatSortModule,
+        MatDialogModule
     ],
     exports: [
         MatButtonModule,
@@ -49,6 +50,7 @@ import { MatTableModule } from '@angular/material/table';
         MatSelectModule,
         MatTableModule,
         MatSortModule,
+        MatDialogModule
     ]
 })
 

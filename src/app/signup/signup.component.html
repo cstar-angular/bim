@@ -10,7 +10,7 @@
         <form class="signup-form">
           <mat-form-field class="full-width">
               <mat-label>Full Name</mat-label>
-              <input  matInput  placeholder="Full name"  name="fname" class="form-input" [(ngModel)]="user.fname"  required>
+              <input  matInput  placeholder="Full name"  name="name" class="form-input" [(ngModel)]="user.name"  required>
             </mat-form-field>
             <mat-form-field class="full-width">
               <mat-label>Company (Optional)</mat-label>
@@ -18,11 +18,11 @@
             </mat-form-field>
             <mat-form-field class="full-width">
               <mat-label>Email</mat-label>
-              <input  matInput  placeholder="Email" name="email">
+              <input  matInput  placeholder="Email" name="email"[(ngModel)]="user.email">
             </mat-form-field>
             <mat-form-field class="full-width">
               <mat-label>Password</mat-label>
-              <input  matInput  placeholder="Password"  name="password">
+              <input  matInput type="password"  placeholder="Password"  name="password"[(ngModel)]="user.password">
             </mat-form-field>
             <span>Password must be 8 characters or longer</span>
         </form>
@@ -30,7 +30,7 @@
       <mat-card-actions>
         <button mat-raised-button (click)="tryRegister()" color="primary" class="full-width">Create Account</button>
         <div class="go-to-signin">
-            <a href="/signin">Go to Sign in</a>
+            <a (click)="gotoSignIn()">Go to Sign in</a>
         </div>
       </mat-card-actions>
     </mat-card>
@@ -43,7 +43,7 @@
       </mat-card-header>
 
       <mat-card-content>
-          <button mat-raised-button (click)="register()" color="primary" class="full-width google-sign">Sign in with Google+</button>
+          <button mat-raised-button (click)="tryGoogleLogin()" color="primary" class="full-width google-sign">Sign in with Google+</button>
           <button mat-raised-button (click)="register()" color="primary" class="full-width linkedin-sign">Sign in with Linkedin</button>
       </mat-card-content>
     </mat-card>
