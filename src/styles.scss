@@ -50,6 +50,9 @@ ul li {
 .full-width {
   width: 100%;
 }
+.bg-gray {
+  background: #F2F2F2;
+}
 
 *::-webkit-scrollbar {
   width: 10px;
@@ -89,7 +92,9 @@ ul li {
   padding-left: 10px;
   padding-right: 10px;
 }
-
+.mat-form-field-wrapper {
+  padding-top: 1.25em;
+}
 .mat-form-field-flex {
   border-bottom: 1px solid;
 }
@@ -111,6 +116,7 @@ ul li {
   background: #3b5998;
   border-radius: 0;
   min-width: 120px;
+  border: 1px solid #3b5998;
 }
 .mat-raised-button.mat-blue span {
   color: #ffffff;
@@ -119,7 +125,29 @@ ul li {
   font-family: "AvenirNextLTPro-Bold";
   color: #000000;
 }
+.mat-table .mat-header-cell, .mat-table .mat-cell {
+  background: #ffffff;
+}
+.mat-table tr.selected, .mat-table tr.mat-row.selected td.mat-cell {
+  background: #F2F2F2;
+}
+.mat-table tr.selected, 
+.mat-table tr.mat-row.selected td.mat-cell .mat-form-field-flex,
+.mat-table tr.mat-row.selected td.mat-cell span {
+  background: #ffffff;
+}
+.mat-table .mat-cell,
+.mat-table .mat-cell span {
+  color: #000000;
+  font-weight: bold;
+  font-family: "AvenirLTStd-Black";
+  text-transform: capitalize;
+}
 
+.project-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
 button.primary {
   background: none;
   color: #3b5998;
@@ -140,8 +168,42 @@ button.primary {
   color: #717171;
 }
 
+mat-dialog-container.mat-dialog-container {
+  background: #ffffff;
+  padding: 30px 50px;
+}
+mat-dialog-container.mat-dialog-container .mat-dialog-title {
+  color: #000000;
+}
+mat-dialog-container.mat-dialog-container .mat-dialog-content {
+  display: flex;
+}
+mat-dialog-container.mat-dialog-container .mat-dialog-actions {
+  display: flex;
+  flex-direction: row-reverse;
+}
+mat-dialog-container.mat-dialog-container .mat-dialog-actions button {
+  margin-left: 20px;
+}
+
 app-header .mat-toolbar-multiple-rows {
   min-height: 50px;
+}
+
+table.mat-table {
+  min-width: 100%;
+}
+
+.message {
+  padding: 0 50px;
+  color: #DD4B39;
+  background: #ffffff;
+}
+.content-search .mat-form-field-flex {
+  background: none;
+}
+.content-search .tool-bar > div {
+  cursor: pointer;
 }
 .authentication {
   display: flex;

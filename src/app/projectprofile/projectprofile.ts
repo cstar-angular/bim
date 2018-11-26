@@ -22,5 +22,6 @@ export class ProjectProfile {
     geolocation_4: string;
     bim_template: string;
     thumb_image: string;
-    is_archive?: string;
+    is_archive?: boolean;
+    template_title?: string;
 }

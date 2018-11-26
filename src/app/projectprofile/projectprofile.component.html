@@ -1,7 +1,8 @@
-
 <div class="project-wrap" *ngIf="project">
-        <app-loading *ngIf="!project"></app-loading>
-  <div class="general-info">
+    <app-loading *ngIf="!project"></app-loading>
+    <div *ngIf="message" class="row message">{{ message }}</div>           
+            
+    <div class="general-info">
       <div class="row">
           <div class="project-num">
               <mat-label>* Project Number</mat-label>
@@ -189,17 +190,16 @@
       </div>
 
       <div class="row" *ngIf="isEditable">
-          <a class="save-project" (click)="saveTemplateDialog()">Save Project as Template</a>
+          <div class="open-dialogs">
+                <a class="save-project" (click)="saveTemplateDialog()">Save Project as Template</a>
+                <a class="archive-project" (click)="archiveProjectDialog()">Archive Project</a>
+          </div>
       </div>
-
-      <div class="row" *ngIf="isEditable">
-            <a class="archive-project" (click)="archiveProjectDialog()">Archive Project</a>
-        </div>
   
       <div class="actions">
         <button mat-raised-button color="blue" *ngIf="isEditable" (click)="saveProject()">Save Project</button>
         <button mat-stroked-button color="blue" *ngIf="isEditable" (click)="cancel()">Cancel</button>
-        <button mat-stroked-button color="blue" *ngIf="!isEditable" (click)="switEditable()">Edit</button>
+        <button mat-stroked-button color="blue" *ngIf="!isEditable" (click)="switchEditable()">Edit</button>
       </div>
   </div>
 </div>

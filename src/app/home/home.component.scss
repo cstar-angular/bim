@@ -36,6 +36,13 @@
                 clear: both;
             }
         }
+        .mat-card-content {
+            height: 100%;
+            
+            img {
+                height: 100%;
+            }
+        }
 
         img {
             width: 100%;

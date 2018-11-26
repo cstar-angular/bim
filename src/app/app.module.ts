@@ -30,6 +30,7 @@ import { environment } from '../environments/environment';
 import { UserComponent } from './user/user.component';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 import { LoadingComponent } from './loading/loading.component';
+import { SaveTemplateDialog, ArchiveDialog } from './projectprofile/projectprofile.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,9 @@ import { LoadingComponent } from './loading/loading.component';
     ProjectbimComponent,
     UserComponent,
     ForgetpasswordComponent,
-    LoadingComponent
+    LoadingComponent,
+    SaveTemplateDialog,
+    ArchiveDialog
   ],
   imports: [
     BrowserModule,
@@ -64,6 +67,7 @@ import { LoadingComponent } from './loading/loading.component';
     FormsModule,
     HttpClientModule,
   ],
+  entryComponents: [SaveTemplateDialog, ArchiveDialog],
   providers: [
     
   ],

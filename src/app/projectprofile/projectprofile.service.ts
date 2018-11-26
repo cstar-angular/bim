@@ -19,7 +19,7 @@ export class ProjectprofileService {
     return this.projectsRef.push(project);
   }
  
-  updateProject(key: string, value: any): void {
+  updateProject(key: string, value: any): any {
     this.projectsRef.update(key, value).catch(error => this.handleError(error));
   }
  

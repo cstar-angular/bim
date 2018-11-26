@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>ARE YOU SURE ?</h1>
+<div mat-dialog-content>
+  <p>Are you sure you want to archive this project ? This action is irreversible.</p>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button color="blue" [mat-dialog-close]="true" cdkFocusInitial>Archive</button>
+    <button mat-stroked-button color="blue" (click)="onNoClick()">Cancel</button>
+</div>

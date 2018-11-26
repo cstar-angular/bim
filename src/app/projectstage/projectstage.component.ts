@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { DatabaseService } from '../_services/database.service';
+import { map } from 'rxjs/operators';
+import { Statement } from '@angular/compiler';
 
 @Component({
   selector: 'app-projectstage',
@@ -8,52 +11,162 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 })
 export class ProjectstageComponent implements OnInit {
 
-  displayedColumns = ['position', 'stage', 'start', 'end', 'remarks'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  tablePath = '/stages';
+
+  isEditable = false;
+  stages: StageElement[];
+  selectedKey;
+  editableKey;
+
+  displayedColumns = ['number', 'stage', 'start', 'end', 'remarks'];
+  dataSource = new MatTableDataSource(this.stages);
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() { }
+  constructor(
+    private databaseService: DatabaseService
+  ) { }
 
   ngOnInit() {
-    this.dataSource.sort = this.sort;
+    
+    this.databaseService.getLists(this.tablePath).snapshotChanges().pipe(
+      map(changes => 
+        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+      )
+    ).subscribe(data => {
+      this.stages = data;
+
+      this.sortRecords();
+
+      this.dataSource = new MatTableDataSource(this.stages);
+    });
+    
+    if(this.dataSource) {
+      this.dataSource.sort = this.sort;
+    }
   }
 
+  switchEditable() {
+    this.isEditable = !this.isEditable;
+  }
+
+  selectRow(key) {
+    if(this.isEditable) {
+      this.selectedKey = key;
+    }
+  }
+
+  insertRow() {
+    if(!this.editableKey) {
+      var number = 0;
+      var position = 0;
+      for (let stage of this.stages){
+        if(number < stage.number) {
+          number = stage.number;
+        }
+
+        if(position < stage.position) {
+          position = stage.position;
+        }
+      }
+
+      number++;
+      position++;
+
+      var newRow: StageElement = {number: number, stage: '', start:"", end: "", remarks: "", key: "newRow", position: position};
+      this.selectedKey = "newRow";
+      this.editableKey = this.selectedKey;
+      this.stages.push(newRow);
+
+      this.dataSource = new MatTableDataSource(this.stages);
+    }
+  }
+
+  deleteRow() {
+    if(this.selectedKey) {
+      this.databaseService.deleteRow(this.tablePath, this.selectedKey);
+    }
+
+    if(this.selectedKey == 'newRow') {
+      
+    }
+  }
+
+  editRow() {
+    this.editableKey = this.selectedKey;
+  }
+
+  saveRow() {
+    for (let stage of this.stages){
+      if(stage.key == 'newRow') {
+        var result = this.databaseService.createRow(this.tablePath, stage);
+        stage.key = result.key;
+        this.databaseService.updateRow(this.tablePath, result.key, stage);
+      }
+
+      if(stage.key == this.editableKey) {
+        this.databaseService.updateRow(this.tablePath, this.editableKey, stage);
+      }
+    }
+
+    this.editableKey = null;
+  }
+
+  moveUp() {
+    if(!this.editableKey) {
+      var index = 0;
+      for (let stage of this.stages){
+        if(stage.key == this.selectedKey && this.stages[index - 1]) {
+          var position = this.stages[index]['position'];
+          this.stages[index]['position'] = this.stages[index - 1]['position'];
+          this.databaseService.updateRow(this.tablePath, stage.key, this.stages[index]);
+
+          this.stages[index - 1]['position'] = position;
+          this.databaseService.updateRow(this.tablePath, this.stages[index - 1]['key'], this.stages[index - 1]);
+
+          break;
+        }
+
+        index++;
+      }
+
+      this.sortRecords();
+    }
+  }
+
+  moveDown() {
+    if(!this.editableKey) {
+      var index = 0;
+      for (let stage of this.stages){
+        if(stage.key == this.selectedKey && this.stages[index + 1]) {
+          var position = this.stages[index]['position'];
+          this.stages[index]['position'] = this.stages[index + 1]['position'];
+          this.databaseService.updateRow(this.tablePath, stage.key, this.stages[index]);
+
+          this.stages[index + 1]['position'] = position;
+          this.databaseService.updateRow(this.tablePath, this.stages[index+1]['key'], this.stages[index+1]);
+
+          break;
+        }
+
+        index++;
+      }
+
+      this.sortRecords();
+    }
+  }
+
+  sortRecords() {
+    this.stages.sort(function(a, b){return a.position - b.position});
+  }
 }
 
-export interface PeriodicElement {
-  position: string;
+export interface StageElement {
+  number: number;
   stage: string;
   start: string;
   end: string;
   remarks: string;
+  key?: string;
+  position?: number;
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: "S01", stage: 'Conceptual Design', start:"ARCH", end: "100", remarks: "200"},
-  {position: "S02", stage: 'Design Development', start:"STR", end: "200", remarks: "200"},
-  {position: "S03", stage: 'Tender', start:"CVL", end: "100", remarks: "200"},
-  {position: "S04", stage: 'Construction', start:"MECH", end: "100", remarks: "200"},
-  {position: "S05", stage: 'Handover', start:"ELE", end: "100", remarks: "200"},
-  {position: "S06", stage: 'Facility Management', start:"PLU", end: "100", remarks: "200"},
-  {position: "S07", stage: 'Conceptual Design', start:"FIRE", end: "100", remarks: "NA"},
-  {position: "S08", stage: 'Design Development', start:"LS", end: "100", remarks: "200"},
-  {position: "S09", stage: 'Tender', start:"FIX", end: "100", remarks: "200"},
-  {position: "S10", stage: 'Construction', start:"FURN", end: "NA", remarks: "200"},
-
-  {position: "S11", stage: 'Handover', start:"ARCH", end: "100", remarks: "200"},
-  {position: "S12", stage: 'Facility Management', start:"STR", end: "200", remarks: "200"},
-  {position: "S13", stage: 'Conceptual Design', start:"CVL", end: "100", remarks: "200"},
-  {position: "S14", stage: 'Design Development', start:"MECH", end: "100", remarks: "200"},
-  {position: "S15", stage: 'Tender', start:"ELE", end: "100", remarks: "200"},
-  {position: "S16", stage: 'Carbon', start:"PLU", end: "100", remarks: "200"},
-  {position: "S17", stage: 'Nitrogen', start:"FIRE", end: "100", remarks: "NA"},
-  {position: "S18", stage: 'Oxygen', start:"LS", end: "100", remarks: "200"},
-  {position: "S19", stage: 'Fluorine', start:"FIX", end: "100", remarks: "200"},
-  {position: "S20", stage: 'Neon', start:"FURN", end: "NA", remarks: "200"},
-
-  {position: "S21", stage: 'Hydrogen', start:"ARCH", end: "100", remarks: "200"},
-  {position: "S22", stage: 'Helium', start:"STR", end: "200", remarks: "200"},
-  {position: "S23", stage: 'Lithium', start:"CVL", end: "100", remarks: "200"},
-  {position: "S24", stage: 'Beryllium', start:"MECH", end: "100", remarks: "200"},
-];

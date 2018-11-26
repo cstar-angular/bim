@@ -2,8 +2,9 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    height: 100%;
-    padding: 50px;
+    height: calc(100% - 50px);
+    margin-top: 20px;
+    padding: 20px 50px;
     overflow-y: scroll;
 
     mat-label {
@@ -72,19 +73,28 @@
             }
         }
 
-        .save-project {
-            flex-direction: row-reverse;
+        .open-dialogs {
             display: flex;
-            margin-top: 20px;
-            text-decoration: underline;
-        }
+            flex-direction: column;
+            align-content: flex-end;
+            align-items: flex-end;
 
-        .archive-project {
-            flex-direction: row-reverse;
-            display: flex;
-            margin-top: 20px;
-            text-decoration: underline;
-            color: #FF3960;
+            .save-project {
+                margin-top: 20px;
+                text-decoration: underline;
+                font-style: italic;
+            }
+    
+            .archive-project {
+                margin-top: 20px;
+                text-decoration: underline;
+                font-style: italic;
+                color: #FF3960;
+            }
         }
+    }
+
+    .mat-dialog-container .template-title {
+        text-transform: capitalize;
     }
 }

@@ -4,15 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectprofileService } from './projectprofile.service';
 import { ProjectProfile } from './projectprofile';
 import { DropdownService } from '../_services/dropdown.service';
-import { Observable } from 'rxjs';
+import { DatabaseService } from '../_services/database.service';
+import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-
-
-export interface DialogData {
-  title: string;
-}
-
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
   selector: 'app-projectprofile',
@@ -41,11 +37,13 @@ export class ProjectprofileComponent implements OnInit {
   timezones: any[];
 
   isEditable = true;
+  message;
 
   constructor(
     private activedRoute: ActivatedRoute,
     private router: Router,
     private location: Location,
+    private databaseService: DatabaseService,
     private projectprofileService: ProjectprofileService,
     private dropdownService: DropdownService,
     public dialog: MatDialog
@@ -76,13 +74,13 @@ export class ProjectprofileComponent implements OnInit {
     }
   }
 
-  switEditable() {
+  switchEditable() {
     this.isEditable = !this.isEditable;
   }
 
   cancel() {
     if (this.projectKey !== null && this.projectKey !== undefined) {
-      this.switEditable();
+      this.switchEditable();
     } else {
       this.location.back();
     }
@@ -90,12 +88,11 @@ export class ProjectprofileComponent implements OnInit {
   saveProject() {
     if (this.projectKey !== null && this.projectKey !== undefined) {
       this.projectprofileService.updateProject(this.projectKey, this.project);
-      this.switEditable();
+      this.switchEditable();
     } else {
       var result = this.projectprofileService.createProject(this.project);
       this.router.navigate(['/project/profile/' + result.ref.key]);
     }
-    
   }
 
   deleteProject() {
@@ -108,27 +105,43 @@ export class ProjectprofileComponent implements OnInit {
 
   saveTemplateDialog(): void {
     const dialogRef = this.dialog.open(SaveTemplateDialog, {
-      width: '250px',
+      width: '500px',
       data: {title: ""}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // this.animal = result;
+      if(result) {
+        var template = this.project;
+        template.template_title = result;
+        this.databaseService.createRow('/templates', template).then(result => {
+          if(result.key) {
+            // this.message = "Template was saved successfully!";
+          }
+        });
+      }
     });
   }
 
   archiveProjectDialog() {
-    const dialogRef = this.dialog.open(SaveTemplateDialog, {
-      width: '250px',
-      data: {title: ""}
+    const dialogRef = this.dialog.open(ArchiveDialog, {
+      width: '500px',
+      data: {key: this.projectKey, project: this.project}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // this.animal = result;
+      if(result) {
+        this.project.is_archive = true;
+        this.projectprofileService.updateProject(this.projectKey, this.project).then( res => console.log(res));
+      }
     });
   }
 }
 
+// Define Dialog components
+
+export interface DialogData {
+  title: string;
+}
 
 @Component({
   selector: 'save-template-dialog',
@@ -144,5 +157,19 @@ export class SaveTemplateDialog {
   onNoClick(): void {
     this.dialogRef.close();
   }
+}
 
+@Component({
+  selector: 'archive-dialog',
+  templateUrl: 'archive.html',
+})
+export class ArchiveDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<ArchiveDialog>,
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }
