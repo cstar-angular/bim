@@ -1,40 +1,36 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
-import { DatabaseService } from '../_services/database.service';
+import { DatabaseService } from '../../_services/database.service';
 import { map } from 'rxjs/operators';
 import { Statement } from '@angular/compiler';
 
 @Component({
-  selector: 'app-lod',
-  templateUrl: './lod.component.html',
-  styleUrls: ['./lod.component.scss']
+  selector: 'app-meeting',
+  templateUrl: './meeting.component.html',
+  styleUrls: ['./meeting.component.scss']
 })
+export class MeetingComponent implements OnInit {
 
-export class LodComponent implements OnInit {
-
-  tablePath = '/lods';
+  tablePath = '/meeting';
 
   isEditable = false;
   elements: TableElement[];
   selectedKey;
   editableKey;
 
-  stages = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'}
-  ];
-
-  lods = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'}
-  ];
-
-  dropdowns = ['NA', '100', '200', '300', '400', '500'];
-
-  displayedColumns = ['number', 'disciple', 'code', 's01', 's02', 's03', 's04', 's05', 's06', 's07', 's08', 's09'];
+  displayedColumns = ['number', 'meeting', 'start', 'frequency', 'organizer'];
   dataSource = new MatTableDataSource(this.elements);
+
+  frequencyOptions = [
+    "One time",
+    "As needed",
+    "Daily",
+    "Weelky",
+    "Bi-Weekly",
+    "Monthly",
+    "Quarterly",
+    "Yearly"
+  ];
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -43,6 +39,7 @@ export class LodComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    
     this.databaseService.getLists(this.tablePath).snapshotChanges().pipe(
       map(changes => 
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
@@ -62,9 +59,10 @@ export class LodComponent implements OnInit {
 
   switchEditable() {
     this.isEditable = !this.isEditable;
-
+    
     if (!this.isEditable) {
       this.selectedKey = null;
+      this.editableKey = null;
     }
   }
 
@@ -78,20 +76,20 @@ export class LodComponent implements OnInit {
     if(!this.editableKey) {
       var number = 0;
       var position = 0;
-      for (let element of this.elements){
-        if(number < element.number) {
-          number = element.number;
+      for (let stage of this.elements){
+        if(number < stage.number) {
+          number = stage.number;
         }
 
-        if(position < element.position) {
-          position = element.position;
+        if(position < stage.position) {
+          position = stage.position;
         }
       }
 
       number++;
       position++;
-
-      var newRow: TableElement = {number: number, disciple: '', code:"", s01: "", s02: "", s03: "", s04: "", s05: "", s06: "", s07: "", s08: "", s09: "", key: "newRow", position: position, is_new: true};
+     
+      var newRow: TableElement = {number: number, meeting: '', start:"", frequency: "", organizer: "", key: "newRow", position: position};
       this.selectedKey = "newRow";
       this.editableKey = this.selectedKey;
       this.elements.push(newRow);
@@ -100,7 +98,7 @@ export class LodComponent implements OnInit {
     }
   }
 
-  deleteRow() {console.log(this.selectedKey);
+  deleteRow() {
     if(this.selectedKey) {
       this.databaseService.deleteRow(this.tablePath, this.selectedKey);
     }
@@ -115,19 +113,15 @@ export class LodComponent implements OnInit {
   }
 
   saveRow() {
-    for (let element of this.elements){
-      if(element.key == 'newRow') {
-        if(element.disciple && element.code && element.s01 && element.s02) {
-          var result = this.databaseService.createRow(this.tablePath, element);
-          element.key = result.key;
-          this.databaseService.updateRow(this.tablePath, result.key, element);
-        }
+    for (let stage of this.elements){
+      if(stage.key == 'newRow') {
+        var result = this.databaseService.createRow(this.tablePath, stage);
+        stage.key = result.key;
+        this.databaseService.updateRow(this.tablePath, result.key, stage);
       }
 
-      if(element.key == this.editableKey) {
-        if(element.disciple && element.code && element.s01 && element.s02) {
-          this.databaseService.updateRow(this.tablePath, this.editableKey, element);
-        }
+      if(stage.key == this.editableKey) {
+        this.databaseService.updateRow(this.tablePath, this.editableKey, stage);
       }
     }
 
@@ -185,18 +179,10 @@ export class LodComponent implements OnInit {
 
 export interface TableElement {
   number: number;
-  disciple: string;
-  code: string;
-  s01: string;
-  s02: string;
-  s03: string;
-  s04: string;
-  s05: string;
-  s06: string;
-  s07: string;
-  s08: string;
-  s09: string;
-  key?: string, 
-  position?: number, 
-  is_new?: true
+  meeting: string;
+  start: string;
+  frequency: string;
+  organizer: string;
+  key?: string;
+  position?: number;
 }

@@ -1,0 +1,88 @@
+<div class="main-content">
+    <div class="content-search">
+        <div class="search-form">
+            <div>
+                <mat-form-field color="white" class="">
+                    <input matInput placeholder="Search" value="">
+                </mat-form-field>
+            </div>
+            <div>
+                <button mat-stroked-button color="blue" *ngIf="!isEditable" (click)="switchEditable()">Edit</button>
+                <button mat-raised-button color="blue" *ngIf="isEditable" (click)="switchEditable()">Done</button>
+            </div>        
+        </div>
+    
+        <div *ngIf="isEditable" class="tool-bar">
+            <div class="movedown" (click)="moveDown()"><mat-icon>keyboard_arrow_down</mat-icon>Move down</div>
+            <div class="moveup" (click)="moveUp()"><mat-icon>keyboard_arrow_up</mat-icon>Move up</div>
+            <div class="insert" (click)="insertRow()"><mat-icon>add</mat-icon>Insert</div>
+            <div class="delete" (click)="deleteRow()"><mat-icon>clear</mat-icon>Delete</div>
+            <div class="edit" *ngIf="!editableKey" (click)="editRow()"><mat-icon>edit</mat-icon>Edit</div>
+            <div class="edit" *ngIf="editableKey" (click)="saveRow()"><mat-icon>save</mat-icon>Save</div>
+        </div>
+    </div>
+  
+    <div class="table-container mat-elevation-z8">
+        <table mat-table color="white" [dataSource]="dataSource" matSort>
+      
+          <!-- No. Column -->
+          <ng-container matColumnDef="number">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+            <td mat-cell *matCellDef="let element">
+              B{{("00"+element.number).slice(-2)}}
+            </td>
+            <td mat-cell *matCellDef="let element"></td>
+          </ng-container>
+    
+          <!-- Disciple Column -->
+          <ng-container matColumnDef="block">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Block </th>
+            <td mat-cell *matCellDef="let element"> 
+              <span *ngIf="element.key != editableKey">{{element.block}}</span>
+              <mat-form-field *ngIf="element.key == editableKey">
+                <input matInput [(ngModel)]="element.block" required>
+              </mat-form-field>
+            </td>
+          </ng-container>
+    
+          <!-- Code Column -->
+          <ng-container matColumnDef="area">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Area(SqM) </th>
+            <td mat-cell *matCellDef="let element"> 
+              <span *ngIf="element.key != editableKey" class="bg-gray">{{element.area }}</span>
+              <mat-form-field *ngIf="element.key == editableKey">
+                  <input matInput [(ngModel)]="element.area" required>
+              </mat-form-field>
+            </td>
+          </ng-container>
+      
+          <!-- s01 Column -->
+          <ng-container matColumnDef="levels">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Levels </th>
+            <td mat-cell *matCellDef="let element"> 
+              <span *ngIf="element.key != editableKey" class="bg-gray">{{ element.levels }}</span>
+              <mat-form-field *ngIf="element.key == editableKey">
+                <input matInput [(ngModel)]="element.levels" required>
+              </mat-form-field>
+            </td>
+          </ng-container>
+      
+          <!-- s02 Column -->
+          <ng-container matColumnDef="remarks">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Remarks </th>
+            <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.key != editableKey" class="gray-200">{{element.remarks}}</span>
+              <mat-form-field *ngIf="element.key == editableKey">
+                <input matInput [(ngModel)]="element.remarks" required>
+              </mat-form-field>
+            </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'selected' : (row.key == selectedKey)}" (click)="selectRow(row.key)"></tr>
+        </table>
+    </div>
+
+  
+
+</div>

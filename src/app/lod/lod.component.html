@@ -44,9 +44,9 @@
         <table mat-table color="white" [dataSource]="dataSource" matSort>
       
           <!-- No. Column -->
-          <ng-container matColumnDef="position" sticky>
+          <ng-container matColumnDef="number" sticky>
             <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-            <td mat-cell *matCellDef="let element"> <span>{{element.position}}</span> </td>
+            <td mat-cell *matCellDef="let element"> <span>D{{("00"+element.number).slice(-2)}}</span> </td>
           </ng-container>
     
           <!-- Disciple Column -->
@@ -75,10 +75,10 @@
           <ng-container matColumnDef="s01">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> s01 </th>
             <td mat-cell *matCellDef="let element">
-              <span *ngIf="element.key != editableKey" >{{element.s01}}</span>
+              <span *ngIf="element.key != editableKey" [ngClass]="['gray-' + element.s01]">{{element.s01}}</span>
               <mat-form-field *ngIf="element.key == editableKey">
-                  <mat-select placeholder="">
-                      <mat-option *ngFor="let option of dropdowns" [value]="element.s01">
+                  <mat-select placeholder="" [(ngModel)]="element.s01">
+                      <mat-option *ngFor="let option of dropdowns" [value]="option">
                         {{ option }} 
                       </mat-option>
                     </mat-select>
@@ -90,10 +90,10 @@
           <ng-container matColumnDef="s02">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> s02 </th>
             <td mat-cell *matCellDef="let element">
-              <span *ngIf="element.key != editableKey" class="gray-200">{{element.s02}}</span>
+              <span *ngIf="element.key != editableKey" [ngClass]="['gray-' + element.s02]">{{element.s02}}</span>
               <mat-form-field *ngIf="element.key == editableKey">
-                  <mat-select placeholder="">
-                      <mat-option *ngFor="let option of dropdowns" [value]="element.s02">
+                  <mat-select placeholder="" [(ngModel)]="element.s02">
+                      <mat-option *ngFor="let option of dropdowns" [value]="option">
                         {{ option }} 
                       </mat-option>
                     </mat-select>
@@ -105,10 +105,10 @@
           <ng-container matColumnDef="s03">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>s03</th>
             <td mat-cell *matCellDef="let element">
-              <span *ngIf="element.key != editableKey" class="gray-300">{{element.s03}}</span>
+              <span *ngIf="element.key != editableKey" [ngClass]="['gray-' + element.s03]">{{element.s03}}</span>
               <mat-form-field *ngIf="element.key == editableKey">
-                  <mat-select placeholder="">
-                      <mat-option *ngFor="let option of dropdowns" [value]="element.s03">
+                  <mat-select placeholder="" [(ngModel)]="element.s03">
+                      <mat-option *ngFor="let option of dropdowns" [value]="option">
                         {{ option }} 
                       </mat-option>
                     </mat-select>
@@ -120,10 +120,10 @@
           <ng-container matColumnDef="s04">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> s04 </th>
               <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.key != editableKey" class="gray-300">{{element.s04}}</span>
+                <span *ngIf="element.key != editableKey" [ngClass]="['gray-' + element.s04]">{{element.s04}}</span>
                 <mat-form-field *ngIf="element.key == editableKey">
-                    <mat-select placeholder="">
-                        <mat-option *ngFor="let option of dropdowns" [value]="element.s04">
+                    <mat-select placeholder="" [(ngModel)]="element.s04">
+                        <mat-option *ngFor="let option of dropdowns" [value]="option">
                           {{ option }} 
                         </mat-option>
                       </mat-select>
@@ -135,10 +135,10 @@
             <ng-container matColumnDef="s05">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> s05 </th>
               <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.key != editableKey" class="gray-300">{{element.s05}}</span>
+                <span *ngIf="element.key != editableKey" [ngClass]="['gray-' + element.s05]">{{element.s05}}</span>
                 <mat-form-field *ngIf="element.key == editableKey">
-                    <mat-select placeholder="">
-                        <mat-option *ngFor="let option of dropdowns" [value]="element.s05">
+                    <mat-select placeholder="" [(ngModel)]="element.s05">
+                        <mat-option *ngFor="let option of dropdowns" [value]="option">
                           {{ option }} 
                         </mat-option>
                       </mat-select>
@@ -150,10 +150,10 @@
             <ng-container matColumnDef="s06">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>s06</th>
               <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.key != editableKey" class="gray-300">{{element.s06}}</span>
+                <span *ngIf="element.key != editableKey" [ngClass]="['gray-' + element.s06]">{{element.s06}}</span>
                 <mat-form-field *ngIf="element.key == editableKey">
-                    <mat-select placeholder="">
-                        <mat-option *ngFor="let option of dropdowns" [value]="element.s06">
+                    <mat-select placeholder="" [(ngModel)]="element.s06">
+                        <mat-option *ngFor="let option of dropdowns" [value]="option">
                           {{ option }} 
                         </mat-option>
                       </mat-select>
@@ -165,10 +165,10 @@
           <ng-container matColumnDef="s07">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> s07 </th>
               <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.key != editableKey" class="gray-300">{{element.s07}}</span>
+                <span *ngIf="element.key != editableKey" [ngClass]="['gray-' + element.s07]">{{element.s07}}</span>
                 <mat-form-field *ngIf="element.key == editableKey">
-                    <mat-select placeholder="">
-                        <mat-option *ngFor="let option of dropdowns" [value]="element.s07">
+                    <mat-select placeholder="" [(ngModel)]="element.s07">
+                        <mat-option *ngFor="let option of dropdowns" [value]="option">
                           {{ option }} 
                         </mat-option>
                       </mat-select>
@@ -180,10 +180,10 @@
             <ng-container matColumnDef="s08">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> s08 </th>
               <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.key != editableKey" class="gray-300">{{element.s08}}</span>
+                <span *ngIf="element.key != editableKey" [ngClass]="['gray-' + element.s08]">{{element.s08}}</span>
                 <mat-form-field *ngIf="element.key == editableKey">
-                    <mat-select placeholder="">
-                        <mat-option *ngFor="let option of dropdowns" [value]="element.s08">
+                    <mat-select placeholder="" [(ngModel)]="element.s08">
+                        <mat-option *ngFor="let option of dropdowns" [value]="option">
                           {{ option }} 
                         </mat-option>
                       </mat-select>
@@ -195,10 +195,10 @@
             <ng-container matColumnDef="s09">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>s09</th>
               <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.key != editableKey" class="gray-300">{{element.s09}}</span>
+                <span *ngIf="element.key != editableKey" [ngClass]="['gray-' + element.s09]">{{element.s09}}</span>
                 <mat-form-field *ngIf="element.key == editableKey">
-                    <mat-select placeholder="">
-                        <mat-option *ngFor="let option of dropdowns" [value]="element.s09">
+                    <mat-select placeholder="" [(ngModel)]="element.s09">
+                        <mat-option *ngFor="let option of dropdowns" [value]="option">
                           {{ option }} 
                         </mat-option>
                       </mat-select>
