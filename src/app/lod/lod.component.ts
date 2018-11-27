@@ -33,7 +33,7 @@ export class LodComponent implements OnInit {
 
   dropdowns = ['NA', '100', '200', '300', '400', '500'];
 
-  displayedColumns = ['position', 'disciple', 'code', 's01', 's02', 's03', 's04', 's05', 's06', 's07', 's08', 's09'];
+  displayedColumns = ['number', 'disciple', 'code', 's01', 's02', 's03', 's04', 's05', 's06', 's07', 's08', 's09'];
   dataSource = new MatTableDataSource(this.elements);
 
   @ViewChild(MatSort) sort: MatSort;
