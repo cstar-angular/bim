@@ -22,6 +22,17 @@
             }
         }
         
+        .tool-bar {
+            display: flex;
+            flex-direction: row-reverse;
+
+            > div {
+                display: flex;
+                padding: 10px;
+                align-items: center;
+                align-content: center;
+            }
+        }
     }
 
     .table-container {
