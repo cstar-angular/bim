@@ -21,6 +21,19 @@ export class ChatService {
   }
 
   sendMsg(msgbody, projectId, urlType): any {
+    msgbody['timesent'] = this.getTimeStamp();
     return this.db.list(this.dbPath+'/'+projectId + '/'+urlType).push(msgbody);
+  }
+
+  getTimeStamp() {
+    const now = new Date();
+    const date = now.getUTCFullYear() + '/' +
+                 (now.getUTCMonth() + 1) + '/' +
+                 now.getUTCDate();
+    const time = now.getUTCHours() + ':' +
+                 now.getUTCMinutes() + ':' +
+                 now.getUTCSeconds();
+
+    return (date + ' ' + time);
   }
 }

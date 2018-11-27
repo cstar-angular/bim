@@ -2,18 +2,18 @@
   <div class="search-bar" >
       <form class="search-form">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Search" value="">
+            <input matInput placeholder="Search" (keyup)="search($event.target.value)">
           </mat-form-field>
         </form>
   </div>
   
   <app-loading *ngIf="isLoading"></app-loading>
 
-  <ul class="msg-list"  *ngIf="!isLoading && messages.length == 0">
+  <ul class="msg-list"  *ngIf="!isLoading && messagesShow.length == 0">
     <h2 class="no-messages">No Messages</h2>
   </ul>
-  <ul class="msg-list" *ngIf="!isLoading && messages && messages.length>0" #scroller>
-    <li class="msg-list-item" *ngFor="let message of messages">
+  <ul class="msg-list" *ngIf="!isLoading && messagesShow && messagesShow.length>0" #scroller>
+    <li class="msg-list-item" *ngFor="let message of messagesShow">
       <div class="msg-sender">
         <img src="/assets/images/avatar.png">
         <div class="msg-sender-detail">
@@ -30,14 +30,14 @@
       </div>
 
       <div class="msg-date">
-        <span>2nd Feb 2019</span>
+        <span> {{ message.timesent | date:'medium' }}</span>
       </div>
     </li>
 
   </ul>
 
   <div class="msg-box">
-    <textarea class="input-message-to-send" placeholder="Type something to send!" [(ngModel)]="msgtext"  (keydown)="handleSubmit($event)"></textarea>
+    <textarea class="input-message-to-send" placeholder="Type something to send!" [(ngModel)]="msgtext"  (keyup)="handleSubmit($event)"></textarea>
     <div class="chat-tools">
       <div class="adding-tools">
         <mat-icon>attach_file</mat-icon>
