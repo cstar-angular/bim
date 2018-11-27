@@ -13,6 +13,8 @@ import { ProjectbimComponent } from './projectbim/projectbim.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 import { ProjectconfComponent } from './projectconf/projectconf.component';
+import { TeamComponent } from './project/team/team.component';
+import { MeetingComponent } from './project/meeting/meeting.component';
 
 
 const routes: Routes = [
@@ -70,6 +72,14 @@ const routes: Routes = [
           {
             path: 'conf/:id',
             component: ProjectconfComponent
+          },
+          {
+            path: 'team/:id',
+            component: TeamComponent
+          },
+          {
+            path: 'meeting/:id',
+            component: MeetingComponent
           }
         ]
       }

@@ -34,6 +34,8 @@ import { SaveTemplateDialog, ArchiveDialog } from './projectprofile/projectprofi
 import { ChatService } from './_services/chat.service';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { ProjectconfComponent } from './projectconf/projectconf.component';
+import { TeamComponent } from './project/team/team.component';
+import { MeetingComponent } from './project/meeting/meeting.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { ProjectconfComponent } from './projectconf/projectconf.component';
     LoadingComponent,
     SaveTemplateDialog,
     ArchiveDialog,
-    ProjectconfComponent
+    ProjectconfComponent,
+    TeamComponent,
+    MeetingComponent
   ],
   imports: [
     BrowserModule,
