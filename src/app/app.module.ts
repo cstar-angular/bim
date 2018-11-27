@@ -36,6 +36,7 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import { ProjectconfComponent } from './projectconf/projectconf.component';
 import { TeamComponent } from './project/team/team.component';
 import { MeetingComponent } from './project/meeting/meeting.component';
+import { PickerModule } from '@ctrl/ngx-emoji-mart'
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { MeetingComponent } from './project/meeting/meeting.component';
     AngularFireDatabaseModule,
     FormsModule,
     HttpClientModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    PickerModule
   ],
   entryComponents: [SaveTemplateDialog, ArchiveDialog],
   providers: [
