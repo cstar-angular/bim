@@ -12,6 +12,7 @@ import { ProjectstageComponent } from './projectstage/projectstage.component';
 import { ProjectbimComponent } from './projectbim/projectbim.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
+import { ProjectconfComponent } from './projectconf/projectconf.component';
 
 
 const routes: Routes = [
@@ -65,6 +66,10 @@ const routes: Routes = [
           {
             path: 'lod/:id',
             component: LodComponent
+          },
+          {
+            path: 'conf/:id',
+            component: ProjectconfComponent
           }
         ]
       }
