@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { DatabaseService } from '../_services/database.service';
+import { map } from 'rxjs/operators';
+import { Statement } from '@angular/compiler';
 
 @Component({
   selector: 'app-projectbim',
@@ -8,38 +11,182 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 })
 export class ProjectbimComponent implements OnInit {
 
-  displayedColumns = ['no', 'bim_use', 'check', 'software', 'version', 'format'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  tablePath = '/bims';
+
+  isEditable = false;
+  elements: TableElement[];
+  selectedKey;
+  editableKey;
+
+  displayedColumns = ['number', 'bim_use', 'check', 'software', 'version', 'format'];
+  dataSource = new MatTableDataSource(this.elements);
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() { }
+  constructor(
+    private databaseService: DatabaseService
+  ) { }
 
   ngOnInit() {
-    this.dataSource.sort = this.sort;
+    
+    this.databaseService.getLists(this.tablePath).snapshotChanges().pipe(
+      map(changes => 
+        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+      )
+    ).subscribe(data => {
+      this.elements = data;
+
+      this.sortRecords();
+
+      this.dataSource = new MatTableDataSource(this.elements);
+    });
+    
+    if(this.dataSource) {
+      this.dataSource.sort = this.sort;
+    }
   }
 
+  switchEditable() {
+    this.isEditable = !this.isEditable;
+
+    if (!this.isEditable) {
+      this.selectedKey = null;
+    }
+  }
+
+  switchToggle() {
+    for (let element of this.elements) {
+      if (element.key == this.editableKey) {
+        element.check = !element.check;
+      }
+    }
+  }
+
+  selectRow(key) {
+    if(this.isEditable) {
+      this.selectedKey = key;
+    }
+  }
+
+  insertRow() {
+    if(!this.editableKey) {
+      var number = 0;
+      var position = 0;
+      for (let element of this.elements){
+        if(number < element.number) {
+          number = element.number;
+        }
+
+        if(position < element.position) {
+          position = element.position;
+        }
+      }
+
+      number++;
+      position++;
+
+      var newRow: TableElement = {number: number, bim_use: '', check:true, software: "", version: "", format: "", key: "newRow", position: position, is_new: true};
+      this.selectedKey = "newRow";
+      this.editableKey = this.selectedKey;
+      this.elements.push(newRow);
+
+      this.dataSource = new MatTableDataSource(this.elements);
+    }
+  }
+
+  deleteRow() {console.log(this.selectedKey);
+    if(this.selectedKey) {
+      this.databaseService.deleteRow(this.tablePath, this.selectedKey);
+    }
+
+    if(this.selectedKey == 'newRow') {
+      
+    }
+  }
+
+  editRow() {
+    this.editableKey = this.selectedKey;
+  }
+
+  saveRow() {
+    for (let element of this.elements){
+      if(element.key == 'newRow') {
+        if(element.bim_use && element.format && element.software && element.version) {
+          element.is_new = false;
+          var result = this.databaseService.createRow(this.tablePath, element);
+          element.key = result.key;
+          this.databaseService.updateRow(this.tablePath, result.key, element);
+        }
+      }
+
+      if(element.key == this.editableKey) {
+        if(element.bim_use && element.format && element.software && element.version) {
+          element.is_new = false;
+          this.databaseService.updateRow(this.tablePath, this.editableKey, element);
+        }
+      }
+    }
+
+    this.editableKey = null;
+  }
+
+  moveUp() {
+    if(!this.editableKey) {
+      var index = 0;
+      for (let element of this.elements){
+        if(element.key == this.selectedKey && this.elements[index - 1]) {
+          var position = this.elements[index]['position'];
+          this.elements[index]['position'] = this.elements[index - 1]['position'];
+          this.databaseService.updateRow(this.tablePath, element.key, this.elements[index]);
+
+          this.elements[index - 1]['position'] = position;
+          this.databaseService.updateRow(this.tablePath, this.elements[index - 1]['key'], this.elements[index - 1]);
+
+          break;
+        }
+
+        index++;
+      }
+
+      this.sortRecords();
+    }
+  }
+
+  moveDown() {
+    if(!this.editableKey) {
+      var index = 0;
+      for (let element of this.elements){
+        if(element.key == this.selectedKey && this.elements[index + 1]) {
+          var position = this.elements[index]['position'];
+          this.elements[index]['position'] = this.elements[index + 1]['position'];
+          this.databaseService.updateRow(this.tablePath, element.key, this.elements[index]);
+
+          this.elements[index + 1]['position'] = position;
+          this.databaseService.updateRow(this.tablePath, this.elements[index+1]['key'], this.elements[index+1]);
+
+          break;
+        }
+
+        index++;
+      }
+
+      this.sortRecords();
+    }
+  }
+
+  sortRecords() {
+    this.elements.sort(function(a, b){return a.position - b.position});
+  }
 }
 
-export interface PeriodicElement {
-  no: string;
+export interface TableElement {
+  number: number;
   bim_use: string;
-  check: number;
+  check: boolean;
   software: string;
   version: string;
   format: string;
+  key?: string;
+  position?: number;
+  is_new?: boolean
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {no: "U01", bim_use: 'Conceptual Design', check:1, software: "100", version: "200", format: "RVT, DWG, DWF, NWF"},
-  {no: "U02", bim_use: 'Design Development', check:0, software: "200", version: "200", format: ""},
-  {no: "U03", bim_use: 'Tsoftwareer', check:0, software: "100", version: "200", format: ""},
-  {no: "U04", bim_use: 'Construction', check:1, software: "100", version: "200", format: ""},
-  {no: "U05", bim_use: 'Handover', check:1, software: "100", version: "200", format: ""},
-  {no: "U06", bim_use: 'Facility Management', check:0, software: "100", version: "200", format: ""},
-  {no: "U07", bim_use: 'Conceptual Design', check:1, software: "100", version: "NA", format: ""},
-  {no: "U08", bim_use: 'Design Development', check:1, software: "100", version: "200", format: ""},
-  {no: "U09", bim_use: 'Tsoftwareer', check:0, software: "100", version: "200", format: ""},
-  {no: "U10", bim_use: 'Construction', check:0, software: "NA", version: "200", format: ""},
-
-];

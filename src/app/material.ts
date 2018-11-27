@@ -12,6 +12,8 @@ import { NgModule } from '@angular/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+ 
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
@@ -33,6 +35,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
         MatTableModule,
         MatSortModule,
         MatDialogModule,
+        MatSlideToggleModule, 
         MatProgressSpinnerModule
     ],
     exports: [
@@ -53,6 +56,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
         MatTableModule,
         MatSortModule,
         MatDialogModule,
+        MatSlideToggleModule,
         MatProgressSpinnerModule
     ]
 })

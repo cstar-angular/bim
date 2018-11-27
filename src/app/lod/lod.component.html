@@ -22,11 +22,22 @@
                   </mat-select>
             </mat-form-field>
           </div>
+
           <div>
-            <button mat-stroked-button color="blue">Edit</button>
+              <button mat-stroked-button color="blue" *ngIf="!isEditable" (click)="switchEditable()">Edit</button>
+              <button mat-raised-button color="blue" *ngIf="isEditable" (click)="switchEditable()">Done</button>
           </div>
-          
+        
         </div>
+
+          <div *ngIf="isEditable" class="tool-bar">
+              <div class="movedown" (click)="moveDown()"><mat-icon>keyboard_arrow_down</mat-icon>Move down</div>
+              <div class="moveup" (click)="moveUp()"><mat-icon>keyboard_arrow_up</mat-icon>Move up</div>
+              <div class="insert" (click)="insertRow()"><mat-icon>add</mat-icon>Insert</div>
+              <div class="delete" (click)="deleteRow()"><mat-icon>clear</mat-icon>Delete</div>
+              <div class="edit" *ngIf="!editableKey" (click)="editRow()"><mat-icon>edit</mat-icon>Edit</div>
+              <div class="edit" *ngIf="editableKey" (click)="saveRow()"><mat-icon>save</mat-icon>Save</div>
+          </div>
       </div>
     
     <div class="table-container mat-elevation-z8">
@@ -41,71 +52,162 @@
           <!-- Disciple Column -->
           <ng-container matColumnDef="disciple" sticky>
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Disciple </th>
-            <td mat-cell *matCellDef="let element"> <span>{{element.disciple}}</span> </td>
+            <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.key != editableKey">{{element.disciple}}</span>
+                <mat-form-field *ngIf="element.key == editableKey">
+                    <input matInput [(ngModel)]="element.disciple" required>
+                </mat-form-field>
+            </td>
           </ng-container>
     
           <!-- Code Column -->
           <ng-container matColumnDef="code" sticky>
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
-            <td mat-cell *matCellDef="let element"> <span class="color">{{element.code}}</span> </td>
+            <td mat-cell *matCellDef="let element">                
+                <span *ngIf="element.key != editableKey">{{element.code}}</span>
+                <mat-form-field *ngIf="element.key == editableKey">
+                    <input matInput [(ngModel)]="element.code" required>
+                </mat-form-field>
+            </td>
           </ng-container>
       
           <!-- s01 Column -->
           <ng-container matColumnDef="s01">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> s01 </th>
-            <td mat-cell *matCellDef="let element"> <span class="gray-100">{{element.s01}}</span> </td>
+            <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.key != editableKey" >{{element.s01}}</span>
+              <mat-form-field *ngIf="element.key == editableKey">
+                  <mat-select placeholder="">
+                      <mat-option *ngFor="let option of dropdowns" [value]="element.s01">
+                        {{ option }} 
+                      </mat-option>
+                    </mat-select>
+              </mat-form-field>
+            </td>
           </ng-container>
       
           <!-- s02 Column -->
           <ng-container matColumnDef="s02">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> s02 </th>
-            <td mat-cell *matCellDef="let element"> <span class="gray-200">{{element.s02}}</span> </td>
+            <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.key != editableKey" class="gray-200">{{element.s02}}</span>
+              <mat-form-field *ngIf="element.key == editableKey">
+                  <mat-select placeholder="">
+                      <mat-option *ngFor="let option of dropdowns" [value]="element.s02">
+                        {{ option }} 
+                      </mat-option>
+                    </mat-select>
+              </mat-form-field>
+            </td>
           </ng-container>
       
           <!-- s03 Column -->
           <ng-container matColumnDef="s03">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>s03</th>
-            <td mat-cell *matCellDef="let element"> <span class="gray-300">{{element.s03}}</span></td>
+            <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.key != editableKey" class="gray-300">{{element.s03}}</span>
+              <mat-form-field *ngIf="element.key == editableKey">
+                  <mat-select placeholder="">
+                      <mat-option *ngFor="let option of dropdowns" [value]="element.s03">
+                        {{ option }} 
+                      </mat-option>
+                    </mat-select>
+              </mat-form-field>
+            </td>
           </ng-container>
       
           <!-- s04 Column -->
           <ng-container matColumnDef="s04">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> s04 </th>
-              <td mat-cell *matCellDef="let element"> <span class="gray-300">{{element.s04}}</span></td>
+              <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.key != editableKey" class="gray-300">{{element.s04}}</span>
+                <mat-form-field *ngIf="element.key == editableKey">
+                    <mat-select placeholder="">
+                        <mat-option *ngFor="let option of dropdowns" [value]="element.s04">
+                          {{ option }} 
+                        </mat-option>
+                      </mat-select>
+                </mat-form-field>
+              </td>
             </ng-container>
         
             <!-- s05 Column -->
             <ng-container matColumnDef="s05">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> s05 </th>
-              <td mat-cell *matCellDef="let element"> <span class="gray-300">{{element.s05}}</span> </td>
+              <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.key != editableKey" class="gray-300">{{element.s05}}</span>
+                <mat-form-field *ngIf="element.key == editableKey">
+                    <mat-select placeholder="">
+                        <mat-option *ngFor="let option of dropdowns" [value]="element.s05">
+                          {{ option }} 
+                        </mat-option>
+                      </mat-select>
+                </mat-form-field>
+              </td>
             </ng-container>
         
             <!-- s06 Column -->
             <ng-container matColumnDef="s06">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>s06</th>
-              <td mat-cell *matCellDef="let element"><span class="gray-300">{{element.s06}}</span></td>
+              <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.key != editableKey" class="gray-300">{{element.s06}}</span>
+                <mat-form-field *ngIf="element.key == editableKey">
+                    <mat-select placeholder="">
+                        <mat-option *ngFor="let option of dropdowns" [value]="element.s06">
+                          {{ option }} 
+                        </mat-option>
+                      </mat-select>
+                </mat-form-field>
+              </td>
             </ng-container>
       
           <!-- s07 Column -->
           <ng-container matColumnDef="s07">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> s07 </th>
-              <td mat-cell *matCellDef="let element"> <span class="gray-300">{{element.s07}}</span> </td>
+              <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.key != editableKey" class="gray-300">{{element.s07}}</span>
+                <mat-form-field *ngIf="element.key == editableKey">
+                    <mat-select placeholder="">
+                        <mat-option *ngFor="let option of dropdowns" [value]="element.s07">
+                          {{ option }} 
+                        </mat-option>
+                      </mat-select>
+                </mat-form-field>
+              </td>
             </ng-container>
         
             <!-- s08 Column -->
             <ng-container matColumnDef="s08">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> s08 </th>
-              <td mat-cell *matCellDef="let element"> <span class="gray-300">{{element.s08}}</span> </td>
+              <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.key != editableKey" class="gray-300">{{element.s08}}</span>
+                <mat-form-field *ngIf="element.key == editableKey">
+                    <mat-select placeholder="">
+                        <mat-option *ngFor="let option of dropdowns" [value]="element.s08">
+                          {{ option }} 
+                        </mat-option>
+                      </mat-select>
+                </mat-form-field>
+              </td>
             </ng-container>
         
             <!-- s09 Column -->
             <ng-container matColumnDef="s09">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>s09</th>
-              <td mat-cell *matCellDef="let element"><span class="gray-300">{{element.s09}}</span></td>
+              <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.key != editableKey" class="gray-300">{{element.s09}}</span>
+                <mat-form-field *ngIf="element.key == editableKey">
+                    <mat-select placeholder="">
+                        <mat-option *ngFor="let option of dropdowns" [value]="element.s09">
+                          {{ option }} 
+                        </mat-option>
+                      </mat-select>
+                </mat-form-field>
+              </td>
             </ng-container>
           
           <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'selected' : (row.key == selectedKey)}" (click)="selectRow(row.key)"></tr>
         </table>
     </div>
 </div>

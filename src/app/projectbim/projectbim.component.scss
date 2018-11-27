@@ -9,6 +9,7 @@
         .bim-form {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             padding: 20px;
 
             .mat-form-field {
@@ -43,7 +44,6 @@
         .mat-table {
 
             .mat-header-cell, .mat-cell {
-                background: #ffffff;
                 color: #000000;
                 padding-left: 10px;
                 padding-right: 10px;
@@ -73,4 +73,51 @@
             }            
         }
     }
+
+    .check-toggle {
+        width: 100px;
+        height: 30px;
+        border-radius: 0;
+    }
+    .check-toggle .toggle-inactive {
+        border: 2px solid #AFABAB;
+        display: flex;
+        flex-direction: row-reverse
+    }
+    .check-toggle .toggle-inactive span {
+        background: #AFABAB;
+    }
+    .check-toggle .toggle-active {
+        border: 2px solid #00B050;
+        display: flex;
+    }
+    .check-toggle .toggle-active span {
+        background: #00B050;
+    }
+    .check-toggle span {
+        width: 80px;
+        height: 26px;
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 !important;
+    }
+// .mat-slide-toggle .mat-slide-toggle-thumb {
+//   width: 70px;
+//   height: 26px;
+//   border-radius: 0;
+// }
+// .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb-container {
+//   left: -17px;
+// }
+// .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+//   background: #ffffff;
+//   border: 2px solid #00B050;
+// }
+// .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+//   background: #00B050;
+//   content: "<span>Active</span>";
+// }
+
 }

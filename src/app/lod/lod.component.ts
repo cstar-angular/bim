@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DataSource } from '@angular/cdk/table';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { DatabaseService } from '../_services/database.service';
+import { map } from 'rxjs/operators';
+import { Statement } from '@angular/compiler';
 
 @Component({
   selector: 'app-lod',
@@ -9,6 +11,13 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 })
 
 export class LodComponent implements OnInit {
+
+  tablePath = '/lods';
+
+  isEditable = false;
+  elements: TableElement[];
+  selectedKey;
+  editableKey;
 
   stages = [
     {value: 'steak-0', viewValue: 'Steak'},
@@ -22,28 +31,160 @@ export class LodComponent implements OnInit {
     {value: 'tacos-2', viewValue: 'Tacos'}
   ];
 
-  displayedColumns = ['position', 'disciple', 'code', 's01', 's02', 's03', 's04', 's05', 's06', 's07', 's08', 's08', 's09'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dropdowns = ['NA', '100', '200', '300', '400', '500'];
+
+  displayedColumns = ['position', 'disciple', 'code', 's01', 's02', 's03', 's04', 's05', 's06', 's07', 's08', 's09'];
+  dataSource = new MatTableDataSource(this.elements);
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() { }
+  constructor(
+    private databaseService: DatabaseService
+  ) { }
 
   ngOnInit() {
-    this.dataSource.sort = this.sort;
+    this.databaseService.getLists(this.tablePath).snapshotChanges().pipe(
+      map(changes => 
+        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+      )
+    ).subscribe(data => {
+      this.elements = data;
+
+      this.sortRecords();
+
+      this.dataSource = new MatTableDataSource(this.elements);
+    });
+    
+    if(this.dataSource) {
+      this.dataSource.sort = this.sort;
+    }
   }
 
+  switchEditable() {
+    this.isEditable = !this.isEditable;
+
+    if (!this.isEditable) {
+      this.selectedKey = null;
+    }
+  }
+
+  selectRow(key) {
+    if(this.isEditable) {
+      this.selectedKey = key;
+    }
+  }
+
+  insertRow() {
+    if(!this.editableKey) {
+      var number = 0;
+      var position = 0;
+      for (let element of this.elements){
+        if(number < element.number) {
+          number = element.number;
+        }
+
+        if(position < element.position) {
+          position = element.position;
+        }
+      }
+
+      number++;
+      position++;
+
+      var newRow: TableElement = {number: number, disciple: '', code:"", s01: "", s02: "", s03: "", s04: "", s05: "", s06: "", s07: "", s08: "", s09: "", key: "newRow", position: position, is_new: true};
+      this.selectedKey = "newRow";
+      this.editableKey = this.selectedKey;
+      this.elements.push(newRow);
+
+      this.dataSource = new MatTableDataSource(this.elements);
+    }
+  }
+
+  deleteRow() {console.log(this.selectedKey);
+    if(this.selectedKey) {
+      this.databaseService.deleteRow(this.tablePath, this.selectedKey);
+    }
+
+    if(this.selectedKey == 'newRow') {
+      
+    }
+  }
+
+  editRow() {
+    this.editableKey = this.selectedKey;
+  }
+
+  saveRow() {
+    for (let element of this.elements){
+      if(element.key == 'newRow') {
+        if(element.disciple && element.code && element.s01 && element.s02) {
+          var result = this.databaseService.createRow(this.tablePath, element);
+          element.key = result.key;
+          this.databaseService.updateRow(this.tablePath, result.key, element);
+        }
+      }
+
+      if(element.key == this.editableKey) {
+        if(element.disciple && element.code && element.s01 && element.s02) {
+          this.databaseService.updateRow(this.tablePath, this.editableKey, element);
+        }
+      }
+    }
+
+    this.editableKey = null;
+  }
+
+  moveUp() {
+    if(!this.editableKey) {
+      var index = 0;
+      for (let element of this.elements){
+        if(element.key == this.selectedKey && this.elements[index - 1]) {
+          var position = this.elements[index]['position'];
+          this.elements[index]['position'] = this.elements[index - 1]['position'];
+          this.databaseService.updateRow(this.tablePath, element.key, this.elements[index]);
+
+          this.elements[index - 1]['position'] = position;
+          this.databaseService.updateRow(this.tablePath, this.elements[index - 1]['key'], this.elements[index - 1]);
+
+          break;
+        }
+
+        index++;
+      }
+
+      this.sortRecords();
+    }
+  }
+
+  moveDown() {
+    if(!this.editableKey) {
+      var index = 0;
+      for (let element of this.elements){
+        if(element.key == this.selectedKey && this.elements[index + 1]) {
+          var position = this.elements[index]['position'];
+          this.elements[index]['position'] = this.elements[index + 1]['position'];
+          this.databaseService.updateRow(this.tablePath, element.key, this.elements[index]);
+
+          this.elements[index + 1]['position'] = position;
+          this.databaseService.updateRow(this.tablePath, this.elements[index+1]['key'], this.elements[index+1]);
+
+          break;
+        }
+
+        index++;
+      }
+
+      this.sortRecords();
+    }
+  }
+
+  sortRecords() {
+    this.elements.sort(function(a, b){return a.position - b.position});
+  }
 }
 
-export interface Element {
-  position: number,
-  name: string,
-  weight: number,
-  symbol: string
-}
-
-export interface PeriodicElement {
-  position: number;
+export interface TableElement {
+  number: number;
   disciple: string;
   code: string;
   s01: string;
@@ -55,40 +196,7 @@ export interface PeriodicElement {
   s07: string;
   s08: string;
   s09: string;
-
+  key?: string, 
+  position?: number, 
+  is_new?: true
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, disciple: 'Hydrogen', code:"ARCH", s01: "100", s02: "200", s03: "300", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-  {position: 2, disciple: 'Helium', code:"STR", s01: "200", s02: "200", s03: "200", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-  {position: 3, disciple: 'Lithium', code:"CVL", s01: "100", s02: "200", s03: "300", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-  {position: 4, disciple: 'Beryllium', code:"MECH", s01: "100", s02: "200", s03: "NA", s04: "300", s05: "400", s06: "400", s07: "400", s08: "500", s09: "200"},
-  {position: 5, disciple: 'Boron', code:"ELE", s01: "100", s02: "200", s03: "300", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-  {position: 6, disciple: 'Carbon', code:"PLU", s01: "100", s02: "200", s03: "300", s04: "300", s05: "400", s06: "400", s07: "400", s08: "500", s09: "200"},
-  {position: 7, disciple: 'Nitrogen', code:"FIRE", s01: "100", s02: "NA", s03: "300", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-  {position: 8, disciple: 'Oxygen', code:"LS", s01: "100", s02: "200", s03: "300", s04: "300", s05: "400", s06: "NA", s07: "NA", s08: "500", s09: "200"},
-  {position: 9, disciple: 'Fluorine', code:"FIX", s01: "100", s02: "200", s03: "NA", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-  {position: 10, disciple: 'Neon', code:"FURN", s01: "NA", s02: "200", s03: "300", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-
-  {position: 11, disciple: 'Hydrogen', code:"ARCH", s01: "100", s02: "200", s03: "300", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-  {position: 12, disciple: 'Helium', code:"STR", s01: "200", s02: "200", s03: "200", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-  {position: 13, disciple: 'Lithium', code:"CVL", s01: "100", s02: "200", s03: "300", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-  {position: 14, disciple: 'Beryllium', code:"MECH", s01: "100", s02: "200", s03: "NA", s04: "300", s05: "400", s06: "400", s07: "400", s08: "500", s09: "200"},
-  {position: 15, disciple: 'Boron', code:"ELE", s01: "100", s02: "200", s03: "300", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-  {position: 16, disciple: 'Carbon', code:"PLU", s01: "100", s02: "200", s03: "300", s04: "300", s05: "400", s06: "400", s07: "400", s08: "500", s09: "200"},
-  {position: 17, disciple: 'Nitrogen', code:"FIRE", s01: "100", s02: "NA", s03: "300", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-  {position: 18, disciple: 'Oxygen', code:"LS", s01: "100", s02: "200", s03: "300", s04: "300", s05: "400", s06: "NA", s07: "NA", s08: "500", s09: "200"},
-  {position: 19, disciple: 'Fluorine', code:"FIX", s01: "100", s02: "200", s03: "NA", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-  {position: 20, disciple: 'Neon', code:"FURN", s01: "NA", s02: "200", s03: "300", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-
-  {position: 21, disciple: 'Hydrogen', code:"ARCH", s01: "100", s02: "200", s03: "300", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-  {position: 22, disciple: 'Helium', code:"STR", s01: "200", s02: "200", s03: "200", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-  {position: 23, disciple: 'Lithium', code:"CVL", s01: "100", s02: "200", s03: "300", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-  {position: 24, disciple: 'Beryllium', code:"MECH", s01: "100", s02: "200", s03: "NA", s04: "300", s05: "400", s06: "400", s07: "400", s08: "500", s09: "200"},
-  {position: 25, disciple: 'Boron', code:"ELE", s01: "100", s02: "200", s03: "300", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-  {position: 26, disciple: 'Carbon', code:"PLU", s01: "100", s02: "200", s03: "300", s04: "300", s05: "400", s06: "400", s07: "400", s08: "500", s09: "200"},
-  {position: 27, disciple: 'Nitrogen', code:"FIRE", s01: "100", s02: "NA", s03: "300", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-  {position: 28, disciple: 'Oxygen', code:"LS", s01: "100", s02: "200", s03: "300", s04: "300", s05: "400", s06: "NA", s07: "NA", s08: "500", s09: "200"},
-  {position: 29, disciple: 'Fluorine', code:"FIX", s01: "100", s02: "200", s03: "NA", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-  {position: 30, disciple: 'Neon', code:"FURN", s01: "NA", s02: "200", s03: "300", s04: "300", s05: "400", s06: "NA", s07: "400", s08: "500", s09: "200"},
-];

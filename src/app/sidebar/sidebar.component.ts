@@ -10,6 +10,7 @@ export class SidebarComponent implements OnInit {
   activate;
   projectKey;
   r_e;
+  
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute

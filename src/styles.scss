@@ -50,8 +50,22 @@ ul li {
 .full-width {
   width: 100%;
 }
+.no-bg {
+  background: none;
+}
 .bg-gray {
   background: #F2F2F2;
+}
+
+.project-wrap {
+  display: flex;
+}
+
+button.primary {
+  background: none;
+  color: #3b5998;
+  border: 1px solid #3b5998;
+  border-radius: 0;
 }
 
 *::-webkit-scrollbar {
@@ -66,15 +80,8 @@ ul li {
   background: #888; 
 }
 
-.mat-sort-header-container {
-  display: flex;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-}
-
-.mat-sort-header-button {
-  text-transform: capitalize;
+.mat-form-field-wrapper {
+  padding-top: 1.25em;
 }
 
 .mat-form-field-flex {
@@ -92,15 +99,26 @@ ul li {
   padding-left: 10px;
   padding-right: 10px;
 }
-.mat-form-field-wrapper {
-  padding-top: 1.25em;
-}
-.mat-form-field-flex {
-  border-bottom: 1px solid;
-}
 
 .mat-hint {
   color: #000000;
+}
+
+.mat-select {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.mat-select-panel {
+  background: #484848;
+}
+.mat-form-field .mat-input-element,
+.mat-select-value-text span {
+  font-family: "AvenirNextLTPro-Bold";
+  font-size: 1.2em;
+  color: #000000;
+}
+.mat-select-arrow {
+  color: #717171;
 }
 
 .mat-stroked-button.mat-blue {
@@ -121,8 +139,21 @@ ul li {
 .mat-raised-button.mat-blue span {
   color: #ffffff;
 }
-.mat-header-cell .mat-sort-header-button {
+
+.mat-sort-header-container {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+table.mat-table {
+  min-width: 100%;
+}
+
+.mat-table .mat-header-cell .mat-sort-header-button {
   font-family: "AvenirNextLTPro-Bold";
+  text-transform: capitalize;
   color: #000000;
 }
 .mat-table .mat-header-cell, .mat-table .mat-cell {
@@ -133,7 +164,7 @@ ul li {
 }
 .mat-table tr.selected, 
 .mat-table tr.mat-row.selected td.mat-cell .mat-form-field-flex,
-.mat-table tr.mat-row.selected td.mat-cell span {
+.mat-table tr.mat-row.selected td.mat-cell input {
   background: #ffffff;
 }
 .mat-table .mat-cell,
@@ -142,30 +173,6 @@ ul li {
   font-weight: bold;
   font-family: "AvenirLTStd-Black";
   text-transform: capitalize;
-}
-
-.project-wrap {
-  display: flex;
-  flex-wrap: wrap;
-}
-button.primary {
-  background: none;
-  color: #3b5998;
-  border: 1px solid #3b5998;
-  border-radius: 0;
-}
-
-.mat-select-panel {
-  background: #484848;
-}
-.mat-form-field .mat-input-element,
-.mat-select-value-text span {
-  font-family: "AvenirNextLTPro-Bold";
-  font-size: 1.2em;
-  color: #000000;
-}
-.mat-select-arrow {
-  color: #717171;
 }
 
 mat-dialog-container.mat-dialog-container {
@@ -188,10 +195,6 @@ mat-dialog-container.mat-dialog-container .mat-dialog-actions button {
 
 app-header .mat-toolbar-multiple-rows {
   min-height: 50px;
-}
-
-table.mat-table {
-  min-width: 100%;
 }
 
 .message {
