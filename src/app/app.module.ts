@@ -31,6 +31,8 @@ import { UserComponent } from './user/user.component';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 import { LoadingComponent } from './loading/loading.component';
 import { SaveTemplateDialog, ArchiveDialog } from './projectprofile/projectprofile.component';
+import { ChatService } from './_services/chat.service';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 
 @NgModule({
   declarations: [
@@ -59,17 +61,17 @@ import { SaveTemplateDialog, ArchiveDialog } from './projectprofile/projectprofi
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     AngularFireDatabaseModule,
     FormsModule,
     HttpClientModule,
+    AngularFireStorageModule
   ],
   entryComponents: [SaveTemplateDialog, ArchiveDialog],
   providers: [
-    
+    ChatService
   ],
   bootstrap: [AppComponent]
 })

@@ -14,6 +14,8 @@ import { MatTableModule } from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
  
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 @NgModule({
     imports: [
         MatButtonModule,
@@ -34,6 +36,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
         MatSortModule,
         MatDialogModule,
         MatSlideToggleModule, 
+        MatProgressSpinnerModule
     ],
     exports: [
         MatButtonModule,
@@ -54,6 +57,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
         MatSortModule,
         MatDialogModule,
         MatSlideToggleModule,
+        MatProgressSpinnerModule
     ]
 })
 
