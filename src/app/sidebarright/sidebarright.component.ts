@@ -17,7 +17,9 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
   urlType;
   routerEvent;
   messages;
+  messagesShow;
   msgtext = '';
+  searchTxt = '';
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
 
@@ -56,6 +58,7 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
   loadMessages() {
     this.isLoading = true;
     this.messages = [];
+    this.messagesShow = [];
     
     this.chatService.getMessages(this.projectId, this.urlType).snapshotChanges().pipe(
       map(changes => 
@@ -63,7 +66,9 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
       )
     ).subscribe(data => {
       this.messages = data;
+      this.messagesShow = data;
       this.isLoading = false;
+      this.search(this.searchTxt)
     });
   }
 
@@ -121,5 +126,13 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
     });   
   }
 
+  search(val) {
+   this.searchTxt = val;
+   if (this.searchTxt == "") {
+     return;
+   }
 
+   this.messagesShow = this.messages.filter(message => message.message.includes(this.searchTxt));
+   
+  }
 }
