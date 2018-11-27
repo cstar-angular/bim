@@ -13,6 +13,10 @@
         height: 100%;
         overflow-y: scroll;
 
+        .no-messages{
+            text-align: center;
+        }
+
         &::-webkit-scrollbar {
             width: 10px;
         }
@@ -65,6 +69,10 @@
             .msg-content {
                 padding: 15px 0;
                 font-style: italic;
+                
+                .chat-img{
+                    width: 100%;
+                }
             }
 
             .msg-date {
@@ -74,6 +82,64 @@
     }
 
     .msg-box {
-        min-height: 200px;
+        min-height: 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .input-message-to-send{
+            border: none;
+            width: 100%;
+            resize: none;
+            padding: 5px;
+
+            &::placeholder {
+                font-style: oblique;
+            }
+
+            &:focus{
+                border: grey;
+                outline: none;
+            }
+        }
+
+        .chat-tools{
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 10px;
+            align-items: center;
+
+            .adding-tools{
+                display: flex;
+                align-items: center;
+
+                mat-icon{
+                    color: black;
+                    cursor: pointer;
+                    font-size: 21px;
+                }
+
+                #images-for-send{
+                    display: none;
+                }
+            }
+
+            .send-button-tool{
+                .send-btn-round{
+                    background: #344456;
+                    border-radius: 50%;
+                    padding: 4px 0px 2px 5px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    mat-icon{
+                        color: white;
+                        cursor: pointer;
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
     }
 }

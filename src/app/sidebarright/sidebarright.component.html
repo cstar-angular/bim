@@ -1,5 +1,5 @@
 <div class="right-panel">
-  <div class="search-bar">
+  <div class="search-bar" >
       <form class="search-form">
           <mat-form-field class="full-width">
             <input matInput placeholder="Search" value="">
@@ -7,8 +7,13 @@
         </form>
   </div>
   
-  <ul class="msg-list">
-    <li class="msg-list-item">
+  <app-loading *ngIf="isLoading"></app-loading>
+
+  <ul class="msg-list"  *ngIf="!isLoading && messages.length == 0">
+    <h2 class="no-messages">No Messages</h2>
+  </ul>
+  <ul class="msg-list" *ngIf="!isLoading && messages && messages.length>0" #scroller>
+    <li class="msg-list-item" *ngFor="let message of messages">
       <div class="msg-sender">
         <img src="/assets/images/avatar.png">
         <div class="msg-sender-detail">
@@ -18,7 +23,10 @@
       </div>
 
       <div class="msg-content">
-        <span>We are in the process of finalizing the stage milestones. Is everyone ok with the list shown here?</span>
+        <span *ngIf="message.type == 'txt'">{{message.message}}</span>
+        <a [href]='message.message' *ngIf="message.type == 'img'">
+          <img [src]="message.message" class="chat-img">
+        </a>
       </div>
 
       <div class="msg-date">
@@ -26,30 +34,24 @@
       </div>
     </li>
 
-    <li class="msg-list-item">
-        <div class="msg-sender">
-          <img src="/assets/images/avatar.png">
-          <div class="msg-sender-detail">
-            <p class="name">Billy Alonzo</p>
-            <p>BIM Manager</p>
-          </div>
-        </div>
-  
-        <div class="msg-content">
-          <span>We are in the process of finalizing the stage milestones. Is everyone ok with the list shown here?</span>
-        </div>
-  
-        <div class="msg-date">
-          <span>2nd Feb 2019</span>
-        </div>
-    </li>
   </ul>
 
   <div class="msg-box">
-      <form class="search-form">
-          <mat-form-field color="primary" class="full-width">
-            <textarea matInput MatTextareaAutosize minRows="5" placeholder="Leave a comment"></textarea>
-          </mat-form-field>
-        </form>
+    <textarea class="input-message-to-send" placeholder="Type something to send!" [(ngModel)]="msgtext"  (keydown)="handleSubmit($event)"></textarea>
+    <div class="chat-tools">
+      <div class="adding-tools">
+        <mat-icon>attach_file</mat-icon>
+        <mat-icon (click)="popupforImage()">photo_camera</mat-icon>
+        <input type="file" #images_for_send accept="image/*" id="images-for-send" (change)="handleFileInput($event.target.files)">
+        <mat-icon>mood</mat-icon>
+      </div>
+      <div class="send-button-tool">
+        <div class="send-btn-round">
+          <mat-icon (click)="sendMsg()" >send</mat-icon>
+        </div>
+      </div>
+    </div>
   </div>
+
+  
 </div>
