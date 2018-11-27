@@ -73,6 +73,11 @@
                 .chat-img{
                     width: 100%;
                 }
+
+                .msg-attach-item{
+                    display: flex;
+                    align-items: center;
+                }
             }
 
             .msg-date {
@@ -120,6 +125,10 @@
                 }
 
                 #images-for-send{
+                    display: none;
+                }
+
+                #files-for-send{
                     display: none;
                 }
             }
