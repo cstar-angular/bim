@@ -1,0 +1,40 @@
+.expired{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    background: black;
+    z-index: -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .user-avartar{
+        width: 10%;
+        border-radius: 50%;
+    }
+
+    .upgrade-btn{
+        background: #3b5998;
+        color: white;
+        padding: 10px 0px;
+        border: none;
+        border-radius: 3px;
+        outline: none;
+        margin-top: 25px;
+        width: 20%
+    }
+
+    .contact-btn{
+        background: #000;
+        color: #3b5998;
+        padding: 10px 0px;
+        border: solid 2px #3b5998;
+        border-radius: 3px;
+        outline: none;
+        margin-top: 25px;
+        width: 20%
+    }
+}

@@ -15,6 +15,8 @@ import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.compone
 import { ProjectconfComponent } from './projectconf/projectconf.component';
 import { TeamComponent } from './project/team/team.component';
 import { MeetingComponent } from './project/meeting/meeting.component';
+import { ExpiredComponent } from './expired/expired.component'
+import { UpgradeComponent } from './upgrade/upgrade.component';
 
 
 const routes: Routes = [
@@ -82,6 +84,17 @@ const routes: Routes = [
             component: MeetingComponent
           }
         ]
+      },
+
+      {
+        path: 'expired',
+        component: ExpiredComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'upgrade',
+        component: UpgradeComponent,
+        canActivate: [AuthGuard]
       }
     ]
   }

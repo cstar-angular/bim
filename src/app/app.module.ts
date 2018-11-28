@@ -36,7 +36,10 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import { ProjectconfComponent } from './projectconf/projectconf.component';
 import { TeamComponent } from './project/team/team.component';
 import { MeetingComponent } from './project/meeting/meeting.component';
-import { PickerModule } from '@ctrl/ngx-emoji-mart'
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { ExpiredComponent } from './expired/expired.component';
+import { UpgradeComponent } from './upgrade/upgrade.component'
+import { Ng5SliderModule } from 'ng5-slider';
 
 @NgModule({
   declarations: [
@@ -61,7 +64,9 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart'
     ArchiveDialog,
     ProjectconfComponent,
     TeamComponent,
-    MeetingComponent
+    MeetingComponent,
+    ExpiredComponent,
+    UpgradeComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +80,8 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart'
     FormsModule,
     HttpClientModule,
     AngularFireStorageModule,
-    PickerModule
+    PickerModule,
+    Ng5SliderModule
   ],
   entryComponents: [SaveTemplateDialog, ArchiveDialog],
   providers: [
