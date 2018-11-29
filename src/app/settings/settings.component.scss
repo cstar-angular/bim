@@ -1,0 +1,30 @@
+.profile{
+
+    margin: 0 -50px;
+
+    .title{
+        color: black;
+        padding-left: 20px;
+        font-size: 20px;
+    }
+
+    .tab-header{
+        display: flex;
+        width: 100%;
+        border: none;
+        border-bottom: solid 1px #888;
+
+        .tab-header-item{
+            padding: 5px 20px;
+            font-size: 20px;
+        }
+    }
+
+    .tab-body{
+        .tab-body-item{
+            .tab-profile{
+                display: flex;
+            }
+        }
+    }
+}

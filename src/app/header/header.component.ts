@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { SettingsComponent } from '../settings/settings.component'
 import { AuthService } from '../_services/auth.service';
-
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import * as firebase from 'firebase/app';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -11,8 +13,8 @@ import { AuthService } from '../_services/auth.service';
 })
 export class HeaderComponent implements OnInit {
   url = '';
-  isAuth = false;
-  
+  isAuth: boolean;
+  authUser;
   constructor(
     private router: Router,
     public dialog: MatDialog,
@@ -20,7 +22,19 @@ export class HeaderComponent implements OnInit {
   ) {
     this.router.events.subscribe((val) => {
       this.url = val['url'];
+     
     });
+
+    var me = this;
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        me.isAuth = true;
+      } else {
+        me.isAuth = false;
+      }
+    });
+
+  
   }
 
   ngOnInit() {
@@ -28,7 +42,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngAfterViewChecked() {
-    
+   
   }
 
   gotourl(url){
