@@ -1,5 +1,8 @@
 <div class="profile">
-  <p class="title">MY SETTINGS</p>
+  <p class="title">
+    <span>MY SETTINGS</span>
+    <mat-icon class="close-icon" (click)="onNoClick()">close</mat-icon>
+  </p>
   <div class="tab-header">
     <span class="tab-header-item" [ngClass]="{'active': activeTab == 'Profile'}" (click)="activeTab = 'Profile'">Profile</span>
     <span class="tab-header-item" [ngClass]="{'active': activeTab == 'Account'}" (click)="activeTab = 'Account'">Account</span>
@@ -69,6 +72,23 @@
         </div>
       </div>
 
+    </div>
+
+    <div class="tab-body-item" *ngIf="activeTab == 'My Templates'">
+      <div class="tab-my-template">
+      </div>
+    </div>
+
+    <div class="tab-body-item" *ngIf="activeTab == 'Apps'">
+      <div class="tab-apps">
+        <button class="upgrade-btn">Upgrade</button>
+
+        <p class="upgrade-details">Upgrade now for unlimited access to apps !</p>
+
+        <button class="contact-btn">Contact Sales</button>
+
+        <p class="contact-details">Contact sales for additional help !</p>
+      </div>
     </div>
   </div>
 </div>
