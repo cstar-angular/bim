@@ -9,8 +9,7 @@
         <div>
             <span *ngIf="url == '/signin'" class="nav-item-createaccount" (click)="gotourl('/signup')">CREATE ACCOUNT</span>
             <span *ngIf="url == '/signup'" class="nav-item-signinaccount" (click)="gotourl('/')">SIGN IN</span>
-
-            <span (click)="openDialog()" *ngIf="isAuth">Hi Billy Alonzo!</span>
+            <span (click)="openDialog()" *ngIf="isAuth">Hi Billy Alonzo!{{isAuth}}</span>
             <span (click)="openDialog()" *ngIf="isAuth" class="small-avatar">BA</span>
         </div>
         <mat-icon>notifications</mat-icon>
