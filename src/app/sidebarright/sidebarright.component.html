@@ -12,7 +12,7 @@
   <ul class="msg-list"  *ngIf="!isLoading && messagesShow.length == 0">
     <h2 class="no-messages">No Messages</h2>
   </ul>
-  <ul class="msg-list" *ngIf="!isLoading && messagesShow && messagesShow.length>0" #scroller>
+  <ul class="msg-list" *ngIf="!isLoading && messagesShow && messagesShow.length>0" #feedContainer>
     <li class="msg-list-item" *ngFor="let message of messagesShow">
       <div class="msg-sender">
         <img src="/assets/images/avatar.png">

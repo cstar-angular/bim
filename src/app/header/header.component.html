@@ -11,6 +11,7 @@
             <span *ngIf="url == '/signup'" class="nav-item-signinaccount" (click)="gotourl('/')">SIGN IN</span>
             <span (click)="openDialog()" *ngIf="isAuth">Hi {{userProfile.name}}</span>
             <span (click)="openDialog()" *ngIf="isAuth && avartarImage.type == 'text'" class="small-avatar">{{avartarImage.val}}</span>
+            <img (click)="openDialog()" *ngIf="isAuth && avartarImage.type == 'image'" class="small-avatar-image" [src]="avartarImage.val">
         </div>
         <mat-icon>notifications</mat-icon>
         <button mat-flat-button color="white" (click)="gotourl('/upgrade')">Upgrade</button>
