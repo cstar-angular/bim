@@ -6,6 +6,7 @@ import { AuthService } from '../_services/auth.service';
 import { UserProfile } from '../user/profile';
 import { map } from 'rxjs/operators';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-settings',
@@ -22,13 +23,23 @@ export class SettingsComponent implements OnInit {
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
 
+  passwordUpdateInfo = {
+    old: '',
+    confirm: '',
+    new: ''
+  }
+  
+
   constructor(
     public dialogRef: MatDialogRef<SettingsComponent>,
     private auth: AngularFireAuth ,
     private authService: AuthService,
-    private afStorage: AngularFireStorage
+    private afStorage: AngularFireStorage,
+    private router: Router
   ) {
     this.authUser = auth.auth.currentUser;
+    console.log(this.authUser);
+    
     this.userProfile.email = this.authUser.email;
     // this.userProfile.phone = this.authUser.phoneNumber;
     this.userProfile.avatar = this.authUser.photoURL;
@@ -57,7 +68,7 @@ export class SettingsComponent implements OnInit {
     });
 
     this.authUser.updateProfile({
-      displayName: "Jane Q. User",
+      displayName: this.userProfile.name,
       photoURL: this.userProfile.avatar
     }).then(function() {
       // Update successful.
@@ -96,6 +107,24 @@ export class SettingsComponent implements OnInit {
        
       });
     });   
+  }
+
+  updatePassword() {
+    var me  = this;
+    if(this.passwordUpdateInfo.new == this.passwordUpdateInfo.confirm && this.passwordUpdateInfo.new != "" && this.passwordUpdateInfo.confirm != ""){
+      this.authUser.updatePassword(this.passwordUpdateInfo.new).then(function() {
+        // Update successful.
+        me.authService.doSignout().then(res => {
+          me.dialogRef.close();
+          me.router.navigate(['/signin'])
+        }, err => {
+          console.log(err);
+        });
+      }).catch(function(error) {
+       console.log(error);
+      });
+    }
+    
   }
 
 }
