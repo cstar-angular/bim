@@ -1,20 +1,43 @@
 <div class="profile">
   <p class="title">MY SETTINGS</p>
   <div class="tab-header">
-    <span class="tab-header-item">Profile</span>
-    <span class="tab-header-item">Account</span>
-    <span class="tab-header-item">My Templates</span>
-    <span class="tab-header-item">Apps</span>
+    <span class="tab-header-item" [ngClass]="{'active': activeTab == 'Profile'}" (click)="activeTab = 'Profile'">Profile</span>
+    <span class="tab-header-item" [ngClass]="{'active': activeTab == 'Account'}" (click)="activeTab = 'Account'">Account</span>
+    <span class="tab-header-item" [ngClass]="{'active': activeTab == 'My Templates'}" (click)="activeTab = 'My Templates'">My Templates</span>
+    <span class="tab-header-item" [ngClass]="{'active': activeTab == 'Apps'}" (click)="activeTab = 'Apps'">Apps</span>
   </div>
 
   <div class="tab-body">
     <div class="tab-body-item">
       <div class="tab-profile">
-        <div>
-
+        <div class="left-side-for-image">
+          <img src="/assets/images/avatar.png" alt="" class="profile-image">
+          <p class="change-delete-profile-image">
+            <span class="change-btn">Change</span> | 
+            <span class="delete-btn">Delete</span>
+          </p>
         </div>
-        <div>
+        <div class="right-side-for-info">
+          <mat-form-field class="">
+            <input matInput placeholder="*Full Name" [(ngModel)]='userProfile.name'>
+          </mat-form-field>
           
+          <mat-form-field class="">
+            <input matInput placeholder="*Email" [(ngModel)]='userProfile.email'>
+          </mat-form-field>
+
+          <mat-form-field class="">
+            <span matPrefix>+1 &nbsp;</span> |
+            <input type="tel" matInput placeholder="Phone Number" [(ngModel)]='userProfile.phone'>
+          </mat-form-field>
+
+          <mat-form-field class="">
+            <input matInput placeholder="Company" [(ngModel)]='userProfile.company_name'>
+          </mat-form-field>
+
+          <div class="update-btn-div">
+            <button (click)="updateProfile()">Update Profile</button>
+          </div>
         </div>
       </div>
     </div>

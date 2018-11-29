@@ -5,7 +5,8 @@ import { DatabaseService } from './database.service';
 import { UserProfile } from '../user/profile';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { type } from 'os';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +15,8 @@ export class AuthService {
   public isSignedInStream: Observable<boolean>;
   authUser;
   userName;
-  
+  private dbPath = "/users";
+  dbRef: AngularFireList<any> = null;
   constructor(
     public afAuth: AngularFireAuth, 
     private databaseService: DatabaseService,
@@ -107,5 +109,40 @@ export class AuthService {
         resolve(res);
       }, err => reject(err))
     })
+  }
+
+  getUserById(uid) {
+    // return  this.db.list(this.dbPath+'/'+uid);
+    return  this.db.object(this.dbPath + "/" + uid);
+  }
+
+  updateUserById(uid, profile) {
+    return this.db.list(this.dbPath).update(uid, profile);
+  }
+
+  getAvartarImage(profile: UserProfile) {
+    var return_val = {
+      type: "",
+      val: ""
+    }
+    if (profile.avatar && profile.avatar != "") {
+      return_val.type = "image";
+      return_val.val = profile.avatar;
+      return return_val;
+    }
+
+    if(profile.name && profile.name != "") {
+      var res = profile.name.split(" ");
+      return_val.type = 'text';
+      if(res.length >= 2) {
+        return_val.val = res[0].charAt(0).toUpperCase() + res[1].charAt(0).toUpperCase();
+      }
+      else {
+        return_val.val = profile.name.charAt(0).toUpperCase() + profile.name.charAt(1).toUpperCase();
+      }
+      return return_val;
+    }
+
+    return return_val;
   }
 }

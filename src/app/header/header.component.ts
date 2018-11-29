@@ -6,6 +6,8 @@ import { AuthService } from '../_services/auth.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import * as firebase from 'firebase/app';
+import { UserProfile } from '../user/profile';
+import { AngularFireAuth } from 'angularfire2/auth';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -15,14 +17,19 @@ export class HeaderComponent implements OnInit {
   url = '';
   isAuth: boolean;
   authUser;
+  userProfile = new UserProfile();
+  avartarImage = {
+    type: '',
+    val: ''
+  }
   constructor(
     private router: Router,
     public dialog: MatDialog,
-    private authService: AuthService
+    private authService: AuthService,
+    private auth: AngularFireAuth
   ) {
     this.router.events.subscribe((val) => {
       this.url = val['url'];
-     
     });
 
     var me = this;
@@ -34,7 +41,19 @@ export class HeaderComponent implements OnInit {
       }
     });
 
-  
+    this.authUser = auth.auth.currentUser;
+    this.userProfile.email = this.authUser.email;
+    // this.userProfile.phone = this.authUser.phoneNumber;
+    this.userProfile.avatar = this.authUser.photoURL;
+    this.userProfile.uid = this.authUser.uid;
+
+    this.authService.getUserById(this.userProfile.uid).valueChanges().subscribe(data => {
+      this.userProfile.name = data['name'];
+      this.userProfile.company_name = data['company_name'];
+      this.userProfile.phone = data['phone'];
+
+      this.avartarImage = this.authService.getAvartarImage(this.userProfile);
+    });
   }
 
   ngOnInit() {
