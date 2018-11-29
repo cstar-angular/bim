@@ -6,7 +6,7 @@ import { UserProfile } from '../user/profile';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
-import { type } from 'os';
+
 @Injectable({
   providedIn: 'root'
 })
