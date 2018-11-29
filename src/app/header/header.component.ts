@@ -36,24 +36,26 @@ export class HeaderComponent implements OnInit {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         me.isAuth = true;
+
+        me.authUser = me.auth.auth.currentUser;
+        me.userProfile.email = me.authUser.email;
+        // this.userProfile.phone = this.authUser.phoneNumber;
+        me.userProfile.avatar = me.authUser.photoURL;
+        me.userProfile.uid = me.authUser.uid;
+    
+        me.authService.getUserById(me.userProfile.uid).valueChanges().subscribe(data => {
+          me.userProfile.name = data['name'];
+          me.userProfile.company_name = data['company_name'];
+          me.userProfile.phone = data['phone'];
+    
+          me.avartarImage = me.authService.getAvartarImage(me.userProfile);
+        });
       } else {
         me.isAuth = false;
       }
     });
 
-    this.authUser = auth.auth.currentUser;
-    this.userProfile.email = this.authUser.email;
-    // this.userProfile.phone = this.authUser.phoneNumber;
-    this.userProfile.avatar = this.authUser.photoURL;
-    this.userProfile.uid = this.authUser.uid;
-
-    this.authService.getUserById(this.userProfile.uid).valueChanges().subscribe(data => {
-      this.userProfile.name = data['name'];
-      this.userProfile.company_name = data['company_name'];
-      this.userProfile.phone = data['phone'];
-
-      this.avartarImage = this.authService.getAvartarImage(this.userProfile);
-    });
+   
   }
 
   ngOnInit() {
