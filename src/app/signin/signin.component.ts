@@ -50,7 +50,6 @@ export class SigninComponent implements OnInit {
   login(){
     this.authService.doSignin(this.user)
     .then(res => {
-      console.log(res.user);
       this.errorMessage = "";
 
       localStorage.setItem('currentUser', res.user.uid);
