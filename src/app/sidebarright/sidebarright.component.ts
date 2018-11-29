@@ -25,9 +25,9 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
 
-  @ViewChild('scroller') feedContainer;
-  @ViewChild('images_for_send') images_for_send;
-  @ViewChild('files_for_send') files_for_send;
+  @ViewChild('feedContainer') feedContainer: ElementRef;
+  @ViewChild('images_for_send') images_for_send: ElementRef;
+  @ViewChild('files_for_send') files_for_send: ElementRef;
   
   constructor(
     private router: Router,

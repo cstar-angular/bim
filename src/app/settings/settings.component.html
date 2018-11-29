@@ -11,10 +11,11 @@
     <div class="tab-body-item">
       <div class="tab-profile">
         <div class="left-side-for-image">
-          <img src="/assets/images/avatar.png" alt="" class="profile-image">
+          <img [src]="userProfile.avatar == '' ? '/assets/images/avatar.png' : userProfile.avatar" alt="" class="profile-image">
+          <input type="file" #images_for_profile accept="image/*" id="images-for-profile" (change)="handleFileInput($event.target.files)">
           <p class="change-delete-profile-image">
-            <span class="change-btn">Change</span> | 
-            <span class="delete-btn">Delete</span>
+            <span class="change-btn" (click)="popupforImage()">Change</span> | 
+            <span class="delete-btn" (click)="deleteProfileImage()">Delete</span>
           </p>
         </div>
         <div class="right-side-for-info">
