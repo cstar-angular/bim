@@ -1,0 +1,4 @@
+<div class="avatar">
+  <img [src]="userProfile.avatar == ''? '/assets/images/avatar.png' : avartarImage.val" *ngIf="avartarImage.type == 'image' && avartarImage.val != ''" alt="" class="avatar-img">
+  <span class="avatar-txt" *ngIf="avartarImage.type == 'text'" [ngStyle]="{'background': userProfile.randomColor}">{{avartarImage.val}}</span>
+</div>

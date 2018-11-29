@@ -14,28 +14,7 @@
   </ul>
   <ul class="msg-list" *ngIf="!isLoading && messagesShow && messagesShow.length>0" #feedContainer>
     <li class="msg-list-item" *ngFor="let message of messagesShow">
-      <div class="msg-sender">
-        <img src="/assets/images/avatar.png">
-        <div class="msg-sender-detail">
-          <p class="name">Billy Alonzo</p>
-          <p>BIM Manager</p>
-        </div>
-      </div>
-
-      <div class="msg-content">
-        <span *ngIf="message.type == 'txt'">{{message.message}}</span>
-        <a [href]='message.message' *ngIf="message.type == 'img'">
-          <img [src]="message.message" class="chat-img">
-        </a>
-
-        <a [href]='message.message' *ngIf="message.type == 'file'" class="msg-attach-item">
-          <mat-icon>attach_file</mat-icon>{{message.name}}
-        </a>
-      </div>
-
-      <div class="msg-date">
-        <span> {{ message.timesent | date:'medium' }}</span>
-      </div>
+      <app-message [message]="message"></app-message>
     </li>
 
   </ul>

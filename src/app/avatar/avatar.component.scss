@@ -1,0 +1,20 @@
+.avatar{
+    .avatar-img{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+
+    .avatar-txt{
+        color: #fff;
+        font-size: 15px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        border-radius: 50%;
+    }
+}
