@@ -6,6 +6,14 @@
         color: black;
         padding-left: 20px;
         font-size: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .close-icon{
+            margin-right: 20px;
+            cursor: pointer;
+        }
     }
 
     .tab-header{
@@ -124,6 +132,44 @@
                         border: none;
                         outline: none;
                     }
+                }
+            }
+
+            .tab-apps{
+                padding: 150px 150px;
+                display: flex;
+                flex-direction: column;
+                width: 600px;
+                justify-content: center;
+                align-items: center;
+
+                .upgrade-btn{
+                    background: #2F5597;
+                    color: #fff;
+                    padding: 5px 15px;
+                    width: 200px;
+                    border: none;
+                    outline: none;
+                }
+
+                .upgrade-details{
+                    font-style: italic;
+                    margin-top: 15px;
+                }
+
+                .contact-btn{
+                    background: #fff;
+                    color: #2F5597;
+                    padding: 5px 15px;
+                    width: 200px;
+                    border: solid 2px #2F5597;
+                    outline: none;
+                    margin-top: 50px;
+                }
+
+                .contact-details{
+                    font-style: italic;
+                    margin-top: 15px;
                 }
             }
         }
