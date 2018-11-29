@@ -44,6 +44,7 @@ import { UpgradeService } from './_services/upgrade.service';
 import { MatrixComponent } from './project/matrix/matrix.component';
 import { QualityComponent } from './project/quality/quality.component';
 import { AuthService } from './_services/auth.service';
+import { AuthGuard } from './_guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -93,6 +94,7 @@ import { AuthService } from './_services/auth.service';
   providers: [
     ChatService,
     UpgradeService,
+    AuthGuard,
     AuthService
   ],
   bootstrap: [AppComponent]

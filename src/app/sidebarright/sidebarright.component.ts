@@ -141,7 +141,6 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
     this.ref = this.afStorage.ref('files/' + this.projectId+'/'+this.urlType + '/'+id);
     this.task = this.ref.put(files[0]);
     var me = this;
-    console.log(files[0]);
     
     this.isProgressForuploading = true;
     this.task.then(function (data) {
@@ -168,8 +167,6 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
 
   addEmoji(event) {
     this.isEmojji = !this.isEmojji;
-    console.log(event)
     this.msgtext += event.emoji.native;
-    
   }
 }

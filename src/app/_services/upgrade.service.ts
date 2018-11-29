@@ -11,16 +11,9 @@ export class UpgradeService {
     public afAuth: AngularFireAuth
   ) { 
     let user:any = firebase.auth().currentUser;
-    console.log('------------------');
-    
-    console.log(user);
-    
   }
 
   getAuth() {
     let user:any = firebase.auth().currentUser;
-    console.log('------------------');
-    
-    console.log(user);
   }
 }

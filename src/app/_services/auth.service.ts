@@ -3,13 +3,31 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { DatabaseService } from './database.service';
 import { UserProfile } from '../user/profile';
-
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  public isSignedInStream: Observable<boolean>;
   
-  constructor(public afAuth: AngularFireAuth, private databaseService: DatabaseService) { }
+  constructor(public afAuth: AngularFireAuth, private databaseService: DatabaseService) {
+    this.afAuth.authState.subscribe((user: firebase.User) => {
+      if(user) {
+        
+      }else {
+       
+      }
+    });
+    this.isSignedInStream = this.afAuth.authState.pipe(
+      map<firebase.User, boolean>((user: firebase.User) => {
+        return user != null;
+      })
+    );
+  }
+
+ 
 
   doGoogleLogin(){
     return new Promise<any>((resolve, reject) => {
@@ -75,7 +93,11 @@ export class AuthService {
     return this.databaseService.getRowDetails('/users', firebase.auth().currentUser.uid);
   }
 
-  get currentUserObservable(): any {
-    return this.afAuth.auth;
+  isAuth() {
+    if(firebase.auth().currentUser) {
+      return true;
+    } 
+    return false;
   }
+
 }
