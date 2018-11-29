@@ -8,7 +8,7 @@
   </div>
 
   <div class="tab-body">
-    <div class="tab-body-item">
+    <div class="tab-body-item" *ngIf="activeTab == 'Profile'">
       <div class="tab-profile">
         <div class="left-side-for-image">
           <img [src]="userProfile.avatar == '' ? '/assets/images/avatar.png' : userProfile.avatar" alt="" class="profile-image">
@@ -41,6 +41,34 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="tab-body-item" *ngIf="activeTab == 'Account'">
+      <div class="tab-account">
+        <button class="upgrade-btn">Upgrade</button>
+
+        <p class="freetrial-explain">Your free trial expires in <span class="trial-days">25 days</span>!</p>
+
+        <mat-form-field class="full-width">
+          <mat-label>Old Password</mat-label>
+          <input  matInput type="password"  placeholder="Old Password" [(ngModel)]="passwordUpdateInfo.old" >
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>New Password</mat-label>
+          <input  matInput type="password"  placeholder="New Password" [(ngModel)]="passwordUpdateInfo.new">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Confirm</mat-label>
+          <input  matInput type="password"  placeholder="Confirm" [(ngModel)]="passwordUpdateInfo.confirm">
+        </mat-form-field>
+
+        <div class="update-pwd-div">
+          <button class="update-pwd-btn" (click)="updatePassword()">Update</button>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

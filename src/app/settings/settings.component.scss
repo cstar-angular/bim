@@ -88,6 +88,44 @@
                     }
                 }
             }
+
+            .tab-account{
+                padding: 40px 150px;
+                display: flex;
+                flex-direction: column;
+                width: 600px;
+
+                .upgrade-btn{
+                    background: #2F5597;
+                    color: #fff;
+                    border: none;
+                    outline: none;
+                    padding: 5px 15px;
+                    width: 100px;
+                }
+
+                .freetrial-explain{
+                    font-style: italic;
+                    margin-top: 20px;
+
+                    .trial-days{
+                        color: #2F5597;
+                    }
+                }
+
+                .update-pwd-div{
+                    display: flex;
+                    justify-content: flex-end;
+                    
+                    .update-pwd-btn{
+                        background: #2F5597;
+                        color: #fff;
+                        padding: 5px 15px;
+                        border: none;
+                        outline: none;
+                    }
+                }
+            }
         }
     }
 }
