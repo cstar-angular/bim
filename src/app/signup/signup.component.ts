@@ -28,9 +28,9 @@ export class SignupComponent implements OnInit {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer
   ) { 
-      if (localStorage.getItem('currentUser') !== 'undefined' && localStorage.getItem('currentUser') !== null) {
-        this.router.navigate(['/']);
-      }
+      // if (localStorage.getItem('currentUser') !== 'undefined' && localStorage.getItem('currentUser') !== null) {
+      //   this.router.navigate(['/']);
+      // }
       
       this.matIconRegistry.addSvgIcon(
         'google-plus',
@@ -51,7 +51,7 @@ export class SignupComponent implements OnInit {
 
   tryRegister() {
     this.authService.doRegister(this.user)
-    .then(res => {
+    .then(res => {console.log(res);
       this.errorMessage = "";
       this.successMessage = "Your account has been created";
 
@@ -70,4 +70,13 @@ export class SignupComponent implements OnInit {
     }, err => console.log(err)
     )
   }
+}
+
+export interface UserProfile {
+  name: string;
+  cname: string;
+  email: string;
+  password: string;
+  phone: string;
+  avatar: string;
 }
