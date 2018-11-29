@@ -24,11 +24,11 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isAuth = this.authService.isAuth();
+    
   }
 
   ngAfterViewChecked() {
-    this.isAuth = this.authService.isAuth();
+    
   }
 
   gotourl(url){
@@ -42,6 +42,14 @@ export class HeaderComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+    });
+  }
+
+  signout() {
+    this.authService.doSignout().then(res => {
+      this.router.navigate(['/signin'])
+    }, err => {
+      console.log(err);
     });
   }
 }

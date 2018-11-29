@@ -89,15 +89,12 @@ export class AuthService {
     })    
   }
 
-  getUserProfile(): any {
-    return this.databaseService.getRowDetails('/users', firebase.auth().currentUser.uid);
+  doSignout() {
+    return new Promise<any>((resolve, reject) => {
+      firebase.auth().signOut()
+      .then(res => {
+        resolve(res);
+      }, err => reject(err))
+    })
   }
-
-  isAuth() {
-    if(firebase.auth().currentUser) {
-      return true;
-    } 
-    return false;
-  }
-
 }
