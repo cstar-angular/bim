@@ -74,4 +74,8 @@ export class AuthService {
   getUserProfile(): any {
     return this.databaseService.getRowDetails('/users', firebase.auth().currentUser.uid);
   }
+
+  get currentUserObservable(): any {
+    return this.afAuth.auth;
+  }
 }
