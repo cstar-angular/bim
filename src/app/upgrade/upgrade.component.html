@@ -1,0 +1,20 @@
+<div class="upgrade">
+  <img src="/assets/images/avatar.png" alt="" class="user-avartar">
+  <p style="margin-top: 30px;">
+    <span style="font-size: 30px;color: white;"><strong style="font-size: 30px;color: white;">BIM</strong> . VU</span>
+  </p>
+  <p style="font-size: 25px;color: white;    margin-top: 25px;">
+    Upgrade for only <span style="font-size: 30px;color:#fff">$50</span> / month a project and gain access to unlimited users!
+  </p>
+  
+  <div class="slider-container">
+    <ng5-slider [(value)]="value" [options]="options"></ng5-slider>
+  </div>
+  <p>Choose the number of projects above</p>
+  <button class="price-btn" *ngIf="value != 30">Total <b>${{value * 50}}</b> / month</button>
+  <button class="price-btn" *ngIf="value == 30">ENTERPRISE</button>
+
+  <button class="pay-now-btn" *ngIf="value != 30">PAY NOW</button>
+  <button class="pay-now-btn" *ngIf="value == 30">CONTACT SUPPORT</button>
+
+</div>

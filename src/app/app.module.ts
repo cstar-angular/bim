@@ -36,9 +36,17 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import { ProjectconfComponent } from './projectconf/projectconf.component';
 import { TeamComponent } from './project/team/team.component';
 import { MeetingComponent } from './project/meeting/meeting.component';
+<<<<<<< HEAD
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { ExpiredComponent } from './expired/expired.component';
+import { UpgradeComponent } from './upgrade/upgrade.component'
+import { Ng5SliderModule } from 'ng5-slider';
+import { UpgradeService } from './_services/upgrade.service';
+=======
 import { MatrixComponent } from './project/matrix/matrix.component';
 import { QualityComponent } from './project/quality/quality.component';
 import { PickerModule } from '@ctrl/ngx-emoji-mart'
+>>>>>>> fc94958f84117354cb939e8534ba016e250e42b1
 
 @NgModule({
   declarations: [
@@ -64,8 +72,13 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart'
     ProjectconfComponent,
     TeamComponent,
     MeetingComponent,
+<<<<<<< HEAD
+    ExpiredComponent,
+    UpgradeComponent
+=======
     MatrixComponent,
     QualityComponent
+>>>>>>> fc94958f84117354cb939e8534ba016e250e42b1
   ],
   imports: [
     BrowserModule,
@@ -79,11 +92,13 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart'
     FormsModule,
     HttpClientModule,
     AngularFireStorageModule,
-    PickerModule
+    PickerModule,
+    Ng5SliderModule
   ],
   entryComponents: [SaveTemplateDialog, ArchiveDialog],
   providers: [
-    ChatService
+    ChatService,
+    UpgradeService
   ],
   bootstrap: [AppComponent]
 })
