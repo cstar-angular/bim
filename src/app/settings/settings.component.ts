@@ -49,7 +49,7 @@ export class SettingsComponent implements OnInit {
     this.authService.getUserById(this.uid).valueChanges().subscribe(data => {
       this.userProfile.name = data['name'];
       this.userProfile.company_name = data['company_name'];
-      this.userProfile.phone = data['phone'];
+      this.userProfile.phone = data['phone'] ? data['phone']: '';
     });
   }
 

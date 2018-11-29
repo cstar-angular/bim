@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   url = '';
   isAuth: boolean;
   authUser;
-  userProfile = new UserProfile();
+  userProfile;
   avartarImage = {
     type: '',
     val: ''
@@ -36,19 +36,10 @@ export class HeaderComponent implements OnInit {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         me.isAuth = true;
-
         me.authUser = me.auth.auth.currentUser;
-        me.userProfile.email = me.authUser.email;
-        // this.userProfile.phone = this.authUser.phoneNumber;
-        me.userProfile.avatar = me.authUser.photoURL;
-        me.userProfile.uid = me.authUser.uid;
-    
-        me.authService.getUserById(me.userProfile.uid).valueChanges().subscribe(data => {
-          me.userProfile.name = data['name'];
-          me.userProfile.company_name = data['company_name'];
-          me.userProfile.phone = data['phone'];
-    
-          me.avartarImage = me.authService.getAvartarImage(me.userProfile);
+       
+        me.authService.getUserById(me.authUser.uid).valueChanges().subscribe(data => {
+          me.userProfile = data;
         });
       } else {
         me.isAuth = false;

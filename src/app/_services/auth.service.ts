@@ -61,7 +61,7 @@ export class AuthService {
       .then(res => {
         let user:any = firebase.auth().currentUser;
         
-        var userProfile: UserProfile = {uid: user.uid, name: value.name, company_name: value.cname, email: value.email};
+        var userProfile: UserProfile = {uid: user.uid, name: value.name, company_name: value.cname, email: value.email, randomColor: this.getRandomColorHex()};
 
         this.databaseService.createRowWithKey('/users/'+user.uid, userProfile);
 
@@ -72,6 +72,17 @@ export class AuthService {
         resolve(res);
       }, err => reject(err))
     })
+  }
+
+ getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  
+  getRandomColorHex() {
+    var r = this.getRandomInt(0, 255);
+    var g = this.getRandomInt(0, 255);
+    var b = this.getRandomInt(0, 255);
+    return "rgb(" + r + "," + g + "," + b + ")";
   }
 
   doSignin(value){
