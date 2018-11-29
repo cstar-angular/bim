@@ -43,6 +43,7 @@ import { Ng5SliderModule } from 'ng5-slider';
 import { UpgradeService } from './_services/upgrade.service';
 import { MatrixComponent } from './project/matrix/matrix.component';
 import { QualityComponent } from './project/quality/quality.component';
+import { AuthService } from './_services/auth.service';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { QualityComponent } from './project/quality/quality.component';
   entryComponents: [SaveTemplateDialog, ArchiveDialog],
   providers: [
     ChatService,
-    UpgradeService
+    UpgradeService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
