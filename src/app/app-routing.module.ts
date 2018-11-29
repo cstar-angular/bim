@@ -15,13 +15,10 @@ import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.compone
 import { ProjectconfComponent } from './projectconf/projectconf.component';
 import { TeamComponent } from './project/team/team.component';
 import { MeetingComponent } from './project/meeting/meeting.component';
-<<<<<<< HEAD
 import { ExpiredComponent } from './expired/expired.component'
 import { UpgradeComponent } from './upgrade/upgrade.component';
-=======
 import { MatrixComponent } from './project/matrix/matrix.component';
 import { QualityComponent } from './project/quality/quality.component';
->>>>>>> fc94958f84117354cb939e8534ba016e250e42b1
 
 
 const routes: Routes = [
