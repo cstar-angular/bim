@@ -40,6 +40,7 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { ExpiredComponent } from './expired/expired.component';
 import { UpgradeComponent } from './upgrade/upgrade.component'
 import { Ng5SliderModule } from 'ng5-slider';
+import { UpgradeService } from './_services/upgrade.service';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { Ng5SliderModule } from 'ng5-slider';
   ],
   entryComponents: [SaveTemplateDialog, ArchiveDialog],
   providers: [
-    ChatService
+    ChatService,
+    UpgradeService
   ],
   bootstrap: [AppComponent]
 })

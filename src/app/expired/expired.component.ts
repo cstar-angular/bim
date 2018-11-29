@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UpgradeService } from '../_services/upgrade.service';
 
 @Component({
   selector: 'app-expired',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExpiredComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private upgradeService: UpgradeService
+  ) { 
+    
+  }
 
   ngOnInit() {
   }

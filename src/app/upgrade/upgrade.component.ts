@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Options } from 'ng5-slider';
+import { UpgradeService } from '../_services/upgrade.service';
 
 @Component({
   selector: 'app-upgrade',
@@ -16,7 +17,11 @@ export class UpgradeComponent implements OnInit {
     showTicksValues: true
   };
 
-  constructor() { }
+  constructor(
+    private upgradeService: UpgradeService
+  ) {
+    this.upgradeService.getAuth();
+   }
 
   ngOnInit() {
   }
