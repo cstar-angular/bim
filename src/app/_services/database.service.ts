@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,9 @@ export class DatabaseService {
   private dbPath = "/projects";
  
   dbRef: AngularFireList<any> = null;
- 
+
+  result;
+
   constructor(private db: AngularFireDatabase) {
     this.dbRef = db.list(this.dbPath);
   }
@@ -17,6 +20,10 @@ export class DatabaseService {
   createRow(path: string, data: any): any {
     this.dbRef = this.db.list(path);
     return this.dbRef.push(data);
+  }
+
+  createRowWithKey(path: string, data: any): any {
+    this.db.object(path).set(data);
   }
  
   updateRow(path: string, key: string, value: any): any {
@@ -40,8 +47,11 @@ export class DatabaseService {
   }
 
   getRowDetails(path: string, key: string): any {
-    this.dbRef = this.db.list(path);
-    return  this.db.object(this.dbPath + "/" + key);
+    
+    this.db.object(path + "/" + key).snapshotChanges().subscribe(data=>{
+      this.result = data.payload.val();
+    });
+    return this.result;
   }
  
   private handleError(error) {

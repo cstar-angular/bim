@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+import { DatabaseService } from './database.service';
+import { UserProfile } from '../user/profile';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  constructor(public afAuth: AngularFireAuth) { }
+  
+  constructor(public afAuth: AngularFireAuth, private databaseService: DatabaseService) { }
 
   doGoogleLogin(){
     return new Promise<any>((resolve, reject) => {
@@ -31,7 +33,10 @@ export class AuthService {
       firebase.auth().createUserWithEmailAndPassword(value.email, value.password)
       .then(res => {
         let user:any = firebase.auth().currentUser;
-        console.log(user);
+        
+        var userProfile: UserProfile = {uid: user.uid, name: value.name, company_name: value.cname, email: value.email};
+
+        this.databaseService.createRowWithKey('/users/'+user.uid, userProfile);
 
         if ( user.emailVerified == false ) {
           this.sendEmailVerification();
@@ -56,7 +61,6 @@ export class AuthService {
     return new Promise<any>((resolve, reject) => {
       user.sendEmailVerification().then(
         (success) => {
-          console.log("please verify your email");
           resolve(success);
         } 
       ).catch(
@@ -65,5 +69,9 @@ export class AuthService {
         }
       )
     })    
+  }
+
+  getUserProfile(): any {
+    return this.databaseService.getRowDetails('/users', firebase.auth().currentUser.uid);
   }
 }

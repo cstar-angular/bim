@@ -15,6 +15,8 @@ import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.compone
 import { ProjectconfComponent } from './projectconf/projectconf.component';
 import { TeamComponent } from './project/team/team.component';
 import { MeetingComponent } from './project/meeting/meeting.component';
+import { MatrixComponent } from './project/matrix/matrix.component';
+import { QualityComponent } from './project/quality/quality.component';
 
 
 const routes: Routes = [
@@ -80,6 +82,14 @@ const routes: Routes = [
           {
             path: 'meeting/:id',
             component: MeetingComponent
+          },
+          {
+            path: 'matrix/:id',
+            component: MatrixComponent
+          },
+          {
+            path: 'quality/:id',
+            component: QualityComponent
           }
         ]
       }
