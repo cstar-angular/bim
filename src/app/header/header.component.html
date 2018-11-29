@@ -10,8 +10,8 @@
             <span *ngIf="url == '/signin'" class="nav-item-createaccount" (click)="gotourl('/signup')">CREATE ACCOUNT</span>
             <span *ngIf="url == '/signup'" class="nav-item-signinaccount" (click)="gotourl('/')">SIGN IN</span>
 
-            <span>Hi Billy Alonzo!</span>
-            <span class="small-avatar">BA</span>
+            <span (click)="openDialog()" *ngIf="isAuth">Hi Billy Alonzo!</span>
+            <span (click)="openDialog()" *ngIf="isAuth" class="small-avatar">BA</span>
         </div>
         <mat-icon>notifications</mat-icon>
         <button mat-flat-button color="white" (click)="gotourl('/upgrade')">Upgrade</button>
