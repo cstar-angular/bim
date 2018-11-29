@@ -477,7 +477,7 @@ input.mat-input-element {
     opacity: 1;
 }
 .cdk-overlay-dark-backdrop {
-    background: rgba(0, 0, 0, .288);
+    background: rgba(0, 0, 0, .5);
 }
 .cdk-overlay-transparent-backdrop, .cdk-overlay-transparent-backdrop.cdk-overlay-backdrop-showing {
     opacity: 0;
