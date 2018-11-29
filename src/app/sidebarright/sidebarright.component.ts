@@ -20,13 +20,15 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
   messagesShow;
   msgtext = '';
   searchTxt = '';
+  isProgressForuploading = false;
+  isEmojji = false;
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
 
   @ViewChild('scroller') feedContainer;
   @ViewChild('images_for_send') images_for_send;
+  @ViewChild('files_for_send') files_for_send;
   
-
   constructor(
     private router: Router,
     private chatService: ChatService,
@@ -104,8 +106,11 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
     this.images_for_send.nativeElement.click();
   }
 
+  popupforFile() {
+    this.files_for_send.nativeElement.click();
+  }
+
   handleFileInput(files) {
-    console.log(files);
     if (files.length == 0) {
       return;
     }
@@ -113,6 +118,7 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
     this.ref = this.afStorage.ref('files/' + this.projectId+'/'+this.urlType + '/'+id);
     this.task = this.ref.put(files[0]);
     var me = this;
+    this.isProgressForuploading = true;
     this.task.then(function (data) {
       
       var a = data.ref.getDownloadURL();
@@ -121,6 +127,32 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
           message: data,
           type: 'img'
         }
+        me.isProgressForuploading = false;
+        me.chatService.sendMsg(msgBody, me.projectId, me.urlType);
+      });
+    });   
+  }
+
+  handleFileInputFile(files) {
+    if (files.length == 0) {
+      return;
+    }
+    const id = Math.random().toString(36).substring(2);
+    this.ref = this.afStorage.ref('files/' + this.projectId+'/'+this.urlType + '/'+id);
+    this.task = this.ref.put(files[0]);
+    var me = this;
+    console.log(files[0]);
+    
+    this.isProgressForuploading = true;
+    this.task.then(function (data) {
+      var a = data.ref.getDownloadURL();
+      a.then(function (data) {
+        var msgBody = {
+          message: data,
+          type: 'file',
+          name: files[0]['name']
+        }
+        me.isProgressForuploading = false;
         me.chatService.sendMsg(msgBody, me.projectId, me.urlType);
       });
     });   
@@ -131,8 +163,13 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
    if (this.searchTxt == "") {
      return;
    }
-
    this.messagesShow = this.messages.filter(message => message.message.includes(this.searchTxt));
-   
+  }
+
+  addEmoji(event) {
+    this.isEmojji = !this.isEmojji;
+    console.log(event)
+    this.msgtext += event.emoji.native;
+    
   }
 }

@@ -38,6 +38,7 @@ import { TeamComponent } from './project/team/team.component';
 import { MeetingComponent } from './project/meeting/meeting.component';
 import { MatrixComponent } from './project/matrix/matrix.component';
 import { QualityComponent } from './project/quality/quality.component';
+import { PickerModule } from '@ctrl/ngx-emoji-mart'
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { QualityComponent } from './project/quality/quality.component';
     AngularFireDatabaseModule,
     FormsModule,
     HttpClientModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    PickerModule
   ],
   entryComponents: [SaveTemplateDialog, ArchiveDialog],
   providers: [
