@@ -1,0 +1,22 @@
+<div class="msg-sender" *ngIf="user">
+  <app-avatar [userProfile]="user" *ngIf="user"></app-avatar>
+  <div class="msg-sender-detail">
+    <p class="name">{{user.name}}</p>
+    <p>BIM Manager</p>
+  </div>
+</div>
+
+<div class="msg-content" *ngIf="user">
+  <span *ngIf="message.type == 'txt'">{{message.message}}</span>
+  <a [href]='message.message' *ngIf="message.type == 'img'">
+    <img [src]="message.message" class="chat-img">
+  </a>
+
+  <a [href]='message.message' *ngIf="message.type == 'file'" class="msg-attach-item">
+    <mat-icon>attach_file</mat-icon>{{message.name}}
+  </a>
+</div>
+
+<div class="msg-date">
+  <span> {{ message.timesent | date:'medium' }}</span>
+</div>

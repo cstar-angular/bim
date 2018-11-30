@@ -3,6 +3,8 @@ import { Router, NavigationEnd } from '@angular/router';
 import { ChatService } from '../_services/chat.service';
 import { map } from 'rxjs/operators';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
+import * as firebase from 'firebase/app';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-sidebarright',
@@ -24,6 +26,7 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
   isEmojji = false;
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
+  authUser: firebase.User;
 
   @ViewChild('feedContainer') feedContainer: ElementRef;
   @ViewChild('images_for_send') images_for_send: ElementRef;
@@ -33,7 +36,7 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
     private router: Router,
     private chatService: ChatService,
     private afStorage: AngularFireStorage,
-
+    private auth: AngularFireAuth
   ) { 
     this.routerEvent = this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
@@ -48,6 +51,10 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
         this.loadMessages();
       } 
     });
+
+    this.authUser = this.auth.auth.currentUser;
+    console.log(this.authUser);
+    
   }
 
   ngOnInit() {    
@@ -78,7 +85,8 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
     if(this.msgtext != ''){
       var msgBody = {
         message: this.msgtext,
-        type: 'txt'
+        type: 'txt',
+        userId: this.authUser.uid
       }
       this.chatService.sendMsg(msgBody, this.projectId, this.urlType);
       this.msgtext = '';
@@ -90,7 +98,6 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
       if(!event.shiftKey){
         this.sendMsg();
       }
-      
     }
   }
 
@@ -125,7 +132,8 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
       a.then(function (data) {
         var msgBody = {
           message: data,
-          type: 'img'
+          type: 'img',
+          userId: this.authUser.uid
         }
         me.isProgressForuploading = false;
         me.chatService.sendMsg(msgBody, me.projectId, me.urlType);
@@ -149,7 +157,8 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
         var msgBody = {
           message: data,
           type: 'file',
-          name: files[0]['name']
+          name: files[0]['name'],
+          userId: this.authUser.uid
         }
         me.isProgressForuploading = false;
         me.chatService.sendMsg(msgBody, me.projectId, me.urlType);

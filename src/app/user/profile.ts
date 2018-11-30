@@ -5,4 +5,5 @@ export class UserProfile {
     email: string;
     phone?: string;
     avatar?: string;
+    randomColor?: string;
 }
