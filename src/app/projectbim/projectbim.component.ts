@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { DatabaseService } from '../_services/database.service';
-import { map } from 'rxjs/operators';
-import { Statement } from '@angular/compiler';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-projectbim',
@@ -21,19 +20,45 @@ export class ProjectbimComponent implements OnInit {
   displayedColumns = ['number', 'bim_use', 'check', 'software', 'version', 'format'];
   dataSource = new MatTableDataSource(this.elements);
 
+  projectId;
+  stages;
+
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    private databaseService: DatabaseService
+    private databaseService: DatabaseService,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    
-    this.databaseService.getLists(this.tablePath).snapshotChanges().pipe(
-      map(changes => 
-        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-      )
-    ).subscribe(data => {
+
+    var url = this.router.url;
+    var urlItems = url.split('/');
+
+    if(urlItems.length >= 4) {
+      this. projectId = urlItems[3];
+
+      this.databaseService.getRowDetails('projects' , this.projectId).valueChanges().subscribe(data => {
+       if (data) {
+          this.tablePath = this.tablePath + '/' + this.projectId;
+          this.loadData();
+       }else {
+        this.router.navigate(['/']);
+       }
+      });
+    } else {
+      this.router.navigate(['/']);
+    }
+
+  }
+
+  loadData() {
+    // Get the stages dropdown list
+    this.databaseService.getLists('/stages/' + this.projectId).valueChanges().subscribe(data => {
+      this.stages = data;
+    });
+
+    this.databaseService.getLists(this.tablePath).valueChanges().subscribe(data => {
       this.elements = data;
 
       this.sortRecords();

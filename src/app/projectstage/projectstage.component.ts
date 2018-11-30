@@ -15,12 +15,12 @@ export class ProjectstageComponent implements OnInit {
   tablePath = '/stages';
 
   isEditable = false;
-  stages: StageElement[];
+  elements: StageElement[];
   selectedKey;
   editableKey;
 
   displayedColumns = ['number', 'stage', 'start', 'end', 'remarks'];
-  dataSource = new MatTableDataSource(this.stages);
+  dataSource = new MatTableDataSource(this.elements);
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -32,13 +32,16 @@ export class ProjectstageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     var url = this.router.url;
     var urlItems = url.split('/');
+
     if(urlItems.length >= 4) {
       this. projectId = urlItems[3];
 
       this.databaseService.getRowDetails('projects' , this.projectId).valueChanges().subscribe(data => {
        if (data) {
+         this.tablePath = this.tablePath + '/' + this.projectId;
         this.loadData();
        }else {
         this.router.navigate(['/']);
@@ -47,15 +50,16 @@ export class ProjectstageComponent implements OnInit {
     } else {
       this.router.navigate(['/']);
     }
+
   }
 
   loadData() {
-    this.databaseService.getLists(this.tablePath + '/' + this.projectId).valueChanges().subscribe(data => {
-      this.stages = data;
+    this.databaseService.getLists(this.tablePath).valueChanges().subscribe(data => {
+      this.elements = data;
 
       this.sortRecords();
 
-      this.dataSource = new MatTableDataSource(this.stages);
+      this.dataSource = new MatTableDataSource(this.elements);
     });
     
     if(this.dataSource) {
@@ -86,7 +90,7 @@ export class ProjectstageComponent implements OnInit {
     if(!this.editableKey) {
       var number = 0;
       var position = 0;
-      for (let stage of this.stages){
+      for (let stage of this.elements){
         if(number < stage.number) {
           number = stage.number;
         }
@@ -102,15 +106,15 @@ export class ProjectstageComponent implements OnInit {
       var newRow: StageElement = {number: number, stage: '', start:"", end: "", remarks: "", key: "newRow", position: position};
       this.selectedKey = "newRow";
       this.editableKey = this.selectedKey;
-      this.stages.push(newRow);
+      this.elements.push(newRow);
 
-      this.dataSource = new MatTableDataSource(this.stages);
+      this.dataSource = new MatTableDataSource(this.elements);
     }
   }
 
   deleteRow() {
     if(this.selectedKey) {
-      this.databaseService.deleteRow(this.tablePath + '/' + this.projectId, this.selectedKey);
+      this.databaseService.deleteRow(this.tablePath, this.selectedKey);
     }
 
     if(this.selectedKey == 'newRow') {
@@ -123,15 +127,15 @@ export class ProjectstageComponent implements OnInit {
   }
 
   saveRow() {
-    for (let stage of this.stages){
-      if(stage.key == 'newRow') {
-        var result = this.databaseService.createRow(this.tablePath+ '/' + this.projectId, stage);
-        stage.key = result.key;
-        this.databaseService.updateRow(this.tablePath + '/' + this.projectId, result.key, stage);
+    for (let element of this.elements){
+      if(element.key == 'newRow') {
+        var result = this.databaseService.createRow(this.tablePath, element);
+        element.key = result.key;
+        this.databaseService.updateRow(this.tablePath, result.key, element);
       }
 
-      if(stage.key == this.editableKey) {
-        this.databaseService.updateRow(this.tablePath+ '/' + this.projectId, this.editableKey, stage);
+      if(element.key == this.editableKey) {
+        this.databaseService.updateRow(this.tablePath, this.editableKey, element);
       }
     }
 
@@ -141,14 +145,14 @@ export class ProjectstageComponent implements OnInit {
   moveUp() {
     if(!this.editableKey) {
       var index = 0;
-      for (let stage of this.stages){
-        if(stage.key == this.selectedKey && this.stages[index - 1]) {
-          var position = this.stages[index]['position'];
-          this.stages[index]['position'] = this.stages[index - 1]['position'];
-          this.databaseService.updateRow(this.tablePath + '/' + this.projectId, stage.key, this.stages[index]);
+      for (let element of this.elements){
+        if(element.key == this.selectedKey && this.elements[index - 1]) {
+          var position = this.elements[index]['position'];
+          this.elements[index]['position'] = this.elements[index - 1]['position'];
+          this.databaseService.updateRow(this.tablePath, element.key, this.elements[index]);
 
-          this.stages[index - 1]['position'] = position;
-          this.databaseService.updateRow(this.tablePath + '/' + this.projectId, this.stages[index - 1]['key'], this.stages[index - 1]);
+          this.elements[index - 1]['position'] = position;
+          this.databaseService.updateRow(this.tablePath, this.elements[index - 1]['key'], this.elements[index - 1]);
 
           break;
         }
@@ -163,14 +167,14 @@ export class ProjectstageComponent implements OnInit {
   moveDown() {
     if(!this.editableKey) {
       var index = 0;
-      for (let stage of this.stages){
-        if(stage.key == this.selectedKey && this.stages[index + 1]) {
-          var position = this.stages[index]['position'];
-          this.stages[index]['position'] = this.stages[index + 1]['position'];
-          this.databaseService.updateRow(this.tablePath + '/' + this.projectId, stage.key, this.stages[index]);
+      for (let element of this.elements){
+        if(element.key == this.selectedKey && this.elements[index + 1]) {
+          var position = this.elements[index]['position'];
+          this.elements[index]['position'] = this.elements[index + 1]['position'];
+          this.databaseService.updateRow(this.tablePath, element.key, this.elements[index]);
 
-          this.stages[index + 1]['position'] = position;
-          this.databaseService.updateRow(this.tablePath + '/' + this.projectId, this.stages[index+1]['key'], this.stages[index+1]);
+          this.elements[index + 1]['position'] = position;
+          this.databaseService.updateRow(this.tablePath, this.elements[index+1]['key'], this.elements[index+1]);
 
           break;
         }
@@ -183,8 +187,11 @@ export class ProjectstageComponent implements OnInit {
   }
 
   sortRecords() {
-    this.stages.sort(function(a, b){return a.position - b.position});
+    if(this.elements) {
+      this.elements.sort(function(a, b){return a.position - b.position});
+    }
   }
+  
 }
 
 export interface StageElement {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Evented, Event } from '../_services/evented';
 
 @Component({
   selector: 'app-sidebar',
@@ -32,5 +33,11 @@ export class SidebarComponent implements OnInit {
 
   ngOnDestroy() {
     this.r_e.unsubscribe();
+  }
+
+  clickTumb() {
+    Evented.fire('clickTumb', {
+      val: 'aa'
+    });
   }
 }

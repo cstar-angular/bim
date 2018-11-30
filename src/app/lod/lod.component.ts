@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { DatabaseService } from '../_services/database.service';
-import { map } from 'rxjs/operators';
-import { Statement } from '@angular/compiler';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lod',
@@ -30,33 +29,50 @@ export class LodComponent implements OnInit {
   dropdowns = ['NA', '100', '200', '300', '400', '500'];
 
   displayedColumns = ['number', 'disciple', 'code'];
-  dataSource = new MatTableDataSource(this.elements);
+  dataSource;
+
+  projectId;
 
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    private databaseService: DatabaseService
+    private databaseService: DatabaseService,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    this.databaseService.getLists("/stages").snapshotChanges().pipe(
-      map(changes => 
-        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-      )
-    ).subscribe(data => {
+
+    var url = this.router.url;
+    var urlItems = url.split('/');
+
+    if(urlItems.length >= 4) {
+      this. projectId = urlItems[3];
+
+      this.databaseService.getRowDetails('projects' , this.projectId).valueChanges().subscribe(data => {
+       if (data) {
+         this.tablePath = this.tablePath + '/' + this.projectId;
+        this.loadData();
+       }else {
+        this.router.navigate(['/']);
+       }
+      });
+    } else {
+      this.router.navigate(['/']);
+    }
+
+  }
+
+  loadData() {
+
+    this.databaseService.getLists('/stages/' + this.projectId).valueChanges().subscribe(data => {
       this.stages = data;
-      this.stages.sort((a, b) => {return (a.number - b.number)});
 
       for (let stage of this.stages) {
-        this.displayedColumns.push("s" + ("00"+stage.number).slice(-2));
+        this.displayedColumns.push("s" + ("00" + stage.number).slice(-2));
       }
     });
 
-    this.databaseService.getLists(this.tablePath).snapshotChanges().pipe(
-      map(changes => 
-        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-      )
-    ).subscribe(data => {
+    this.databaseService.getLists(this.tablePath).valueChanges().subscribe(data => {
       this.elements = data;
 
       this.sortRecords();
@@ -201,8 +217,11 @@ export class LodComponent implements OnInit {
   }
 
   sortRecords() {
-    this.elements.sort(function(a, b){return a.position - b.position});
+    if(this.elements) {
+      this.elements.sort(function(a, b){return a.position - b.position});
+    }
   }
+
 }
 
 export interface TableElement {
