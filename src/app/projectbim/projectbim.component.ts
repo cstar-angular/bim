@@ -50,6 +50,7 @@ export class ProjectbimComponent implements OnInit {
     this.isEditable = !this.isEditable;
 
     if (!this.isEditable) {
+      this.editableKey = null;
       this.selectedKey = null;
     }
   }
@@ -63,9 +64,12 @@ export class ProjectbimComponent implements OnInit {
   }
 
   selectRow(key) {
-    this.editableKey = null;
     if(this.isEditable) {
       this.selectedKey = key;
+    }
+    
+    if(this.editableKey != this.selectedKey) {
+      this.editableKey = null;
     }
   }
 

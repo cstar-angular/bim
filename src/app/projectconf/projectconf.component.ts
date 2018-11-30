@@ -48,16 +48,20 @@ export class ProjectconfComponent implements OnInit {
 
   switchEditable() {
     this.isEditable = !this.isEditable;
-    
+
     if (!this.isEditable) {
+      this.editableKey = null;
       this.selectedKey = null;
     }
   }
 
   selectRow(key) {
-    this.editableKey = null;
     if(this.isEditable) {
       this.selectedKey = key;
+    }
+    
+    if(this.editableKey != this.selectedKey) {
+      this.editableKey = null;
     }
   }
 

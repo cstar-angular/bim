@@ -69,16 +69,20 @@ export class QualityComponent implements OnInit {
 
   switchEditable() {
     this.isEditable = !this.isEditable;
-    
+
     if (!this.isEditable) {
-      this.selectedKey = null;
       this.editableKey = null;
+      this.selectedKey = null;
     }
   }
 
   selectRow(key) {
     if(this.isEditable) {
       this.selectedKey = key;
+    }
+    
+    if(this.editableKey != this.selectedKey) {
+      this.editableKey = null;
     }
   }
 
