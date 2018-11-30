@@ -3,6 +3,7 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 import { DatabaseService } from '../_services/database.service';
 import { map } from 'rxjs/operators';
 import { Statement } from '@angular/compiler';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-projectstage',
@@ -23,17 +24,33 @@ export class ProjectstageComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
+  projectId;
+
   constructor(
-    private databaseService: DatabaseService
+    private databaseService: DatabaseService,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    
-    this.databaseService.getLists(this.tablePath).snapshotChanges().pipe(
-      map(changes => 
-        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-      )
-    ).subscribe(data => {
+    var url = this.router.url;
+    var urlItems = url.split('/');
+    if(urlItems.length >= 4) {
+      this. projectId = urlItems[3];
+
+      this.databaseService.getRowDetails('projects' , this.projectId).valueChanges().subscribe(data => {
+       if (data) {
+        this.loadData();
+       }else {
+        this.router.navigate(['/']);
+       }
+      });
+    } else {
+      this.router.navigate(['/']);
+    }
+  }
+
+  loadData() {
+    this.databaseService.getLists(this.tablePath + '/' + this.projectId).valueChanges().subscribe(data => {
       this.stages = data;
 
       this.sortRecords();
@@ -85,7 +102,7 @@ export class ProjectstageComponent implements OnInit {
 
   deleteRow() {
     if(this.selectedKey) {
-      this.databaseService.deleteRow(this.tablePath, this.selectedKey);
+      this.databaseService.deleteRow(this.tablePath + '/' + this.projectId, this.selectedKey);
     }
 
     if(this.selectedKey == 'newRow') {
@@ -100,13 +117,13 @@ export class ProjectstageComponent implements OnInit {
   saveRow() {
     for (let stage of this.stages){
       if(stage.key == 'newRow') {
-        var result = this.databaseService.createRow(this.tablePath, stage);
+        var result = this.databaseService.createRow(this.tablePath+ '/' + this.projectId, stage);
         stage.key = result.key;
-        this.databaseService.updateRow(this.tablePath, result.key, stage);
+        this.databaseService.updateRow(this.tablePath + '/' + this.projectId, result.key, stage);
       }
 
       if(stage.key == this.editableKey) {
-        this.databaseService.updateRow(this.tablePath, this.editableKey, stage);
+        this.databaseService.updateRow(this.tablePath+ '/' + this.projectId, this.editableKey, stage);
       }
     }
 
@@ -120,10 +137,10 @@ export class ProjectstageComponent implements OnInit {
         if(stage.key == this.selectedKey && this.stages[index - 1]) {
           var position = this.stages[index]['position'];
           this.stages[index]['position'] = this.stages[index - 1]['position'];
-          this.databaseService.updateRow(this.tablePath, stage.key, this.stages[index]);
+          this.databaseService.updateRow(this.tablePath + '/' + this.projectId, stage.key, this.stages[index]);
 
           this.stages[index - 1]['position'] = position;
-          this.databaseService.updateRow(this.tablePath, this.stages[index - 1]['key'], this.stages[index - 1]);
+          this.databaseService.updateRow(this.tablePath + '/' + this.projectId, this.stages[index - 1]['key'], this.stages[index - 1]);
 
           break;
         }
@@ -142,10 +159,10 @@ export class ProjectstageComponent implements OnInit {
         if(stage.key == this.selectedKey && this.stages[index + 1]) {
           var position = this.stages[index]['position'];
           this.stages[index]['position'] = this.stages[index + 1]['position'];
-          this.databaseService.updateRow(this.tablePath, stage.key, this.stages[index]);
+          this.databaseService.updateRow(this.tablePath + '/' + this.projectId, stage.key, this.stages[index]);
 
           this.stages[index + 1]['position'] = position;
-          this.databaseService.updateRow(this.tablePath, this.stages[index+1]['key'], this.stages[index+1]);
+          this.databaseService.updateRow(this.tablePath + '/' + this.projectId, this.stages[index+1]['key'], this.stages[index+1]);
 
           break;
         }
