@@ -98,7 +98,7 @@ export class AuthService {
     })    
   }
 
-  getUserProfile(): any {
+  getUserProfile() {
     return this.databaseService.getRowDetails('/users', firebase.auth().currentUser.uid);
   }
 

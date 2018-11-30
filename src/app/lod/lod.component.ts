@@ -19,11 +19,7 @@ export class LodComponent implements OnInit {
   selectedKey;
   editableKey;
 
-  stages = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'}
-  ];
+  stages = [];
 
   lods = [
     {value: 'steak-0', viewValue: 'Steak'},
@@ -33,7 +29,7 @@ export class LodComponent implements OnInit {
 
   dropdowns = ['NA', '100', '200', '300', '400', '500'];
 
-  displayedColumns = ['number', 'disciple', 'code', 's01', 's02', 's03', 's04', 's05', 's06', 's07', 's08', 's09'];
+  displayedColumns = ['number', 'disciple', 'code'];
   dataSource = new MatTableDataSource(this.elements);
 
   @ViewChild(MatSort) sort: MatSort;
@@ -43,6 +39,19 @@ export class LodComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.databaseService.getLists("/stages").snapshotChanges().pipe(
+      map(changes => 
+        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+      )
+    ).subscribe(data => {
+      this.stages = data;
+      this.stages.sort((a, b) => {return (a.number - b.number)});
+
+      for (let stage of this.stages) {
+        this.displayedColumns.push("s" + ("00"+stage.number).slice(-2));
+      }
+    });
+
     this.databaseService.getLists(this.tablePath).snapshotChanges().pipe(
       map(changes => 
         changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
@@ -91,7 +100,13 @@ export class LodComponent implements OnInit {
       number++;
       position++;
 
-      var newRow: TableElement = {number: number, disciple: '', code:"", s01: "", s02: "", s03: "", s04: "", s05: "", s06: "", s07: "", s08: "", s09: "", key: "newRow", position: position, is_new: true};
+      var stageValues = {};
+      for (let stage of this.stages) {
+        stageValues['s'+('00'+stage.number).slice(-2)] = 'NA';
+      }
+
+      var newRow: TableElement = {number: number, disciple: "", code:"", code_color: "", stages: stageValues, key: "newRow", position: position, is_new: true};
+      console.log(newRow);
       this.selectedKey = "newRow";
       this.editableKey = this.selectedKey;
       this.elements.push(newRow);
@@ -117,15 +132,17 @@ export class LodComponent implements OnInit {
   saveRow() {
     for (let element of this.elements){
       if(element.key == 'newRow') {
-        if(element.disciple && element.code && element.s01 && element.s02) {
+        if(element.disciple && element.code) {
           var result = this.databaseService.createRow(this.tablePath, element);
+
           element.key = result.key;
+          element.is_new = false;
           this.databaseService.updateRow(this.tablePath, result.key, element);
         }
       }
 
       if(element.key == this.editableKey) {
-        if(element.disciple && element.code && element.s01 && element.s02) {
+        if(element.disciple && element.code) {
           this.databaseService.updateRow(this.tablePath, this.editableKey, element);
         }
       }
@@ -187,16 +204,9 @@ export interface TableElement {
   number: number;
   disciple: string;
   code: string;
-  s01: string;
-  s02: string;
-  s03: string;
-  s04: string;
-  s05: string;
-  s06: string;
-  s07: string;
-  s08: string;
-  s09: string;
+  code_color: string;
+  stages: any;
   key?: string, 
   position?: number, 
-  is_new?: true
+  is_new?: boolean
 }

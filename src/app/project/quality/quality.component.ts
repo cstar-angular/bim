@@ -3,7 +3,6 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 import { DatabaseService } from '../../_services/database.service';
 import { AuthService } from '../../_services/auth.service';
 import { map } from 'rxjs/operators';
-import { Statement } from '@angular/compiler';
 import { UserProfile } from '../../user/profile';
 
 @Component({
@@ -24,8 +23,8 @@ export class QualityComponent implements OnInit {
   dataSource = new MatTableDataSource(this.elements);
 
   disciplines;
-  assignedUsers: UserProfile[];
-  currentUser: UserProfile;
+  assignedUsers: UserProfile[] = [];
+  currentUser = new UserProfile();
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -35,7 +34,9 @@ export class QualityComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.currentUser = this.auth.getUserProfile();
+    this.auth.getUserProfile().valueChanges().subscribe(data => {
+      this.currentUser = data;
+    });
 
     this.databaseService.getLists('/lods').snapshotChanges().pipe(
       map(changes => 
@@ -53,7 +54,7 @@ export class QualityComponent implements OnInit {
       this.elements = data;
 
       for (let element of this.elements) {
-        // this.assignedUsers.push(this.getUserData(element.checked_by));
+          this.assignedUsers.push(this.getUserData(element.checked_by));
       }
 
       this.sortRecords();
@@ -173,13 +174,20 @@ export class QualityComponent implements OnInit {
     }
   }
   
-  getUserData(uid): UserProfile {
-    var user;
-    this.databaseService.getRowDetails('/users', uid).subscribe(data => {
-      return user = data;
+  getUserData(uid) {
+    return this.databaseService.getRowDetails('/users/', uid).snapshotChanges().subscribe(data => {
+      this.auth.getAvartarImage(data.payload.val()).val;
     });
+  }
 
-    return user;
+  getDiscipline(key) {
+    var discipline;
+    this.disciplines.map(item => {
+      if(item.key == key) {
+        discipline = item.disciple;
+      }
+    });
+    return discipline;
   }
 }
 

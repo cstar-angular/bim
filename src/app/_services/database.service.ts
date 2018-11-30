@@ -46,12 +46,9 @@ export class DatabaseService {
     this.dbRef.remove().catch(error => this.handleError(error));
   }
 
-  getRowDetails(path: string, key: string): any {
-    
-    this.db.object(path + "/" + key).snapshotChanges().subscribe(data=>{
-      this.result = data.payload.val();
-    });
-    return this.result;
+  getRowDetails(path: string, key: string): any {    
+    this.db.object(path + "/" + key);
+    return this.db.object(path + "/" + key);
   }
  
   private handleError(error) {
