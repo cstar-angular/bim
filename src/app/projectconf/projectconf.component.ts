@@ -55,6 +55,7 @@ export class ProjectconfComponent implements OnInit {
   }
 
   selectRow(key) {
+    this.editableKey = null;
     if(this.isEditable) {
       this.selectedKey = key;
     }
