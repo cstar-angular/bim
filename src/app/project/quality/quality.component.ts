@@ -176,7 +176,7 @@ export class QualityComponent implements OnInit {
   
   getUserData(uid) {
     return this.databaseService.getRowDetails('/users/', uid).snapshotChanges().subscribe(data => {
-      this.auth.getAvartarImage(data.payload.val()).val;
+      return data;
     });
   }
 

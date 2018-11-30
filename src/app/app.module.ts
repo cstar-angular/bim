@@ -47,6 +47,7 @@ import { AuthService } from './_services/auth.service';
 import { AuthGuard } from './_guards/auth.guard';
 import { MessageComponent } from './sidebarright/message/message.component';
 import { AvatarComponent } from './avatar/avatar.component';
+import { UseravatarComponent } from './project/quality/useravatar/useravatar.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { AvatarComponent } from './avatar/avatar.component';
     MatrixComponent,
     QualityComponent,
     MessageComponent,
-    AvatarComponent
+    AvatarComponent,
+    UseravatarComponent
   ],
   imports: [
     BrowserModule,
