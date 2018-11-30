@@ -133,7 +133,7 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
         var msgBody = {
           message: data,
           type: 'img',
-          userId: this.authUser.uid
+          userId: me.authUser.uid
         }
         me.isProgressForuploading = false;
         me.chatService.sendMsg(msgBody, me.projectId, me.urlType);
@@ -158,7 +158,7 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
           message: data,
           type: 'file',
           name: files[0]['name'],
-          userId: this.authUser.uid
+          userId: me.authUser.uid
         }
         me.isProgressForuploading = false;
         me.chatService.sendMsg(msgBody, me.projectId, me.urlType);
