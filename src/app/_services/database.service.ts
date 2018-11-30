@@ -47,7 +47,6 @@ export class DatabaseService {
   }
 
   getRowDetails(path: string, key: string): any {    
-    this.db.object(path + "/" + key);
     return this.db.object(path + "/" + key);
   }
  

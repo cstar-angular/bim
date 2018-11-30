@@ -22,6 +22,7 @@ import { QualityComponent } from './project/quality/quality.component';
 
 
 const routes: Routes = [
+  
   {
     component: WrapComponent,
     path: '',
@@ -95,7 +96,6 @@ const routes: Routes = [
           }
         ]
       },
-
       {
         path: 'expired',
         component: ExpiredComponent,
@@ -106,7 +106,8 @@ const routes: Routes = [
         component: UpgradeComponent,
         canActivate: [AuthGuard]
       }
-    ]
+      
+    ], 
   }
 ];
 
