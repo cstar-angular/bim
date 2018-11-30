@@ -78,6 +78,7 @@ export class LodComponent implements OnInit {
   }
 
   selectRow(key) {
+    this.editableKey = null;
     if(this.isEditable) {
       this.selectedKey = key;
     }
