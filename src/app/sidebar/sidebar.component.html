@@ -1,6 +1,8 @@
 <div class="project-sidebar">
     <div class="project-thumb">
-      <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" (click)="clickTumb()">
+        <mat-icon *ngIf="!project.thumb_image" (click)="popupforImage()">photo_camera</mat-icon>
+        <img *ngIf="project.thumb_image" [src]="project.thumb_image" (click)="popupforImage()">
+        <input type="file" *ngIf="editMod" #images_for_send accept="image/*" id="load_project_img" (change)="handleFileInput($event.target.files)">
     </div>
 
     <ul class="sidebar-list">

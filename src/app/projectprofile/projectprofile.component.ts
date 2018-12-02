@@ -70,18 +70,20 @@ export class ProjectprofileComponent implements OnInit {
       this.projectprofileService.getProjectProfile(this.projectKey).valueChanges().subscribe(data => {
         this.project = data;
       });
-
-      localStorage.setItem('pKey', this.projectKey);
     }
 
-    Evented.on('clickTumb', (e: Event<{val: any}>) => {
-      console.log(e.args);
-      
+    Evented.on('updateProjectImage', (e: Event<{imgUrl: any}>) => {
+      this.project.thumb_image = e.args.imgUrl; console.log(e.args.imgUrl);
+      this.saveProject();
     });
   }
 
   switchEditable() {
     this.isEditable = !this.isEditable;
+    
+    Evented.fire('editmod', {
+      mode: this.isEditable
+    });
   }
 
   cancel() {

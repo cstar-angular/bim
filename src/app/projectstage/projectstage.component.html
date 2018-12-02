@@ -34,7 +34,7 @@
             <td mat-cell *matCellDef="let element"></td>
           </ng-container>
     
-          <!-- Disciple Column -->
+          <!-- Stage Name Column -->
           <ng-container matColumnDef="stage">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Stage </th>
             <td mat-cell *matCellDef="let element"> 
@@ -45,7 +45,7 @@
             </td>
           </ng-container>
     
-          <!-- Code Column -->
+          <!-- Start date Column -->
           <ng-container matColumnDef="start">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Start </th>
             <td mat-cell *matCellDef="let element"> 
@@ -58,7 +58,7 @@
             </td>
           </ng-container>
       
-          <!-- s01 Column -->
+          <!-- End date Column -->
           <ng-container matColumnDef="end">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> End </th>
             <td mat-cell *matCellDef="let element"> 
@@ -71,7 +71,7 @@
             </td>
           </ng-container>
       
-          <!-- s02 Column -->
+          <!-- Remarks Column -->
           <ng-container matColumnDef="remarks">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Remarks </th>
             <td mat-cell *matCellDef="let element">
@@ -86,7 +86,4 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'selected' : (row.key == selectedKey)}" (click)="selectRow(row.key)"></tr>
         </table>
     </div>
-
-  
-
 </div>

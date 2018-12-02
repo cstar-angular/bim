@@ -24,4 +24,6 @@ export class ProjectProfile {
     thumb_image: string;
     is_archive?: boolean;
     template_title?: string;
+    created_by?: string;
+    created_time?: string;
 }
