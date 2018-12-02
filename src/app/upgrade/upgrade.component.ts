@@ -55,7 +55,7 @@ export class UpgradeComponent implements OnInit {
       image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
       locale: 'auto',
       token: token => {
-        this.upgradeService.processPayment(token, this.amount, this.value);
+        this.upgradeService.processPayment(token, this.amount * 50 * 100, this.value);
       }
     })
   }
