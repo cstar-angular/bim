@@ -1,0 +1,44 @@
+.notification{
+    position: relative;
+    mat-icon{
+        color: #3B3838;
+        font-size: 25px;
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        margin: 0 3px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+
+    .content{
+        position:absolute;
+        width: 380px;
+        left: -175px;
+        overflow: hidden;
+        top: 40px;
+        z-index: 1;
+
+        .arrow-icon-div{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            img{
+                width: 15px;
+                height: 15px;
+            }
+        }
+
+        .notifications-container{
+            background: #3B3838;
+            border-radius: 5px;
+            .header{
+                display: flex;
+                justify-content: flex-end;
+                padding: 0 10px;
+                font-size: 12px;
+            }
+        }
+    }
+}

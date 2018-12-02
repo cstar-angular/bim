@@ -1,0 +1,14 @@
+<div class="notification">
+  <mat-icon (click)="toggle()">notifications</mat-icon>
+
+  <div class="content" *ngIf="isShow">
+    <div class="arrow-icon-div">
+      <img src="/assets/icons/triangle.svg" alt="">
+    </div>
+    <div class="notifications-container">
+      <div class="header">
+        Clear all
+      </div>
+    </div>
+  </div>
+</div>
