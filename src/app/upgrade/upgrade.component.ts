@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Options } from 'ng5-slider';
 import { UpgradeService } from '../_services/upgrade.service';
-
+import { AuthService } from '../_services/auth.service';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { environment } from '../../environments/environment';
+declare var StripeCheckout: any;
 @Component({
   selector: 'app-upgrade',
   templateUrl: './upgrade.component.html',
@@ -17,13 +20,57 @@ export class UpgradeComponent implements OnInit {
     showTicksValues: true
   };
 
+  authUser;
+  user;
+  isLoading = true;
+
+
+  handler: any;
+  amount: number = 500;
+  
+
   constructor(
-    private upgradeService: UpgradeService
+    private upgradeService: UpgradeService,
+    private authService: AuthService,
+    private afAuth: AngularFireAuth
   ) {
-    this.upgradeService.getAuth();
+    
    }
 
   ngOnInit() {
+    this.authUser = this.afAuth.auth.currentUser;
+    this.authService.getUserByIdPromise(this.authUser.uid).then(data => {
+      this.isLoading = false;
+      if(data) {
+        this.user = data;
+      }
+      if (data && data.membership) {
+        this.value = data.membership.type;
+      }
+
+    });
+
+    this.handler = StripeCheckout.configure({
+      key: environment.stripeKey,
+      image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+      locale: 'auto',
+      token: token => {
+        this.upgradeService.processPayment(token, this.amount, this.value);
+      }
+    })
   }
+
+  handlePayment() {
+    this.handler.open({
+      name: "BIM Membership",
+      description: "Upgrade Membership",
+      amount: this.value * 50 * 100
+    })
+  }
+
+  @HostListener('window:popstate')
+    onpopstate() {
+      this.handler.close()
+    }
 
 }
