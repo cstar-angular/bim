@@ -1,5 +1,5 @@
-<div class="upgrade">
-  <img src="/assets/images/avatar.png" alt="" class="user-avartar">
+<div class="upgrade" *ngIf="!isLoading">
+  <img [src]="user.avatar == ''? '/assets/images/avatar.png' : user.avatar" alt="" class="user-avartar">
   <p style="margin-top: 30px;">
     <span style="font-size: 30px;color: white;"><strong style="font-size: 30px;color: white;">BIM</strong> . VU</span>
   </p>
@@ -14,7 +14,9 @@
   <button class="price-btn" *ngIf="value != 30">Total <b>${{value * 50}}</b> / month</button>
   <button class="price-btn" *ngIf="value == 30">ENTERPRISE</button>
 
-  <button class="pay-now-btn" *ngIf="value != 30">PAY NOW</button>
+  <button class="pay-now-btn" *ngIf="value != 30" (click)="handlePayment()">PAY NOW</button>
   <button class="pay-now-btn" *ngIf="value == 30">CONTACT SUPPORT</button>
 
 </div>
+
+<app-loading *ngIf="isLoading"></app-loading>

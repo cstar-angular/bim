@@ -7,5 +7,7 @@ export const environment = {
     projectId: "bimbackend",
     storageBucket: "bimbackend.appspot.com",
     messagingSenderId: "315609333100"
-  }
+  },
+  stripeKey: 'pk_test_XopyJS2ntwqB3j7bd6mzHRSn'
+  
 };

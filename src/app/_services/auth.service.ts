@@ -127,6 +127,18 @@ export class AuthService {
     return  this.db.object(this.dbPath + "/" + uid);
   }
 
+  getUserByIdPromise(uid) {
+    return new Promise<any>((resolve, reject) => {
+      this.db.object(this.dbPath + "/" + uid).valueChanges().subscribe(data => {
+        if (data) {
+          resolve(data);
+        } else {
+          reject(null);
+        }
+      })
+    })
+  }
+
   updateUserById(uid, profile) {
     return this.db.list(this.dbPath).update(uid, profile);
   }
