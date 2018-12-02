@@ -12,7 +12,7 @@
             <span (click)="openDialog()" *ngIf="isAuth && userProfile" style="margin-right: 10px;">Hi {{userProfile.name}}</span>
             <app-avatar *ngIf="userProfile" [userProfile]="userProfile" (click)="openDialog()"></app-avatar>
         </div>
-        <mat-icon>notifications</mat-icon>
+        <app-notification></app-notification>
         <button mat-flat-button color="white" (click)="gotourl('/upgrade')">Upgrade</button>
         <mat-icon>help</mat-icon>
         <mat-icon (click)="signout()">cancel</mat-icon>  
