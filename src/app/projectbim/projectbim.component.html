@@ -8,8 +8,8 @@
       
             <mat-form-field color="white">
                 <mat-select placeholder="Stage">
-                  <mat-option *ngFor="let stage of stages" [value]="stage.value">
-                    {{stage.viewValue}} 
+                  <mat-option *ngFor="let stage of stages" [value]="stage.key">
+                    {{stage.stage}} 
                   </mat-option>
                 </mat-select>
             </mat-form-field>

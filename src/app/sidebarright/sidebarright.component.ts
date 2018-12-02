@@ -106,7 +106,7 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
   }
 
   ngAfterViewChecked() {
-    this.scrollToBottom();
+    // this.scrollToBottom();
   }
 
   popupforImage() {

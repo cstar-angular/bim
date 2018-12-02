@@ -9,6 +9,7 @@ import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { Evented, Event } from '../_services/evented';
 
 @Component({
   selector: 'app-projectprofile',
@@ -72,6 +73,11 @@ export class ProjectprofileComponent implements OnInit {
 
       localStorage.setItem('pKey', this.projectKey);
     }
+
+    Evented.on('clickTumb', (e: Event<{val: any}>) => {
+      console.log(e.args);
+      
+    });
   }
 
   switchEditable() {
