@@ -10,6 +10,20 @@
         cursor: pointer;
         display: flex;
         align-items: center;
+
+        .badge{
+            position: absolute;
+            display: flex;
+            width: 20px;
+            height: 20px;
+            justify-content: center;
+            color: white;
+            background: red;
+            align-items: center;
+            border-radius: 50%;
+            top: -8px;
+            right: -3px;
+        }
     }
 
     .content{
@@ -18,7 +32,7 @@
         left: -175px;
         overflow: hidden;
         top: 40px;
-        z-index: 1;
+        z-index: 1000;
 
         .arrow-icon-div{
             width: 100%;
@@ -38,6 +52,21 @@
                 justify-content: flex-end;
                 padding: 0 10px;
                 font-size: 12px;
+
+                .clear-btn{
+                    cursor: pointer;
+                    color: #ddd;
+                }
+            }
+
+            .notification-list{
+
+            }
+
+            .no-notifications{
+                display:flex;
+                justify-content: center;
+                padding: 10px;
             }
         }
     }

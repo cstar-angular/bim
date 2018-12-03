@@ -80,9 +80,7 @@ export class TeamComponent implements OnInit {
           this.firstDis = item.key;
         }
       })
-      console.log(this.disciplines);
-      console.log(this.disciplines[this.firstDis]);
-      
+    
     });
 
     this.databaseService.getLists(this.tablePath).valueChanges().subscribe(data => {
@@ -106,8 +104,6 @@ export class TeamComponent implements OnInit {
   }
 
   selectRow(key) {
-    console.log(key);
-    
     if(this.isEditable) {
       this.selectedKey = key;
     }
@@ -147,6 +143,10 @@ export class TeamComponent implements OnInit {
           var result = this.databaseService.createRow(this.tablePath, element);
           element.key = result.key;
           this.databaseService.updateRow(this.tablePath, result.key, element);
+
+          // send invite email
+          // create fake account or insert key into team member
+          // notification send
         }
       }
 
@@ -154,6 +154,9 @@ export class TeamComponent implements OnInit {
         if(element.name && element.company && element.email) {
           element.is_new = false;
           this.databaseService.updateRow(this.tablePath, this.editableKey, element);
+
+          // send update email
+          // notification send
         }
       }
     }
