@@ -49,6 +49,7 @@ import { MessageComponent } from './sidebarright/message/message.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import { UseravatarComponent } from './project/quality/useravatar/useravatar.component';
 import { NotificationComponent } from './notification/notification.component';
+import { NotificationItemComponent } from './notification/notification-item/notification-item.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { NotificationComponent } from './notification/notification.component';
     MessageComponent,
     AvatarComponent,
     UseravatarComponent,
-    NotificationComponent
+    NotificationComponent,
+    NotificationItemComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,7 @@
 <div class="notification">
-  <mat-icon (click)="toggle()">notifications</mat-icon>
+  <mat-icon (click)="toggle()">notifications
+    <span *ngIf="badge" class="badge">{{badge}}</span>
+  </mat-icon>
 
   <div class="content" *ngIf="isShow">
     <div class="arrow-icon-div">
@@ -7,8 +9,15 @@
     </div>
     <div class="notifications-container">
       <div class="header">
-        Clear all
+        <span class="clear-btn" (click)="clear()"> Clear all</span>
       </div>
+      <div class="notification-list" *ngIf="!isLoading && notifications.length > 0">
+        <app-notification-item *ngFor="let notification of notifications" [notification]="notification"></app-notification-item>
+      </div>
+      <div *ngIf="!isLoading && notifications.length == 0" class="no-notifications">
+        <h2>No Notification</h2>
+      </div>
+      <app-loading *ngIf="isLoading"></app-loading>
     </div>
   </div>
 </div>
