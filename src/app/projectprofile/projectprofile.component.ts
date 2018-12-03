@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Evented, Event } from '../_services/evented';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-projectprofile',
@@ -47,6 +48,7 @@ export class ProjectprofileComponent implements OnInit {
     private databaseService: DatabaseService,
     private projectprofileService: ProjectprofileService,
     private dropdownService: DropdownService,
+    private authService: AuthService,
     public dialog: MatDialog
   ) {
     this.projectKey = this.activedRoute.snapshot.params['id'];
@@ -70,10 +72,13 @@ export class ProjectprofileComponent implements OnInit {
       this.projectprofileService.getProjectProfile(this.projectKey).valueChanges().subscribe(data => {
         this.project = data;
       });
+    } else {
+      this.project = new ProjectProfile();
+      this.project.created_by = this.authService.getAuthUser().uid;
     }
 
     Evented.on('updateProjectImage', (e: Event<{imgUrl: any}>) => {
-      this.project.thumb_image = e.args.imgUrl; console.log(e.args.imgUrl);
+      this.project.thumb_image = e.args.imgUrl;
       this.saveProject();
     });
   }
