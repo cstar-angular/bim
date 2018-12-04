@@ -3,7 +3,7 @@
       <div class="matrix-form">
         <div>
           <mat-form-field color="white">
-              <mat-select placeholder="Configuration" [(ngModel)]="selectedConfiguration">
+              <mat-select placeholder="Configuration" [(ngModel)]="selectedConfiguration" (selectionChange)="changedConf()">
                 <mat-option *ngFor="let configuration of configurations" [value]="configuration.key">
                   B{{configuration.number}} {{configuration.block}}
                 </mat-option>
@@ -28,27 +28,29 @@
           <td mat-cell *matCellDef="let element"> <span>{{element.no}}</span> </td>
         </ng-container>
   
-        <!-- Disciple Column -->
         <ng-container matColumnDef="code" sticky>
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
           <td mat-cell *matCellDef="let element">
-              <span>{{element.code.code}}</span>
-             
+              <!-- <span>{{element.code.code}}</span> -->
+              <span [style.background]="element.code.code_color"  class="lod-color-span">{{element.code.code}}</span>
           </td>
         </ng-container>
   
-    
-        <!-- s01 Column -->
         <ng-container *ngFor="let lod of lods" [matColumnDef]="lod.key">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>D{{lod.number}}</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="header-lods">
+              <span>D{{lod.number}}</span>
+              <span class="lod-color-span" [style.background]="lod.code_color">{{lod.code}}</span>
+            </div>
+          </th>
           <td mat-cell *matCellDef="let element">
-            <span >{{element.matrix[lod.key].priority}}</span>
-            
+            <!-- <span >{{element.matrix[lod.key].priority}}</span> -->
+            <app-cellpicker [element]="element" [lod]="lod" [isAdmin]="false" [projectId]="projectId" [configureId]="selectedConfiguration"></app-cellpicker>
           </td>
         </ng-container>
     
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'selected' : (row.key == selectedKey)}" (click)="selectRow(row.key)"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'selected' : (row.key == selectedKey)}"></tr>
       </table>
   </div>
 </div>

@@ -1,0 +1,58 @@
+.cellpicker{
+    position: relative;
+
+    .showtext{
+        display: flex;
+        width: 80px;
+        justify-content: center;
+        height: 30px;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .dropdown{
+        position: absolute;
+        z-index: 1;
+        background: #fff;
+        border: solid 1px #888;
+        
+        .dropdown-item{
+            display: flex;
+            align-items: center;
+            padding: 5px 10px;
+            cursor: pointer;
+            width: 130px;
+            
+            .color-tile{
+                display: flex;
+                width: 15px;
+                height: 15px;
+                margin-right: 5px;
+            }
+
+            .color-tile-high{
+                background: rgb(38, 38, 38);
+            }
+
+            .color-tile-medium{
+                background: rgb(128, 128, 128);
+            }
+
+            .color-tile-low{
+                background: rgb(217, 217, 217);
+            }
+
+            .color-tile-na{
+                background: rgb(255, 255, 255);
+            }
+
+            .color-tile-prgress{
+                background: rgb(0, 112, 192);
+            }
+
+            .color-tile-done{
+                background: rgb(84, 130, 53);
+            }
+        }
+    }
+}
