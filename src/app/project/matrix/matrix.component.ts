@@ -98,8 +98,9 @@ export class MatrixComponent implements OnInit {
       element['no'] = 'D' + row.number;
       element['code'] = {
         code: row.code,
-        color_code: row.code_color
+        code_color: row.code_color
       };
+      element['key'] = row.key;
       element['matrix'] = tempRow;
       elements.push(element)
     });
@@ -132,6 +133,10 @@ export class MatrixComponent implements OnInit {
 
   switchEditable() {
     this.isEditable = !this.isEditable;
+  }
+
+  changedConf(){
+    this.loadMatrix();
   }
 
 }
