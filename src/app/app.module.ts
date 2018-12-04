@@ -48,6 +48,8 @@ import { AuthGuard } from './_guards/auth.guard';
 import { MessageComponent } from './sidebarright/message/message.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import { UseravatarComponent } from './project/quality/useravatar/useravatar.component';
+import { NotificationComponent } from './notification/notification.component';
+import { NotificationItemComponent } from './notification/notification-item/notification-item.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +81,9 @@ import { UseravatarComponent } from './project/quality/useravatar/useravatar.com
     QualityComponent,
     MessageComponent,
     AvatarComponent,
-    UseravatarComponent
+    UseravatarComponent,
+    NotificationComponent,
+    NotificationItemComponent
   ],
   imports: [
     BrowserModule,
