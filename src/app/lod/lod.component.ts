@@ -29,7 +29,7 @@ export class LodComponent implements OnInit {
   dropdowns = ['NA', '100', '200', '300', '400', '500'];
 
   displayedColumns = ['number', 'disciple', 'code'];
-  dataSource;
+  dataSource = new MatTableDataSource(this.elements);
 
   projectId;
 
@@ -61,7 +61,7 @@ export class LodComponent implements OnInit {
     }
 
   }
-
+  
   loadData() {
 
     this.databaseService.getLists('/stages/' + this.projectId).valueChanges().subscribe(data => {
@@ -126,8 +126,9 @@ export class LodComponent implements OnInit {
         stageValues['s'+('00'+stage.number).slice(-2)] = 'NA';
       }
 
-      var newRow: TableElement = {number: number, disciple: "", code:"", code_color: "", stages: stageValues, key: "newRow", position: position, is_new: true};
-      console.log(newRow);
+      var code_color = this.getRandomColorHex();
+      var newRow: TableElement = {number: number, disciple: "", code:"", code_color: code_color, stages: stageValues, key: "newRow", position: position, is_new: true};
+
       this.selectedKey = "newRow";
       this.editableKey = this.selectedKey;
       this.elements.push(newRow);
@@ -222,6 +223,9 @@ export class LodComponent implements OnInit {
     }
   }
 
+  getRandomColorHex() {
+    return '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+  }
 }
 
 export interface TableElement {

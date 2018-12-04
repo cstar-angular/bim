@@ -12,7 +12,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "7.0.4",
+    "@angular/animations": "^7.1.1",
     "@angular/cdk": "^7.0.4",
     "@angular/common": "7.0.4",
     "@angular/compiler": "7.0.4",
@@ -28,7 +28,9 @@
     "core-js": "^2.4.1",
     "firebase": "^5.5.8",
     "hammerjs": "^2.0.8",
+    "material-community-components": "^3.2.1",
     "ng5-slider": "^1.1.7",
+    "ngx-color-picker": "^7.1.1",
     "rxjs": "^6.3.3",
     "sass-loader": "^7.1.0",
     "zone.js": "^0.8.26"
