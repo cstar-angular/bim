@@ -16,6 +16,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
  
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { ColorPickerModule } from 'ngx-color-picker';
 import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
@@ -40,6 +41,7 @@ import {MatMenuModule} from '@angular/material/menu';
         MatSlideToggleModule, 
         MatProgressSpinnerModule,
         MatProgressBarModule,
+        ColorPickerModule,
         MatMenuModule
     ],
     exports: [
@@ -63,6 +65,7 @@ import {MatMenuModule} from '@angular/material/menu';
         MatSlideToggleModule,
         MatProgressSpinnerModule,
         MatProgressBarModule,
+        ColorPickerModule,
         MatMenuModule
     ]
 })
