@@ -50,6 +50,7 @@ import { AvatarComponent } from './avatar/avatar.component';
 import { UseravatarComponent } from './project/quality/useravatar/useravatar.component';
 import { NotificationComponent } from './notification/notification.component';
 import { NotificationItemComponent } from './notification/notification-item/notification-item.component';
+import { CellpickerComponent } from './project/matrix/cellpicker/cellpicker.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import { NotificationItemComponent } from './notification/notification-item/noti
     AvatarComponent,
     UseravatarComponent,
     NotificationComponent,
-    NotificationItemComponent
+    NotificationItemComponent,
+    CellpickerComponent
   ],
   imports: [
     BrowserModule,
