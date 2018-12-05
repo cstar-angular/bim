@@ -53,8 +53,6 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
     });
 
     this.authUser = this.auth.auth.currentUser;
-    console.log(this.authUser);
-    
   }
 
   ngOnInit() {    
@@ -102,19 +100,25 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
   }
 
   scrollToBottom(): void {
-    this.feedContainer.nativeElement.scrollTop = this.feedContainer.nativeElement.scrollHeight;    
+    if (this.feedContainer) {
+      this.feedContainer.nativeElement.scrollTop = this.feedContainer.nativeElement.scrollHeight;
+    }
   }
 
   ngAfterViewChecked() {
-    // this.scrollToBottom();
+    this.scrollToBottom();
   }
 
   popupforImage() {
-    this.images_for_send.nativeElement.click();
+    if (this.images_for_send) {
+      this.images_for_send.nativeElement.click();
+    }
   }
 
   popupforFile() {
-    this.files_for_send.nativeElement.click();
+    if (this.files_for_send) {
+      this.files_for_send.nativeElement.click();
+    }
   }
 
   handleFileInput(files) {

@@ -73,6 +73,9 @@ export class ProjectstageComponent implements OnInit {
     if (!this.isEditable) {
       this.editableKey = null;
       this.selectedKey = null;
+
+      this.elements = this.elements.filter(ele => ele.key != "newRow");
+      this.dataSource = new MatTableDataSource(this.elements);
     }
   }
 
@@ -190,6 +193,10 @@ export class ProjectstageComponent implements OnInit {
     if(this.elements) {
       this.elements.sort(function(a, b){return a.position - b.position});
     }
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   
 }

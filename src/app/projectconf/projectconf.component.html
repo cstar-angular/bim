@@ -3,7 +3,7 @@
         <div class="search-form">
             <div>
                 <mat-form-field color="white" class="">
-                    <input matInput placeholder="Search" value="">
+                    <input matInput placeholder="Search" (keyup)="applyFilter($event.target.value)">
                 </mat-form-field>
             </div>
             <div>
@@ -49,7 +49,7 @@
           <ng-container matColumnDef="area">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Area(SqM) </th>
             <td mat-cell *matCellDef="let element"> 
-              <span *ngIf="element.key != editableKey" class="bg-gray">{{element.area }}</span>
+              <span *ngIf="element.key != editableKey" class="bg-gray colored">{{element.area }}</span>
               <mat-form-field *ngIf="element.key == editableKey">
                   <input matInput [(ngModel)]="element.area" required>
               </mat-form-field>
@@ -60,7 +60,7 @@
           <ng-container matColumnDef="levels">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Levels </th>
             <td mat-cell *matCellDef="let element"> 
-              <span *ngIf="element.key != editableKey" class="bg-gray">{{ element.levels }}</span>
+              <span *ngIf="element.key != editableKey" class="bg-gray colored">{{ element.levels }}</span>
               <mat-form-field *ngIf="element.key == editableKey">
                 <input matInput [(ngModel)]="element.levels" required>
               </mat-form-field>

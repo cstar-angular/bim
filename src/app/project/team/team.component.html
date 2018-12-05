@@ -1,13 +1,14 @@
 <div class="main-content">
     <div class="content-search">
-        <div class="bim-form">
+        <div class="search-form">
           <div>
             <mat-form-field color="white" class="">
-              <input matInput placeholder="Search" value="">
+              <input matInput placeholder="Search" (keyup)="applyFilter($event.target.value)">
             </mat-form-field>
       
             <mat-form-field color="white">
-              <mat-select placeholder="Discipline">
+              <mat-select placeholder="Discipline" [(ngModel)]="disciplineFilter" (selectionChange)="filterBySelection()">
+                <mat-option value="">All</mat-option>
                 <mat-option *ngFor="let discipline of disciplines" [value]="discipline.key">
                   {{discipline.code}} 
                 </mat-option>
@@ -15,7 +16,8 @@
             </mat-form-field>
       
             <mat-form-field color="white">
-              <mat-select placeholder="Role">
+              <mat-select placeholder="Role" [(ngModel)]="roleFilter" (selectionChange)="filterBySelection()">
+                <mat-option value="">All</mat-option>
                 <mat-option *ngFor="let role of roles" [value]="role.key">
                   {{role.val}}
                 </mat-option>
@@ -23,8 +25,9 @@
             </mat-form-field>
 
             <mat-form-field color="white">
-              <mat-select placeholder="Access">
-                <mat-option *ngFor="let access of accesses" [value]="accesses.key">
+              <mat-select placeholder="Access" [(ngModel)]="accessFilter" (selectionChange)="filterBySelection()">
+                <mat-option value="">All</mat-option>
+                <mat-option *ngFor="let access of accesses" [value]="access.key">
                   {{access.val}}
                 </mat-option>
               </mat-select>
@@ -76,7 +79,7 @@
           <ng-container matColumnDef="discipline">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Discipline </th>
             <td mat-cell *matCellDef="let element">
-              <span *ngIf="(element.key != editableKey)" class="no-bg">{{getDisciplineByKey(element.discipline).code}}</span>
+              <span *ngIf="(element.key != editableKey)" [style.background]="getDisciplineByKey(element.discipline).code_color" class="colored">{{getDisciplineByKey(element.discipline).code}}</span>
               <mat-form-field color="white" *ngIf="(element.key == editableKey)">
                 <mat-select placeholder="Discipline" [(ngModel)]="element.discipline">
                   <mat-option *ngFor="let discipline of disciplines" [value]="discipline.key">
@@ -106,7 +109,7 @@
           <ng-container matColumnDef="access">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Access </th>
             <td mat-cell *matCellDef="let element">
-              <span *ngIf="(element.key != editableKey) || !element.is_new" class="no-bg">{{roles[element.access].val}}</span>
+              <span *ngIf="(element.key != editableKey) " class="no-bg">{{accesses[element.access].val}}</span>
               <mat-form-field color="white" *ngIf="(element.key == editableKey) ">
                 <mat-select placeholder="Access" [(ngModel)]="accesses[element.access].key">
                   <mat-option *ngFor="let access of accesses" [value]="access.key">
@@ -121,7 +124,7 @@
           <ng-container matColumnDef="email">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
             <td mat-cell *matCellDef="let element">
-              <span *ngIf="element.key != editableKey" class="bg-gray">{{element.email}}</span>
+              <a *ngIf="element.key != editableKey">{{element.email}}</a>
               <mat-form-field *ngIf="element.key == editableKey">
                 <input matInput [(ngModel)]="element.email" required placeholder="Email">
               </mat-form-field>
@@ -133,7 +136,8 @@
             <td mat-cell *matCellDef="let element">
               <span *ngIf="element.key != editableKey" class="bg-gray">{{element.phone}}</span>
               <mat-form-field *ngIf="element.key == editableKey">
-                <input matInput [(ngModel)]="element.phone" placeholder="Phone">
+                  <span matPrefix>+1 &nbsp;</span>
+                  <input type="tel" matInput [(ngModel)]="element.phone" placeholder="Phone">
               </mat-form-field>
             </td>
           </ng-container>

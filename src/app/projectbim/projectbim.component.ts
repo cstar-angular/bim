@@ -17,11 +17,45 @@ export class ProjectbimComponent implements OnInit {
   selectedKey;
   editableKey;
 
+  softwareFilter;
+  checkedFilter;
+  versionFilter;
+
   displayedColumns = ['number', 'bim_use', 'check', 'software', 'version', 'format'];
   dataSource = new MatTableDataSource(this.elements);
 
   projectId;
   stages;
+
+  softwares = [
+    "Revit",
+    "Bentley BIM Suite",
+    "SketchUp",
+    "ArchiCAD",
+    "Vectorworks",
+    "Tekla Structures",
+    "Vico Office",
+    "Quantm",
+    "Digital Project",
+    "Cadpipe HVAC",
+    "Fabrication CADMEP",
+    "AutoCAD",
+    "AutoCAD Civil 3D",
+    "Robot",
+    "STAAD Pro",
+    "FloVent",
+    "Fluent",
+    "Sefaira",
+    "Navisworks",
+    "BIM360 Field",
+    "BIM360 Glue",
+    "BIM360 Layout",
+    "BIM360 Plan",
+    "BIM360 Docs",
+    "ProectDox",
+    "Project Wise",
+    "Solibri Model Checker"
+  ];
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -61,6 +95,18 @@ export class ProjectbimComponent implements OnInit {
     this.databaseService.getLists(this.tablePath).valueChanges().subscribe(data => {
       this.elements = data;
 
+      if(this.checkedFilter) {
+        this.elements = this.elements.filter(ele => ele.check == this.checkedFilter)
+      }
+
+      if(this.softwareFilter) {
+        this.elements = this.elements.filter(ele => ele.software == this.softwareFilter)
+      }
+
+      if(this.versionFilter) {
+        this.elements = this.elements.filter(ele => ele.version == this.versionFilter)
+      }
+
       this.sortRecords();
 
       this.dataSource = new MatTableDataSource(this.elements);
@@ -77,6 +123,9 @@ export class ProjectbimComponent implements OnInit {
     if (!this.isEditable) {
       this.editableKey = null;
       this.selectedKey = null;
+
+      this.elements = this.elements.filter(ele => ele.key != "newRow");
+      this.dataSource = new MatTableDataSource(this.elements);
     }
   }
 
@@ -206,6 +255,14 @@ export class ProjectbimComponent implements OnInit {
 
   sortRecords() {
     this.elements.sort(function(a, b){return a.position - b.position});
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  filterBySelection() {
+    this.loadData();
   }
 }
 

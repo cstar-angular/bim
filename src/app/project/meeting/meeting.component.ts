@@ -82,6 +82,9 @@ export class MeetingComponent implements OnInit {
     if (!this.isEditable) {
       this.editableKey = null;
       this.selectedKey = null;
+
+      this.elements = this.elements.filter(ele => ele.key != "newRow");
+      this.dataSource = new MatTableDataSource(this.elements);
     }
   }
 
@@ -201,6 +204,9 @@ export class MeetingComponent implements OnInit {
     }
   }
   
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }
 
 export interface TableElement {

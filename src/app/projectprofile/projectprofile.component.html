@@ -180,7 +180,7 @@
         <div class="bim-standard">
           <mat-label>BIM Standard</mat-label>
           <mat-form-field>
-              <mat-select name="bim_template" placeholder="" [(ngModel)]="project.bim_template">
+              <mat-select name="bim_template" placeholder="" [(ngModel)]="project.bim_template" [disabled]="!isEditable">
                 <mat-option value="option">Default</mat-option>
                 <mat-option *ngFor="let template of templates | async" [value]="template">{{ template }}</mat-option>
               </mat-select>
@@ -189,7 +189,7 @@
         </div>
       </div>
 
-      <div class="row" *ngIf="isEditable">
+      <div class="row" *ngIf="projectKey && isEditable">
           <div class="open-dialogs">
                 <a class="save-project" (click)="saveTemplateDialog()">Save Project as Template</a>
                 <a class="archive-project" (click)="archiveProjectDialog()">Archive Project</a>

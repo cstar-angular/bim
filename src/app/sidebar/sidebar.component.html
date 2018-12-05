@@ -1,7 +1,7 @@
 <div class="project-sidebar">
     <div class="project-thumb">
-        <mat-icon *ngIf="!project.thumb_image" (click)="popupforImage()">photo_camera</mat-icon>
-        <img *ngIf="project.thumb_image" [src]="project.thumb_image" (click)="popupforImage()">
+        <mat-icon *ngIf="!project || !project.thumb_image" (click)="popupforImage()">photo_camera</mat-icon>
+        <img *ngIf="project && project.thumb_image" [src]="project.thumb_image" (click)="popupforImage()">
         <input type="file" *ngIf="editMod" #load_project_img accept="image/*" id="load_project_img" (change)="handleFileInput($event.target.files)">
     </div>
 
