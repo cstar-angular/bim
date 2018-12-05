@@ -20,15 +20,14 @@ export class LodComponent implements OnInit {
 
   stages = [];
 
-  lods = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'}
-  ];
+  stageFilter;
+  lodFilter;
 
   dropdowns = ['NA', '100', '200', '300', '400', '500'];
+  stageDropdown = [];
+  lodDropdown = [];
 
-  displayedColumns = ['number', 'disciple', 'code'];
+  displayedColumns = [];
   dataSource = new MatTableDataSource(this.elements);
 
   projectId;
@@ -66,7 +65,13 @@ export class LodComponent implements OnInit {
 
     this.databaseService.getLists('/stages/' + this.projectId).valueChanges().subscribe(data => {
       this.stages = data;
+      this.stageDropdown = data;
 
+      if(this.stageFilter) {
+        this.stages = this.stages.filter(ele => ele.key == this.stageFilter)
+      }
+
+      this.displayedColumns = ['number', 'disciple', 'code'];
       for (let stage of this.stages) {
         this.displayedColumns.push("s" + ("00" + stage.number).slice(-2));
       }
@@ -74,6 +79,11 @@ export class LodComponent implements OnInit {
 
     this.databaseService.getLists(this.tablePath).valueChanges().subscribe(data => {
       this.elements = data;
+      this.lodDropdown = data;
+
+      if(this.lodFilter) {
+        this.elements = this.elements.filter(ele => ele.key == this.lodFilter)
+      }
 
       this.sortRecords();
 
@@ -229,6 +239,10 @@ export class LodComponent implements OnInit {
   
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+  
+  filterBySelection() {
+    this.loadData();
   }
 }
 

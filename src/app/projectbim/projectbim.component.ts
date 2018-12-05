@@ -17,6 +17,10 @@ export class ProjectbimComponent implements OnInit {
   selectedKey;
   editableKey;
 
+  softwareFilter;
+  checkedFilter;
+  versionFilter;
+
   displayedColumns = ['number', 'bim_use', 'check', 'software', 'version', 'format'];
   dataSource = new MatTableDataSource(this.elements);
 
@@ -90,6 +94,18 @@ export class ProjectbimComponent implements OnInit {
 
     this.databaseService.getLists(this.tablePath).valueChanges().subscribe(data => {
       this.elements = data;
+
+      if(this.checkedFilter) {
+        this.elements = this.elements.filter(ele => ele.check == this.checkedFilter)
+      }
+
+      if(this.softwareFilter) {
+        this.elements = this.elements.filter(ele => ele.software == this.softwareFilter)
+      }
+
+      if(this.versionFilter) {
+        this.elements = this.elements.filter(ele => ele.version == this.versionFilter)
+      }
 
       this.sortRecords();
 
@@ -240,6 +256,10 @@ export class ProjectbimComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  filterBySelection() {
+    this.loadData();
   }
 }
 

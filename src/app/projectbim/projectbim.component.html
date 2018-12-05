@@ -7,25 +7,28 @@
             </mat-form-field>
       
             <mat-form-field color="white">
-                <mat-select placeholder="Check">
-                  <mat-option value="true">Active</mat-option>
-                  <mat-option value="false">In active</mat-option>
+                <mat-select placeholder="Check" [(ngModel)]="checkedFilter" (selectionChange)="filterBySelection()">
+                    <mat-option value="">All</mat-option>
+                    <mat-option value="1">Active</mat-option>
+                    <mat-option value="0">In active</mat-option>
                 </mat-select>
             </mat-form-field>
       
             <mat-form-field color="white">
-                  <mat-select placeholder="Software">
-                    <mat-option *ngFor="let software of softwares" [value]="software">
-                      {{software}}
-                    </mat-option>
+                  <mat-select placeholder="Software" [(ngModel)]="softwareFilter" (selectionChange)="filterBySelection()">
+                      <mat-option value="">All</mat-option>
+                      <mat-option *ngFor="let software of softwares" [value]="software">
+                        {{software}}
+                      </mat-option>
                   </mat-select>
             </mat-form-field>
 
             <mat-form-field color="white">
-                <mat-select placeholder="Version">
-                  <mat-option *ngFor="let version of versions" [value]="version.value">
-                    {{version.value}}
-                  </mat-option>
+                <mat-select placeholder="Version" [(ngModel)]="versionFilter" (selectionChange)="filterBySelection()">
+                    <mat-option value="">All</mat-option>
+                    <mat-option *ngFor="let version of versions" [value]="version.value">
+                      {{version.value}}
+                    </mat-option>
                 </mat-select>
           </mat-form-field>
           </div>

@@ -18,6 +18,10 @@ export class TeamComponent implements OnInit {
   selectedKey;
   editableKey;
 
+  disciplineFilter;
+  roleFilter;
+  accessFilter;
+
   displayedColumns = ['name', 'company', 'discipline', 'role', 'access', 'email', 'phone'];
   dataSource = new MatTableDataSource(this.elements);
 
@@ -74,6 +78,11 @@ export class TeamComponent implements OnInit {
   loadData() {
     this.databaseService.getLists('/lods/' + this.projectId).valueChanges().subscribe(data => {
       this.disciplines = data;
+      
+      if(this.disciplineFilter) {
+        this.disciplines = this.disciplines.filter(ele => ele.key == this.disciplineFilter)
+      }
+
       data.forEach(item => {
         // this.disciplines[item.key] = item;
         if(!this.firstDis) {
@@ -85,6 +94,15 @@ export class TeamComponent implements OnInit {
 
     this.databaseService.getLists(this.tablePath).valueChanges().subscribe(data => {
       this.elements = data;
+      
+      if(this.roleFilter != null && this.roleFilter != '') {
+        this.elements = this.elements.filter(ele => ele.role == this.roleFilter)
+      }
+
+      if(this.accessFilter != null && this.accessFilter != undefined) {
+        this.elements = this.elements.filter(ele => ele.access == this.accessFilter)
+      }
+
       // this.sortRecords();
       this.dataSource = new MatTableDataSource(this.elements);
     });
@@ -178,6 +196,13 @@ export class TeamComponent implements OnInit {
     }
   }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  filterBySelection() {
+    this.loadData();
+  }
 }
 
 

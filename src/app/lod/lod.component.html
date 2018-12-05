@@ -7,18 +7,20 @@
             </mat-form-field>
       
             <mat-form-field color="white">
-                <mat-select placeholder="Stage">
-                  <mat-option *ngFor="let stage of stages" [value]="stage.key">
-                    {{stage.stage}} 
-                  </mat-option>
+                <mat-select placeholder="Stage" [(ngModel)]="stageFilter" (selectionChange)="filterBySelection()">
+                    <mat-option value="">All</mat-option>
+                    <mat-option *ngFor="let stage of stageDropdown" [value]="stage.key">
+                      {{stage.stage}} 
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
       
             <mat-form-field color="white">
-                  <mat-select placeholder="Lod">
-                    <mat-option *ngFor="let lod of lods" [value]="lod.value">
-                      {{lod.viewValue}}
-                    </mat-option>
+                  <mat-select placeholder="Lod" [(ngModel)]="lodFilter" (selectionChange)="filterBySelection()">
+                      <mat-option value="">All</mat-option>
+                      <mat-option *ngFor="let lod of lodDropdown" [value]="lod.key">
+                        {{lod.disciple}}
+                      </mat-option>
                   </mat-select>
             </mat-form-field>
           </div>
