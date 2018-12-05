@@ -191,6 +191,10 @@ export class ProjectstageComponent implements OnInit {
       this.elements.sort(function(a, b){return a.position - b.position});
     }
   }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
   
 }
 

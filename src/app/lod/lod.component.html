@@ -3,7 +3,7 @@
         <div class="search-form">
           <div>
             <mat-form-field color="white" class="">
-                <input matInput placeholder="Search" value="">
+                <input matInput placeholder="Search" (keyup)="applyFilter($event.target.value)">
             </mat-form-field>
       
             <mat-form-field color="white">

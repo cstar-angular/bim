@@ -23,6 +23,36 @@ export class ProjectbimComponent implements OnInit {
   projectId;
   stages;
 
+  softwares = [
+    "Revit",
+    "Bentley BIM Suite",
+    "SketchUp",
+    "ArchiCAD",
+    "Vectorworks",
+    "Tekla Structures",
+    "Vico Office",
+    "Quantm",
+    "Digital Project",
+    "Cadpipe HVAC",
+    "Fabrication CADMEP",
+    "AutoCAD",
+    "AutoCAD Civil 3D",
+    "Robot",
+    "STAAD Pro",
+    "FloVent",
+    "Fluent",
+    "Sefaira",
+    "Navisworks",
+    "BIM360 Field",
+    "BIM360 Glue",
+    "BIM360 Layout",
+    "BIM360 Plan",
+    "BIM360 Docs",
+    "ProectDox",
+    "Project Wise",
+    "Solibri Model Checker"
+  ];
+
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
@@ -206,6 +236,10 @@ export class ProjectbimComponent implements OnInit {
 
   sortRecords() {
     this.elements.sort(function(a, b){return a.position - b.position});
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }
 

@@ -211,6 +211,10 @@ export class QualityComponent implements OnInit {
     });
     return discipline;
   }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }
 
 export interface TableElement {

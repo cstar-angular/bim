@@ -226,6 +226,10 @@ export class LodComponent implements OnInit {
   getRandomColorHex() {
     return '#'+(Math.random()*0xFFFFFF<<0).toString(16);
   }
+  
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }
 
 export interface TableElement {
