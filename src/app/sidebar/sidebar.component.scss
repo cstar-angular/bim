@@ -6,16 +6,21 @@
     flex-direction: column;
 
     .project-thumb {
+        background: #595959;
+        
         img {
             width: 100%;
         }
 
         .mat-icon {
-            width: 100%;
+            width: 70px;
             color: #ffffff;
-            font-size: 10em;
-            padding: 50px 0;
-            text-align: center
+            font-size: 5em;
+            padding: 50% 0;
+            margin: auto;
+            text-align: center;
+            display: flex;
+            align-items: center;
         }
 
         #load_project_img {

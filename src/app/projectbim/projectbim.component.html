@@ -83,7 +83,7 @@
           <ng-container matColumnDef="software">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Software </th>
             <td mat-cell *matCellDef="let element">
-              <span *ngIf="element.key != editableKey" class="bg-gray">{{element.software}}</span>
+              <span *ngIf="element.key != editableKey" class="bg-gray colored">{{element.software}}</span>
               <mat-form-field *ngIf="element.key == editableKey">
                 <mat-select placeholder="Software" [(ngModel)]="element.software">
                     <mat-option *ngFor="let software of softwares" [value]="software">
@@ -98,7 +98,7 @@
           <ng-container matColumnDef="version">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Version </th>
             <td mat-cell *matCellDef="let element">
-              <span *ngIf="element.key != editableKey" class="bg-gray">{{element.version}}</span>
+              <span *ngIf="element.key != editableKey" class="bg-gray colored">{{element.version}}</span>
               <mat-form-field *ngIf="element.key == editableKey">
                 <input matInput [(ngModel)]="element.version" required>
               </mat-form-field>
@@ -109,7 +109,7 @@
           <ng-container matColumnDef="format">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Formats</th>
             <td mat-cell *matCellDef="let element">
-              <span *ngIf="element.key != editableKey" class="bg-gray">{{element.format}}</span>
+              <span *ngIf="element.key != editableKey" class="bg-gray colored">{{element.format}}</span>
               <mat-form-field *ngIf="element.key == editableKey">
                 <input matInput [(ngModel)]="element.format" required>
               </mat-form-field>
