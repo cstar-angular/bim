@@ -323,6 +323,15 @@ button.primary {
         bottom: 5px;
       }
 
+      .mat-form-field-disabled {
+        &.bg-white {
+          .mat-form-field-wrapper {
+            .mat-form-field-flex {
+              background: #ffffff;
+            }
+          }
+        }
+      }
     }
   }
 
@@ -348,7 +357,7 @@ button.primary {
   .mat-dialog-actions button {
     margin-left: 20px;
   }
-  
+
   .mat-form-field {
     .mat-form-field-wrapper {
         .mat-form-field-flex {
