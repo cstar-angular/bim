@@ -5,6 +5,7 @@ import { ProjectprofileService } from './projectprofile.service';
 import { ProjectProfile } from './projectprofile';
 import { DropdownService } from '../_services/dropdown.service';
 import { DatabaseService } from '../_services/database.service';
+import { ApiService } from '../_services/api.service';
 import { Observable, from } from 'rxjs';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { Evented, Event } from '../_services/evented';
@@ -48,6 +49,7 @@ export class ProjectprofileComponent implements OnInit {
     private router: Router,
     private location: Location,
     private databaseService: DatabaseService,
+    private apiService: ApiService,
     private projectprofileService: ProjectprofileService,
     private dropdownService: DropdownService,
     private authService: AuthService,
@@ -74,6 +76,7 @@ export class ProjectprofileComponent implements OnInit {
     
       this.isEditable=false;
 
+      // Get the permission to edit the project
       this.projectprofileService.getProjectProfile(this.projectKey).valueChanges().subscribe(data => {
         this.project = data;
         if (this.project.created_by == this.currentUser.uid) {
@@ -86,11 +89,12 @@ export class ProjectprofileComponent implements OnInit {
     }
 
     if (this.teamid) {
-      this.databaseService.updateRow('/teams/' + this.projectKey, this.teamid, {uid: this.currentUser.uid});
+      this.databaseService.updateRow('/teams/' + this.projectKey, this.teamid, {uid: this.currentUser.userid});
     }
 
+    // Get the permission to edit the project
     this.projectprofileService.getProjectRoleInfo(this.currentUser.uid, this.projectKey).valueChanges().subscribe((info: any) => {
-      if(info) {
+      if(info && info.length) {
         this.projectRole = info[0].access;
       }
     });
@@ -120,8 +124,26 @@ export class ProjectprofileComponent implements OnInit {
     if (this.projectKey !== null && this.projectKey !== undefined) {
       this.projectprofileService.updateProject(this.projectKey, this.project);
       this.switchEditable();
+      
+      var notificationData = {
+        "sender": this.currentUser.uid,
+        "type": "update",
+        "message": "The Project was updated.",
+        "project": this.projectKey
+      }
+      this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {
+        console.log(result);
+      });
     } else {
       var result = this.projectprofileService.createProject(this.project);
+      
+      var notificationData = {
+        "sender": this.currentUser.uid,
+        "type": "add",
+        "message": "The new Project was added.",
+        "project": this.projectKey
+      }
+      this.apiService.sendRequest('sendNotification', notificationData);
       this.router.navigate(['/project/profile/' + result.ref.key]);
     }
   }
@@ -163,6 +185,14 @@ export class ProjectprofileComponent implements OnInit {
       if(result) {
         this.project.is_archive = true;
         this.projectprofileService.updateProject(this.projectKey, this.project).then( res => console.log(res));
+        
+        var notificationData = {
+          "sender": this.currentUser.uid,
+          "type": "archived",
+          "message": "The Project was archived.",
+          "project": this.projectKey
+        }
+        this.apiService.sendRequest('sendNotification', notificationData);
       }
     });
   }

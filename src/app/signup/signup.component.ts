@@ -81,11 +81,11 @@ export class SignupComponent implements OnInit {
       this.errorMessage = "";
       this.successMessage = "Your account has been created";
 
-      if(this.projectId && this. teamId) {
+      if(this.projectId && this.teamId) {
         if(this.teamInfo) {
-          this.teamInfo.uid = this.afAuth.auth.currentUser.uid;
+          this.teamInfo.userid = this.afAuth.auth.currentUser.uid;
           this.databaseService.updateRow('/teams/' + this.projectId, this.teamId, this.teamInfo);
-          this.databaseService.createRow('/user-project', {userid: this.teamInfo.uid, projectid: this.projectId});
+          this.databaseService.createRow('/user-project', {userid: this.teamInfo.userid, projectid: this.projectId});
         }
       }
       

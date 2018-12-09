@@ -40,7 +40,7 @@ export class ProjectprofileService {
   }
 
   getProjectRoleInfo(userId: string, projectId: string) {
-    return this.db.list('/teams/' + projectId, ref => ref.orderByChild('uid').equalTo(userId));
+    return this.db.list('/teams/' + projectId, ref => ref.orderByChild('userid').equalTo(userId));
   }
  
   private handleError(error) {

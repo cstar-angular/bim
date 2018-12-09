@@ -21,7 +21,6 @@ export class NotificationItemComponent implements OnInit {
 
   ngOnInit() {
     var now = new Date().getTime();
-    console.log(now);
     
     var diff = now - this.notification.created;
     var diff1 = Math.floor(diff / 1000 / 3600 / 24);

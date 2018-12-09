@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { DatabaseService } from '../../_services/database.service';
+import { ApiService } from '../../_services/api.service';
 import { ProjectprofileService } from '../../projectprofile/projectprofile.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../_services/auth.service';
-import { ApiService } from '../../_services/api.service';
 
 @Component({
   selector: 'app-team',
@@ -122,8 +122,19 @@ export class TeamComponent implements OnInit {
       this.dataSource.sort = this.sort;
     }
     
+    // Get the permission to edit the project
+    if (this.projectKey !== null) {
+
+      this.projectprofileService.getProjectProfile(this.projectKey).valueChanges().subscribe(data => {
+        if (data.created_by == this.currentUser.uid) {
+          this.projectRole = 1;
+        }
+      });
+      
+    }
+
     this.projectprofileService.getProjectRoleInfo(this.currentUser.uid, this.projectKey).valueChanges().subscribe((info: any) => {
-      if(info) {
+      if(info && info.length) {
         this.projectRole = info[0].access;
       }
     });
@@ -188,23 +199,17 @@ export class TeamComponent implements OnInit {
             "teamid": element.key,
             "project": this.projectId
           };
-          this.apiService.sendRequest("sendInvitation",param).subscribe(data => {console.log(param);
-            console.log(data);
-          });
+          this.apiService.sendRequest("sendInvitation",param).subscribe(result => {});
           // create fake account or insert key into team member
-          // notification send
-
         }
       }
 
       if(element.key == this.editableKey) {
         if(element.name && element.company && element.email) {
           element.is_new = false;
-          console.log(element);
           this.databaseService.updateRow(this.tablePath, this.editableKey, element);
 
           // send update email
-          // notification send
         }
       }
     }

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatabaseService } from '../../_services/database.service';
+import { ApiService } from '../../_services/api.service';
 import { ProjectprofileService } from '../../projectprofile/projectprofile.service';
 import { map } from 'rxjs/operators';
 import { MatTableDataSource, MatSort } from '@angular/material';
@@ -33,6 +34,7 @@ export class MatrixComponent implements OnInit {
     private activedRoute: ActivatedRoute,
     private router: Router,
     private databaseService: DatabaseService,
+    private apiService: ApiService,
     private projectprofileService: ProjectprofileService,
     private authService: AuthService
   ) {
@@ -53,8 +55,19 @@ export class MatrixComponent implements OnInit {
         this.loadConfigurations();
         // this.loadData();
 
+        // Get the permission to edit the project
+        if (this.projectKey !== null) {
+
+          this.projectprofileService.getProjectProfile(this.projectKey).valueChanges().subscribe(data => {
+            if (data.created_by == this.currentUser.uid) {
+              this.projectRole = 1;
+            }
+          });
+          
+        }
+
         this.projectprofileService.getProjectRoleInfo(this.currentUser.uid, this.projectKey).valueChanges().subscribe((info: any) => {
-          if(info) {
+          if(info && info.length) {
             this.projectRole = info[0].access;
           }
         });
@@ -122,7 +135,7 @@ export class MatrixComponent implements OnInit {
       element['key'] = row.key;
       element['matrix'] = tempRow;
       elements.push(element)
-    });
+    });console.log(this.lods);
    this.dataSource = new MatTableDataSource(elements);
   }
 
