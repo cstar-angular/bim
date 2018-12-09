@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { DatabaseService } from '../../_services/database.service';
+import { ApiService } from '../../_services/api.service';
 import { ProjectprofileService } from '../../projectprofile/projectprofile.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../_services/auth.service';
@@ -44,6 +45,7 @@ export class MeetingComponent implements OnInit {
   constructor(
     private activedRoute: ActivatedRoute,
     private databaseService: DatabaseService,
+    private apiService: ApiService,
     private projectprofileService: ProjectprofileService,
     private authService: AuthService,
     private router: Router
@@ -87,8 +89,19 @@ export class MeetingComponent implements OnInit {
       this.dataSource.sort = this.sort;
     }
     
+    // Get the permission to edit the project
+    if (this.projectKey !== null) {
+
+      this.projectprofileService.getProjectProfile(this.projectKey).valueChanges().subscribe(data => {
+        if (data.created_by == this.currentUser.uid) {
+          this.projectRole = 1;
+        }
+      });
+      
+    }
+
     this.projectprofileService.getProjectRoleInfo(this.currentUser.uid, this.projectKey).valueChanges().subscribe((info: any) => {
-      if(info) {
+      if(info && info.length) {
         this.projectRole = info[0].access;
       }
     });
@@ -163,10 +176,26 @@ export class MeetingComponent implements OnInit {
         var result = this.databaseService.createRow(this.tablePath, stage);
         stage.key = result.key;
         this.databaseService.updateRow(this.tablePath, result.key, stage);
+        
+        var notificationData = {
+          "sender": this.currentUser.uid,
+          "type": "add",
+          "message": "The new Meeting was added.",
+          "project": this.projectKey
+        }
+        this.apiService.sendRequest('sendNotification', notificationData);
       }
 
       if(stage.key == this.editableKey) {
         this.databaseService.updateRow(this.tablePath, this.editableKey, stage);
+        
+        var notificationData = {
+          "sender": this.currentUser.uid,
+          "type": "update",
+          "message": "The Project Meeting was updated.",
+          "project": this.projectKey
+        }
+        this.apiService.sendRequest('sendNotification', notificationData);
       }
     }
 

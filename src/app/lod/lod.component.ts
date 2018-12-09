@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { DatabaseService } from '../_services/database.service';
+import { ApiService } from '../_services/api.service';
 import { ProjectprofileService } from '../projectprofile/projectprofile.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../_services/auth.service';
@@ -43,6 +44,7 @@ export class LodComponent implements OnInit {
   constructor(
     private activedRoute: ActivatedRoute,
     private databaseService: DatabaseService,
+    private apiService: ApiService,
     private projectprofileService: ProjectprofileService,
     private authService: AuthService,
     private router: Router
@@ -105,9 +107,20 @@ export class LodComponent implements OnInit {
     if(this.dataSource) {
       this.dataSource.sort = this.sort;
     }
-    
+
+    // Get the permission to edit the project
+    if (this.projectKey !== null) {
+
+      this.projectprofileService.getProjectProfile(this.projectKey).valueChanges().subscribe(data => {
+        if (data.created_by == this.currentUser.uid) {
+          this.projectRole = 1;
+        }
+      });
+
+    }
+
     this.projectprofileService.getProjectRoleInfo(this.currentUser.uid, this.projectKey).valueChanges().subscribe((info: any) => {
-      if(info) {
+      if(info && info.length) {
         this.projectRole = info[0].access;
       }
     });
@@ -192,12 +205,28 @@ export class LodComponent implements OnInit {
           element.key = result.key;
           element.is_new = false;
           this.databaseService.updateRow(this.tablePath, result.key, element);
+
+          var notificationData = {
+            "sender": this.currentUser.uid,
+            "type": "add",
+            "message": "The new LOD data was added.",
+            "project": this.projectKey
+          }
+          this.apiService.sendRequest('sendNotification', notificationData);
         }
       }
 
       if(element.key == this.editableKey) {
         if(element.disciple && element.code) {
           this.databaseService.updateRow(this.tablePath, this.editableKey, element);
+          
+          var notificationData = {
+            "sender": this.currentUser.uid,
+            "type": "update",
+            "message": "The new LOD data was updated.",
+            "project": this.projectKey
+          }
+          this.apiService.sendRequest('sendNotification', notificationData);
         }
       }
     }

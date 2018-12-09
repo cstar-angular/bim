@@ -6,6 +6,8 @@
         <span class="user-name" *ngIf="userProfile">{{userProfile.name}}</span>
         <span class="noti-type-invite" *ngIf="notification.type == 'invite'"> invited you to</span>
         <span class="noti-type-comment" *ngIf="notification.type == 'comment'"> commented on</span>
+        <span class="noti-type-comment" *ngIf="notification.type == 'add'"> added on</span>
+        <span class="noti-type-comment" *ngIf="notification.type == 'update'"> updated on</span>
       </div>
       <div>
         {{notification.message}}

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { DatabaseService } from '../_services/database.service';
+import { ApiService } from '../_services/api.service';
 import { ProjectprofileService } from '../projectprofile/projectprofile.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../_services/auth.service';
@@ -33,6 +34,7 @@ export class ProjectstageComponent implements OnInit {
   constructor(
     private activedRoute: ActivatedRoute,
     private databaseService: DatabaseService,
+    private apiService: ApiService,
     private projectprofileService: ProjectprofileService,
     private authService: AuthService,
     private router: Router
@@ -75,9 +77,20 @@ export class ProjectstageComponent implements OnInit {
     if(this.dataSource) {
       this.dataSource.sort = this.sort;
     }
-    console.log(this.currentUser.uid);
-    this.projectprofileService.getProjectRoleInfo(this.currentUser.uid, this.projectKey).valueChanges().subscribe((info: any) => {console.log(info);
-      if(info) {
+    
+    // Get the permission to edit the project
+    if (this.projectKey !== null) {
+
+      this.projectprofileService.getProjectProfile(this.projectKey).valueChanges().subscribe(data => {
+        if (data.created_by == this.currentUser.uid) {
+          this.projectRole = 1;
+        }
+      });
+      
+    }
+
+    this.projectprofileService.getProjectRoleInfo(this.currentUser.uid, this.projectKey).valueChanges().subscribe((info: any) => {
+      if(info && info.length) {
         this.projectRole = info[0].access;
       }
     });
@@ -152,10 +165,26 @@ export class ProjectstageComponent implements OnInit {
         var result = this.databaseService.createRow(this.tablePath, element);
         element.key = result.key;
         this.databaseService.updateRow(this.tablePath, result.key, element);
+        
+        var notificationData = {
+          "sender": this.currentUser.uid,
+          "type": "add",
+          "message": "The new Project Stage was added.",
+          "project": this.projectKey
+        }
+        this.apiService.sendRequest('sendNotification', notificationData);
       }
 
       if(element.key == this.editableKey) {
         this.databaseService.updateRow(this.tablePath, this.editableKey, element);
+        
+        var notificationData = {
+          "sender": this.currentUser.uid,
+          "type": "update",
+          "message": "The Project Stage data was updated.",
+          "project": this.projectKey
+        }
+        this.apiService.sendRequest('sendNotification', notificationData);
       }
     }
 
