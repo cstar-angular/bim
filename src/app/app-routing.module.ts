@@ -19,6 +19,7 @@ import { ExpiredComponent } from './expired/expired.component'
 import { UpgradeComponent } from './upgrade/upgrade.component';
 import { MatrixComponent } from './project/matrix/matrix.component';
 import { QualityComponent } from './project/quality/quality.component';
+import { InviteComponent } from './project/team/invite/invite.component';
 
 
 const routes: Routes = [
@@ -38,6 +39,10 @@ const routes: Routes = [
       },
       {
         path: 'signup',
+        component: SignupComponent
+      },  
+      {
+        path: 'signup/:pid/:teamid',
         component: SignupComponent
       },      
       {
@@ -105,7 +110,11 @@ const routes: Routes = [
         path: 'upgrade',
         component: UpgradeComponent,
         canActivate: [AuthGuard]
-      }
+      },
+      {
+        path: 'invite/:pid/:teamid',
+        component: InviteComponent
+      },
       
     ], 
   }

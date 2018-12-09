@@ -6,9 +6,7 @@ import { ProjectProfile } from './projectprofile';
 import { DropdownService } from '../_services/dropdown.service';
 import { DatabaseService } from '../_services/database.service';
 import { Observable, from } from 'rxjs';
-import { map } from 'rxjs/operators';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { AngularFireDatabase } from 'angularfire2/database';
 import { Evented, Event } from '../_services/evented';
 import { AuthService } from '../_services/auth.service';
 
@@ -40,6 +38,10 @@ export class ProjectprofileComponent implements OnInit {
 
   isEditable = true;
   message;
+  teamid;
+  
+  currentUser;
+  projectRole;
 
   constructor(
     private activedRoute: ActivatedRoute,
@@ -52,6 +54,7 @@ export class ProjectprofileComponent implements OnInit {
     public dialog: MatDialog
   ) {
     this.projectKey = this.activedRoute.snapshot.params['id'];
+    this.teamid = this.activedRoute.snapshot.params['teamid'];
   }
 
   ngOnInit() {
@@ -64,6 +67,8 @@ export class ProjectprofileComponent implements OnInit {
     this.angles = this.dropdownService.getAngles().valueChanges();
     this.roundings = this.dropdownService.getRoundings().valueChanges();
 
+    this.currentUser = this.authService.getAuthUser();
+
     // Fetch project profile information
     if (this.projectKey !== null && this.projectKey !== undefined) {
     
@@ -71,11 +76,24 @@ export class ProjectprofileComponent implements OnInit {
 
       this.projectprofileService.getProjectProfile(this.projectKey).valueChanges().subscribe(data => {
         this.project = data;
+        if (this.project.created_by == this.currentUser.uid) {
+          this.projectRole = 1;
+        }
       });
     } else {
       this.project = new ProjectProfile();
       this.project.created_by = this.authService.getAuthUser().uid;
     }
+
+    if (this.teamid) {
+      this.databaseService.updateRow('/teams/' + this.projectKey, this.teamid, {uid: this.currentUser.uid});
+    }
+
+    this.projectprofileService.getProjectRoleInfo(this.currentUser.uid, this.projectKey).valueChanges().subscribe((info: any) => {
+      if(info) {
+        this.projectRole = info[0].access;
+      }
+    });
 
     Evented.on('updateProjectImage', (e: Event<{imgUrl: any}>) => {
       this.project.thumb_image = e.args.imgUrl;

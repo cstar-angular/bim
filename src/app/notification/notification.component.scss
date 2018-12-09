@@ -47,6 +47,8 @@
         .notifications-container{
             background: #3B3838;
             border-radius: 5px;
+            max-height: 420px;
+            overflow: scroll;
             .header{
                 display: flex;
                 justify-content: flex-end;

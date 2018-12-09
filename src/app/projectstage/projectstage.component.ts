@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { DatabaseService } from '../_services/database.service';
-import { map } from 'rxjs/operators';
-import { Statement } from '@angular/compiler';
-import { Router } from '@angular/router';
+import { ProjectprofileService } from '../projectprofile/projectprofile.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-projectstage',
@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class ProjectstageComponent implements OnInit {
 
+  projectKey = null;
   tablePath = '/stages';
 
   isEditable = false;
@@ -26,10 +27,19 @@ export class ProjectstageComponent implements OnInit {
 
   projectId;
 
+  currentUser;
+  projectRole;
+
   constructor(
+    private activedRoute: ActivatedRoute,
     private databaseService: DatabaseService,
+    private projectprofileService: ProjectprofileService,
+    private authService: AuthService,
     private router: Router
-  ) { }
+  ) {
+    this.projectKey = this.activedRoute.snapshot.params['id'];
+    this.currentUser = this.authService.getAuthUser();
+  }
 
   ngOnInit() {
 
@@ -37,7 +47,7 @@ export class ProjectstageComponent implements OnInit {
     var urlItems = url.split('/');
 
     if(urlItems.length >= 4) {
-      this. projectId = urlItems[3];
+      this.projectId = urlItems[3];
 
       this.databaseService.getRowDetails('projects' , this.projectId).valueChanges().subscribe(data => {
        if (data) {
@@ -65,6 +75,13 @@ export class ProjectstageComponent implements OnInit {
     if(this.dataSource) {
       this.dataSource.sort = this.sort;
     }
+    console.log(this.currentUser.uid);
+    this.projectprofileService.getProjectRoleInfo(this.currentUser.uid, this.projectKey).valueChanges().subscribe((info: any) => {console.log(info);
+      if(info) {
+        this.projectRole = info[0].access;
+      }
+    });
+
   }
 
   switchEditable() {

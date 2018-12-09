@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatabaseService } from '../../_services/database.service';
+import { ProjectprofileService } from '../../projectprofile/projectprofile.service';
 import { map } from 'rxjs/operators';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { AuthService } from '../../_services/auth.service';
 
 @Component({
   selector: 'app-matrix',
@@ -11,6 +13,7 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 })
 export class MatrixComponent implements OnInit {
 
+  projectKey = null;
   configurations;
   selectedConfiguration;
   lods;
@@ -21,11 +24,21 @@ export class MatrixComponent implements OnInit {
   tempMatrix;
   isEditable = false;
   
+  currentUser;
+  projectRole;
+
   @ViewChild(MatSort) sort: MatSort;
+
   constructor(
+    private activedRoute: ActivatedRoute,
     private router: Router,
-    private databaseService: DatabaseService
-  ) { }
+    private databaseService: DatabaseService,
+    private projectprofileService: ProjectprofileService,
+    private authService: AuthService
+  ) {
+    this.projectKey = this.activedRoute.snapshot.params['id'];
+    this.currentUser = this.authService.getAuthUser();
+  }
 
   ngOnInit() {
     var url = this.router.url;
@@ -40,6 +53,12 @@ export class MatrixComponent implements OnInit {
         this.loadConfigurations();
         // this.loadData();
 
+        this.projectprofileService.getProjectRoleInfo(this.currentUser.uid, this.projectKey).valueChanges().subscribe((info: any) => {
+          if(info) {
+            this.projectRole = info[0].access;
+          }
+        });
+  
        }else {
         this.router.navigate(['/']);
        }

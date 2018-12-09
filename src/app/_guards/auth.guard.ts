@@ -5,6 +5,7 @@ import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { AuthService } from '../_services/auth.service';
 import { map } from 'rxjs/operators';
+import { ThrowStmt } from '@angular/compiler';
 
 
 @Injectable({
@@ -23,9 +24,9 @@ export class AuthGuard implements CanActivate {
     
     return this.authService.isSignedInStream.pipe(
       map<boolean, boolean>((isSignedIn: boolean) => {
-
+        
         if (!isSignedIn) {
-          this.router.navigate(['/signin']);
+          this.router.navigate(['signin']);
         }
         
         var url = this.router.url;

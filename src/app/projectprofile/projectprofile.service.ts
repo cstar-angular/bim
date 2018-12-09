@@ -38,6 +38,10 @@ export class ProjectprofileService {
   getProjectProfile(key: string): any {
     return  this.db.object(this.dbPath + "/" + key);
   }
+
+  getProjectRoleInfo(userId: string, projectId: string) {
+    return this.db.list('/teams/' + projectId, ref => ref.orderByChild('uid').equalTo(userId));
+  }
  
   private handleError(error) {
     console.log(error);

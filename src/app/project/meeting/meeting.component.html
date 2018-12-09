@@ -6,7 +6,7 @@
                     <input matInput placeholder="Search" (keyup)="applyFilter($event.target.value)">
                 </mat-form-field>
             </div>
-            <div>
+            <div *ngIf="projectRole == 1">
                 <button mat-stroked-button color="blue" *ngIf="!isEditable" (click)="switchEditable()">Edit</button>
                 <button mat-raised-button color="blue" *ngIf="isEditable" (click)="switchEditable()">Done</button>
             </div>        
