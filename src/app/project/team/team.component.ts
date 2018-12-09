@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { DatabaseService } from '../../_services/database.service';
-import { Router } from '@angular/router';
-import { isNgTemplate } from '@angular/compiler';
+import { ProjectprofileService } from '../../projectprofile/projectprofile.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../_services/auth.service';
+import { ApiService } from '../../_services/api.service';
 
 @Component({
   selector: 'app-team',
@@ -12,6 +13,7 @@ import { AuthService } from '../../_services/auth.service';
 })
 export class TeamComponent implements OnInit {
 
+  projectKey = null;
   tablePath = '/teams';
   isEditable = false;
   elements: TableElement[];
@@ -47,13 +49,22 @@ export class TeamComponent implements OnInit {
     {key: 1, val: 'Editor'}
   ];
 
+  currentUser;
+  projectRole;
+
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
+    private activedRoute: ActivatedRoute,
     private databaseService: DatabaseService,
+    private projectprofileService: ProjectprofileService,
     private router: Router,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+    private apiService: ApiService
+  ) {
+    this.projectKey = this.activedRoute.snapshot.params['id'];
+    this.currentUser = this.authService.getAuthUser();
+  }
 
   ngOnInit() {
     var url = this.router.url;
@@ -110,6 +121,13 @@ export class TeamComponent implements OnInit {
     if(this.dataSource) {
       this.dataSource.sort = this.sort;
     }
+    
+    this.projectprofileService.getProjectRoleInfo(this.currentUser.uid, this.projectKey).valueChanges().subscribe((info: any) => {
+      if(info) {
+        this.projectRole = info[0].access;
+      }
+    });
+
   }
 
   switchEditable() {
@@ -166,14 +184,23 @@ export class TeamComponent implements OnInit {
           this.databaseService.updateRow(this.tablePath, result.key, element);
 
           // send invite email
+          var param = {
+            "teamid": element.key,
+            "project": this.projectId
+          };
+          this.apiService.sendRequest("sendInvitation",param).subscribe(data => {console.log(param);
+            console.log(data);
+          });
           // create fake account or insert key into team member
           // notification send
+
         }
       }
 
       if(element.key == this.editableKey) {
         if(element.name && element.company && element.email) {
           element.is_new = false;
+          console.log(element);
           this.databaseService.updateRow(this.tablePath, this.editableKey, element);
 
           // send update email

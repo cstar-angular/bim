@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { DatabaseService } from '../../_services/database.service';
+import { ProjectprofileService } from '../../projectprofile/projectprofile.service';
 import { AuthService } from '../../_services/auth.service';
 import { UserProfile } from '../../user/profile';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-quality',
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class QualityComponent implements OnInit {
 
+  projectKey = null;
   tablePath = '/quality';
 
   isEditable = false;
@@ -28,13 +30,20 @@ export class QualityComponent implements OnInit {
 
   projectId;
 
+  projectRole;
+
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
+    private activedRoute: ActivatedRoute,
     private databaseService: DatabaseService,
+    private projectprofileService: ProjectprofileService,
     private auth: AuthService,
     private router: Router
-  ) { }
+  ) {
+    this.projectKey = this.activedRoute.snapshot.params['id'];
+    this.currentUser = this.auth.getAuthUser();
+  }
 
   ngOnInit() {
     
@@ -83,6 +92,13 @@ export class QualityComponent implements OnInit {
     if(this.dataSource) {
       this.dataSource.sort = this.sort;
     }
+    
+    this.projectprofileService.getProjectRoleInfo(this.currentUser.uid, this.projectKey).valueChanges().subscribe((info: any) => {
+      if(info) {
+        this.projectRole = info[0].access;
+      }
+    });
+
   }
 
   switchEditable() {

@@ -51,6 +51,7 @@ import { UseravatarComponent } from './project/quality/useravatar/useravatar.com
 import { NotificationComponent } from './notification/notification.component';
 import { NotificationItemComponent } from './notification/notification-item/notification-item.component';
 import { CellpickerComponent } from './project/matrix/cellpicker/cellpicker.component';
+import { InviteComponent } from './project/team/invite/invite.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { CellpickerComponent } from './project/matrix/cellpicker/cellpicker.comp
     UseravatarComponent,
     NotificationComponent,
     NotificationItemComponent,
-    CellpickerComponent
+    CellpickerComponent,
+    InviteComponent
   ],
   imports: [
     BrowserModule,

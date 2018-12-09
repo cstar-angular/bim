@@ -196,7 +196,7 @@
           </div>
       </div>
   
-      <div class="actions">
+      <div *ngIf="projectRole == 1" class="actions">
         <button mat-raised-button color="blue" *ngIf="isEditable" (click)="saveProject()">Save Project</button>
         <button mat-stroked-button color="blue" *ngIf="isEditable" (click)="cancel()">Cancel</button>
         <button mat-stroked-button color="blue" *ngIf="!isEditable" (click)="switchEditable()">Edit</button>

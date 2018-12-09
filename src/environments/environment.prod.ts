@@ -8,6 +8,7 @@ export const environment = {
     storageBucket: "bimbackend.appspot.com",
     messagingSenderId: "315609333100"
   },
-  stripeKey: 'pk_test_XopyJS2ntwqB3j7bd6mzHRSn'
+  stripeKey: 'pk_test_XopyJS2ntwqB3j7bd6mzHRSn',
+  apiUrl: 'https://us-central1-bimbackend.cloudfunctions.net/'
   
 };

@@ -1,5 +1,5 @@
 <div class="home row" layout="row">
-    <div flex *ngFor="let project of projects | async " class="col-md-2 card-div" (click)="gotourl('/project/profile/' + project.key)">
+    <div flex *ngFor="let project of projects" class="col-md-2 card-div" (click)="gotourl('/project/profile/' + project.key)">
         <mat-card class="project-card">
             <mat-card-header>
                 <mat-card-title>{{ project.number }}</mat-card-title>
@@ -21,5 +21,19 @@
         </mat-card-content>
       </mat-card>
     </div>
-        
+</div>
+
+<div class="home row" layout="row">
+    <div flex *ngFor="let project of invitedProjects" class="col-md-2 card-div" (click)="gotourl('/project/profile/' + project.key)">
+        <mat-card class="project-card">
+            <mat-card-header>
+                <mat-card-title>{{ project.number }}</mat-card-title>
+                <mat-card-subtitle>{{ project.name }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <img mat-card-image *ngIf="project.thumb_image" [src]="project.thumb_image" [alt]="project.name">
+                <img mat-card-image *ngIf="!project.thumb_image" src="https://material.angular.io/assets/img/examples/shiba2.jpg" [alt]="project.name">
+            </mat-card-content>
+        </mat-card>
+    </div>
 </div>
