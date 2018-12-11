@@ -79,6 +79,14 @@ button.primary {
   text-align: center;
 }
 
+.text-right {
+  text-align: right;
+}
+
+.text-light {
+  font-family: "AvenirLTStd-Roman", sans-serif;
+}
+
 *::-webkit-scrollbar {
   width: 10px;
 }
@@ -119,10 +127,17 @@ button.primary {
     .mat-form-field-flex {
       background: #ffffff;
       
+      .mat-form-field-infix {
+        border-top: 0;
+        padding: .8375em 0;
+      }
+
       .mat-form-field-label {
         color: #000000;
         padding-left: 10px;
         padding-right: 10px;
+        top: .38125em;
+        line-height: 50px;
       }
 
       .mat-hint {
@@ -294,12 +309,28 @@ button.primary {
           border: none;
   
           span.colored {
-              padding: 10px 30px;;
+              padding: 10px;
+              width: 100%;
+              display: inline-block;
+              font-family: "AvenirLTStd-Book";
           }
   
+          .mat-form-field {
+            width: 100%;
+          }
+
+          .mat-form-field-infix {
+            width: 100%;
+          }
+
           .mat-form-field-ripple {
             padding: 0;
           }
+
+          .avatar, .avatar-txt {
+            width: 40px;
+            height: 40px;
+        }
         }
       }
 
@@ -307,11 +338,23 @@ button.primary {
         background: #F2F2F2;
       }
       
+      td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+        padding-left: 40px;
+      }
+
+      td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type, th.mat-header-cell:last-of-type {
+        padding-right: 40px;
+      }
+
       .mat-cell, .mat-cell span {
         color: #000000;
         font-weight: bold;
         font-family: "AvenirLTStd-Black";
         text-transform: capitalize;
+
+        .text-light {
+          font-family: "AvenirLTStd-Roman", sans-serif;
+        }
       }
         
       .mat-form-field-wrapper {
@@ -343,6 +386,7 @@ button.primary {
 
   .mat-dialog-title {
     color: #000000;
+    letter-spacing: 0.2em;
   }
 
   .mat-dialog-content {
@@ -442,6 +486,10 @@ app-header .mat-toolbar-multiple-rows {
       color: #ffffff;
     }
 
+    .mat-icon {
+      margin-right: 5px;
+    }
+
     svg {
       color: #ffffff;
     }
@@ -453,6 +501,10 @@ app-header .mat-toolbar-multiple-rows {
 
   .linkedin-sign {
     background: #2876B4;
+
+    .mat-icon {
+      margin-top: -5px;
+    }
   }
 }
 

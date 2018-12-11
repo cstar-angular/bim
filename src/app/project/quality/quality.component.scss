@@ -3,6 +3,31 @@
     display: flex;
     flex-direction: column;
 
+    .mat-column-number {
+        width: 100px;
+    }
+    .mat-column-discipline {
+        width: 150px;
+    }
+    .mat-column-checked_by {
+        width: 100px;
+    }
+    .mat-column-report_date {
+        width: 200px;
+    }
+    .mat-column-visual {
+        width: 100px;
+    }
+    .mat-column-interface {
+        width: 100px;
+    }
+    .mat-column-information {
+        width: 100px;
+    }
+    .mat-column-standards {
+        width: 100px;
+    }
+
     .check-toggle > div {
         width: 30px;
         height: 30px;

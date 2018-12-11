@@ -1,6 +1,6 @@
 <div class="main-content">
   <div class="content-search">
-      <div class="matrix-form">
+      <div class="search-form">
         <div>
           <mat-form-field color="white">
               <mat-select placeholder="Configuration" [(ngModel)]="selectedConfiguration" (selectionChange)="changedConf()">
@@ -37,7 +37,7 @@
         </ng-container>
   
         <ng-container *ngFor="let lod of lods" [matColumnDef]="lod.key">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">
             <div class="header-lods">
               <span>D{{lod.number}}</span>
               <span class="lod-color-span" [style.background]="lod.code_color">{{lod.code}}</span>

@@ -23,7 +23,11 @@ export class NotificationComponent implements OnInit {
 
   ngOnInit() {
     this.userId = this.afAuth.auth.currentUser.uid;
-    this.tablePath += '/' + this.userId;
+    
+    if (this.userId) {
+      this.tablePath += '/' + this.userId;
+    }
+
     this.databaseService.getLists(this.tablePath).valueChanges().subscribe(data => {
       this.isLoading = false;
      this.notifications = data;

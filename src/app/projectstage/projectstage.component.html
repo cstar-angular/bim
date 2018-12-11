@@ -50,7 +50,7 @@
             <td mat-cell *matCellDef="let element"> 
               <span *ngIf="element.key != editableKey" class="bg-gray colored">{{element.start | date }}</span>
               <mat-form-field *ngIf="element.key == editableKey" class="bg-white">
-                  <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="element.start" required disabled>
+                  <input matInput [matDatepicker]="picker" placeholder="" [(ngModel)]="element.start" required disabled>
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker disabled="false"></mat-datepicker>
               </mat-form-field>
@@ -63,7 +63,7 @@
             <td mat-cell *matCellDef="let element"> 
               <span *ngIf="element.key != editableKey" class="bg-gray colored">{{ element.end | date }}</span>
               <mat-form-field *ngIf="element.key == editableKey" class="bg-white">
-                <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="element.end" required disabled>
+                <input matInput [matDatepicker]="picker" placeholder="" [(ngModel)]="element.end" required disabled>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker disabled="false"></mat-datepicker>
               </mat-form-field>
