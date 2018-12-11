@@ -1,47 +1,14 @@
 .main-content {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-
-    .content-search {
-        background: #ffffff;
-
-        .matrix-form {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px;
-
-            .mat-form-field {
-                margin-right: 30px;
-            }
-
-            .mat-button {
-                background: #ffffff;
-                border: 2px solid #215ebb;
-                color: #215ebb;
-            }
-        }
-        
-        .tool-bar {
-            display: flex;
-            flex-direction: row-reverse;
-
-            > div {
-                display: flex;
-                padding: 10px;
-                align-items: center;
-                align-content: center;
-            }
-        }
-    }
-
+    
     .table-container {
         height: 100%;
         width: 100%;
         overflow: auto;
         
         .mat-table {
-
+            th .header-lods span {
+                color: #000000;
+            }
             .mat-header-cell, .mat-cell {
                 color: #000000;
                 padding-left: 10px;
@@ -77,6 +44,7 @@
                     &:nth-child(2) {
                         left: 96px !important;
                         width: 150px;
+                        border-right: 1px solid #e0e0e0;
                     }
 
                 }
@@ -116,7 +84,6 @@
 
 .lod-color-span{
     display: flex;
-    width: 80px;
     justify-content: center;
     align-items: center;
     color: #888;

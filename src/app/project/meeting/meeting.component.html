@@ -49,9 +49,9 @@
           <ng-container matColumnDef="start">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Start </th>
             <td mat-cell *matCellDef="let element"> 
-              <span *ngIf="element.key != editableKey" class="bg-gray colored">{{element.start | date }}</span>
+              <span *ngIf="element.key != editableKey" class="bg-gray colored text-center">{{element.start | date }}</span>
               <mat-form-field *ngIf="element.key == editableKey" class="bg-white">
-                  <input matInput [matDatepicker]="picker" [(ngModel)]="element.start" required disabled>
+                  <input matInput [matDatepicker]="picker" [(ngModel)]="element.start" class="text-center" required disabled>
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker disabled="false"></mat-datepicker>
               </mat-form-field>
@@ -62,9 +62,9 @@
           <ng-container matColumnDef="frequency">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Frequency </th>
             <td mat-cell *matCellDef="let element"> 
-              <span *ngIf="element.key != editableKey" class="bg-gray colored">{{ element.frequency }}</span>
+              <span *ngIf="element.key != editableKey" class="bg-gray colored text-center">{{ element.frequency }}</span>
               <mat-form-field *ngIf="element.key == editableKey">
-                  <mat-select name="meeting_frequency" placeholder="" [(ngModel)]="element.frequency" required aria-required="true">
+                  <mat-select name="meeting_frequency" placeholder="" [(ngModel)]="element.frequency" class="text-center" required aria-required="true">
                       <mat-option *ngFor="let option of frequencyOptions" [value]="option">{{ option }}</mat-option>
                   </mat-select>
               </mat-form-field>

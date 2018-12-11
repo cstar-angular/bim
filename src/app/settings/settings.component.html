@@ -22,21 +22,25 @@
           </p>
         </div>
         <div class="right-side-for-info">
+            <mat-label>* Full Name</mat-label>
           <mat-form-field class="">
-            <input matInput placeholder="*Full Name" [(ngModel)]='userProfile.name'>
+            <input matInput placeholder="" [(ngModel)]='userProfile.name'>
           </mat-form-field>
           
+            <mat-label>* Email</mat-label>  
           <mat-form-field class="">
-            <input matInput placeholder="*Email" [(ngModel)]='userProfile.email'>
+            <input matInput placeholder="" [(ngModel)]='userProfile.email'>
           </mat-form-field>
 
+            <mat-label>Phone Number</mat-label>
           <mat-form-field class="">
             <span matPrefix>+1 &nbsp; |</span>
-            <input type="tel" matInput placeholder="Phone Number" [(ngModel)]='userProfile.phone'>
+            <input type="tel" matInput placeholder="" [(ngModel)]='userProfile.phone'>
           </mat-form-field>
 
+            <mat-label>Company</mat-label>
           <mat-form-field class="">
-            <input matInput placeholder="Company" [(ngModel)]='userProfile.company_name'>
+            <input matInput placeholder="" [(ngModel)]='userProfile.company_name'>
           </mat-form-field>
 
           <div class="update-btn-div">
