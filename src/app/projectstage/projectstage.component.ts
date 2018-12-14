@@ -172,7 +172,7 @@ export class ProjectstageComponent implements OnInit {
           "message": "The new Project Stage was added.",
           "project": this.projectKey
         }
-        this.apiService.sendRequest('sendNotification', notificationData);
+        this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {});
       }
 
       if(element.key == this.editableKey) {
@@ -184,7 +184,7 @@ export class ProjectstageComponent implements OnInit {
           "message": "The Project Stage data was updated.",
           "project": this.projectKey
         }
-        this.apiService.sendRequest('sendNotification', notificationData);
+        this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {});
       }
     }
 

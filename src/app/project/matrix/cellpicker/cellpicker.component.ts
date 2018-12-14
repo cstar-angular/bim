@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, HostListener  } from '@angular/core';
 import { DatabaseService } from '../../../_services/database.service';
+import { ApiService } from '../../../_services/api.service';
 
 @Component({
   selector: 'app-cellpicker',
@@ -13,10 +14,13 @@ export class CellpickerComponent implements OnInit {
   @Input() isAdmin;
   @Input() projectId;
   @Input() configureId;
+  @Input() currentUser;
+
   isOpen = false;
 
   constructor(
-    private databaseService: DatabaseService
+    private databaseService: DatabaseService,
+    private apiService: ApiService,
   ) { }
 
   ngOnInit() {
@@ -90,6 +94,14 @@ export class CellpickerComponent implements OnInit {
     }
     
     this.databaseService.createRowWithKey(path, data);
+
+    var notificationData = {
+      "sender": this.currentUser.uid,
+      "type": "add",
+      "message": "The new Meeting was added.",
+      "project": this.projectId
+    }
+    this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {});
   }
 
 }

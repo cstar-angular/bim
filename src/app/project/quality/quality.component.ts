@@ -189,7 +189,7 @@ export class QualityComponent implements OnInit {
           "message": "The new Project Quality data was added.",
           "project": this.projectKey
         }
-        this.apiService.sendRequest('sendNotification', notificationData);
+        this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {});
       }
 
       if(stage.key == this.editableKey) {
@@ -201,7 +201,7 @@ export class QualityComponent implements OnInit {
           "message": "The Project Quality data was updated.",
           "project": this.projectKey
         }
-        this.apiService.sendRequest('sendNotification', notificationData);
+        this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {});
       }
     }
 

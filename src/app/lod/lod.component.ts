@@ -212,7 +212,7 @@ export class LodComponent implements OnInit {
             "message": "The new LOD data was added.",
             "project": this.projectKey
           }
-          this.apiService.sendRequest('sendNotification', notificationData);
+          this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {});
         }
       }
 
@@ -226,7 +226,7 @@ export class LodComponent implements OnInit {
             "message": "The new LOD data was updated.",
             "project": this.projectKey
           }
-          this.apiService.sendRequest('sendNotification', notificationData);
+          this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {});
         }
       }
     }
