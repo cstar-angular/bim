@@ -172,7 +172,7 @@ export class ProjectconfComponent implements OnInit {
           "message": "The new Project Configuration data was added.",
           "project": this.projectKey
         }
-        this.apiService.sendRequest('sendNotification', notificationData);
+        this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {});
       }
 
       if(stage.key == this.editableKey) {
@@ -184,7 +184,7 @@ export class ProjectconfComponent implements OnInit {
           "message": "The new Project Configuration data was updated.",
           "project": this.projectKey
         }
-        this.apiService.sendRequest('sendNotification', notificationData);
+        this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {});
       }
     }
 

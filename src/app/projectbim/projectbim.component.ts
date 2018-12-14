@@ -222,7 +222,7 @@ export class ProjectbimComponent implements OnInit {
   saveRow() {
     for (let element of this.elements){
       if(element.key == 'newRow') {
-        if(element.bim_use && element.format && element.software && element.version) {
+        if(element.bim_use) {
           element.is_new = false;
           var result = this.databaseService.createRow(this.tablePath, element);
           element.key = result.key;
@@ -234,12 +234,12 @@ export class ProjectbimComponent implements OnInit {
             "message": "The new Project Bim data was added.",
             "project": this.projectKey
           }
-          this.apiService.sendRequest('sendNotification', notificationData);
+          this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {});
         }
       }
 
       if(element.key == this.editableKey) {
-        if(element.bim_use && element.format && element.software && element.version) {
+        if(element.bim_use) {
           element.is_new = false;
           this.databaseService.updateRow(this.tablePath, this.editableKey, element);
           
@@ -249,7 +249,7 @@ export class ProjectbimComponent implements OnInit {
             "message": "The new Project Bim data was updated.",
             "project": this.projectKey
           }
-          this.apiService.sendRequest('sendNotification', notificationData);
+          this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {});
         }
       }
     }
@@ -318,9 +318,9 @@ export interface TableElement {
   number: number;
   bim_use: string;
   check: boolean;
-  software: string;
-  version: string;
-  format: string;
+  software?: string;
+  version?: string;
+  format?: string;
   key?: string;
   position?: number;
   is_new?: boolean

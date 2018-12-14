@@ -183,7 +183,7 @@ export class MeetingComponent implements OnInit {
           "message": "The new Meeting was added.",
           "project": this.projectKey
         }
-        this.apiService.sendRequest('sendNotification', notificationData);
+        this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {});
       }
 
       if(stage.key == this.editableKey) {
@@ -195,7 +195,7 @@ export class MeetingComponent implements OnInit {
           "message": "The Project Meeting was updated.",
           "project": this.projectKey
         }
-        this.apiService.sendRequest('sendNotification', notificationData);
+        this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {});
       }
     }
 
