@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { ApiService } from '../_services/api.service';
 
 @Component({
   selector: 'app-sidebarright',
@@ -36,7 +37,8 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
     private router: Router,
     private chatService: ChatService,
     private afStorage: AngularFireStorage,
-    private auth: AngularFireAuth
+    private auth: AngularFireAuth,
+    private apiService: ApiService
   ) { 
     this.routerEvent = this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
@@ -88,6 +90,15 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
       }
       this.chatService.sendMsg(msgBody, this.projectId, this.urlType);
       this.msgtext = '';
+      
+      var notificationData = {
+        "sender": this.authUser.uid,
+        "type": "comment",
+        "message": "Project commented",
+        "project": this.projectId
+      }
+
+      this.apiService.sendRequest('sendNotification', notificationData).subscribe(data => {});
     }
   }
 
@@ -141,6 +152,14 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
         }
         me.isProgressForuploading = false;
         me.chatService.sendMsg(msgBody, me.projectId, me.urlType);
+        var notificationData = {
+          "sender": me.authUser.uid,
+          "type": "comment",
+          "message": "Project commented",
+          "project": me.projectId
+        }
+  
+        me.apiService.sendRequest('sendNotification', notificationData).subscribe(data => {});
       });
     });   
   }
@@ -166,6 +185,14 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
         }
         me.isProgressForuploading = false;
         me.chatService.sendMsg(msgBody, me.projectId, me.urlType);
+        var notificationData = {
+          "sender": me.authUser.uid,
+          "type": "comment",
+          "message": "Project commented",
+          "project": me.projectId
+        }
+  
+        me.apiService.sendRequest('sendNotification', notificationData).subscribe(data => {});
       });
     });   
   }
