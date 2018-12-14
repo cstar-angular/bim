@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { ProjectProfile } from './projectprofile';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,10 @@ export class ProjectprofileService {
  
   projectsRef: AngularFireList<ProjectProfile> = null;
  
-  constructor(private db: AngularFireDatabase) {
+  constructor(
+    private db: AngularFireDatabase,
+    private http: HttpClient
+    ) {
     this.projectsRef = db.list(this.dbPath);
   }
  
@@ -45,5 +50,14 @@ export class ProjectprofileService {
  
   private handleError(error) {
     console.log(error);
+  }
+
+  saveTemplate(params) {
+    return this.http.post(environment.apiUrl + 'saveTemplate', params);
+  }
+
+  loadTemplate(params) {
+    console.log(params);
+    return this.http.post(environment.apiUrl + 'loadTemplate', params);
   }
 }

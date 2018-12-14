@@ -141,6 +141,54 @@
                 }
             }
 
+            .tab-my-template{
+                padding: 30px 20px;
+
+                .template-title{
+                    display: flex;
+                    .title-name {
+                        width: 150px;
+                        color: black;
+                        font-size: 15px;
+                        font-weight: bold;
+                    }
+
+                    .title-created{
+                        color: black;
+                        font-size: 15px;
+                        font-weight: bold;
+                    }
+                }
+
+                .template-item{
+                    display: flex;
+                    .title-name {
+                        width: 150px;
+                        color: black;
+                        font-size: 15px;
+                        font-weight: bold;
+                    }
+
+                    .title-created{
+                        color: black;
+                        font-size: 15px;
+                        font-weight: bold;
+                    }
+
+                    .title-edit{
+                        margin-left: 40px;
+                        display: flex;
+                        cursor: pointer;
+                    }
+
+                    .title-delete{
+                        margin-left: 40px;
+                        display: flex;
+                        cursor: pointer;
+                    }
+                }
+            }
+
             .tab-apps{
                 padding: 150px 150px;
                 display: flex;

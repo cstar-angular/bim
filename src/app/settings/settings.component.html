@@ -80,6 +80,17 @@
 
     <div class="tab-body-item" *ngIf="activeTab == 'My Templates'">
       <div class="tab-my-template">
+        <p class="template-title">
+          <span class="title-name">Name</span>
+          <span class="title-created">Created on</span>
+        </p>
+
+        <p class="template-item" *ngFor="let template of templates">
+            <span class="title-name">{{template.templatename}}</span>
+            <span class="title-created">{{template.created_at}}</span>
+            <span class="title-edit"><mat-icon class="close-icon">edit</mat-icon>Edit</span>
+            <span class="title-delete" (click)="deleteTemplate(template.key)"><mat-icon class="close-icon">close</mat-icon>Delete</span>
+        </p>
       </div>
     </div>
 
