@@ -7,6 +7,7 @@ import { UserProfile } from '../user/profile';
 import { map } from 'rxjs/operators';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { Router } from '@angular/router';
+import { DatabaseService } from '../_services/database.service';
 
 @Component({
   selector: 'app-settings',
@@ -28,6 +29,8 @@ export class SettingsComponent implements OnInit {
     confirm: '',
     new: ''
   }
+
+  templates;
   
 
   constructor(
@@ -35,7 +38,8 @@ export class SettingsComponent implements OnInit {
     private auth: AngularFireAuth ,
     private authService: AuthService,
     private afStorage: AngularFireStorage,
-    private router: Router
+    private router: Router,
+    private databaseService: DatabaseService
   ) {
     this.authUser = auth.auth.currentUser;
     console.log(this.authUser);
@@ -51,6 +55,16 @@ export class SettingsComponent implements OnInit {
       this.userProfile.company_name = data['company_name'];
       this.userProfile.phone = data['phone'] ? data['phone']: '';
     });
+
+    this.databaseService.getLists('/savedtemplates/' + auth.auth.currentUser.uid).valueChanges().subscribe(data => {
+      this.templates = data;
+      if(this.templates.length > 0) {
+        this.templates.map(template => {
+          var date = new Date(template.created_at);
+          template.created_at = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+        })
+      }
+    })
   }
 
   onNoClick(): void {
@@ -125,6 +139,10 @@ export class SettingsComponent implements OnInit {
       });
     }
     
+  }
+
+  deleteTemplate(key) {
+    this.databaseService.deleteRow('/savedtemplates/' + this.auth.auth.currentUser.uid, key);
   }
 
 }

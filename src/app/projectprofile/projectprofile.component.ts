@@ -70,7 +70,9 @@ export class ProjectprofileComponent implements OnInit {
     this.roundings = this.dropdownService.getRoundings().valueChanges();
 
     this.currentUser = this.authService.getAuthUser();
-
+    this.databaseService.getLists('/savedtemplates/' + this.currentUser.uid).valueChanges().subscribe(data => {
+      this.templates = data;
+    });
     // Fetch project profile information
     if (this.projectKey !== null && this.projectKey !== undefined) {
     
@@ -86,6 +88,7 @@ export class ProjectprofileComponent implements OnInit {
     } else {
       this.project = new ProjectProfile();
       this.project.created_by = this.authService.getAuthUser().uid;
+      this.project.bim_template = 'default';
     }
 
     if (this.teamid) {
@@ -132,7 +135,6 @@ export class ProjectprofileComponent implements OnInit {
         "project": this.projectKey
       }
       this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {
-        console.log(result);
       });
     } else {
       var result = this.projectprofileService.createProject(this.project);
@@ -143,8 +145,17 @@ export class ProjectprofileComponent implements OnInit {
         "message": "The new Project was added.",
         "project": this.projectKey
       }
-      this.apiService.sendRequest('sendNotification', notificationData);
-      this.router.navigate(['/project/profile/' + result.ref.key]);
+
+      var params = {
+        templateid: this.project.bim_template,
+        userid: this.currentUser.uid,
+        projectid: result.ref.key
+      };
+      this.projectprofileService.loadTemplate(params).subscribe(data => {
+        this.router.navigate(['/project/profile/' + result.ref.key]);
+      });
+      // this.apiService.sendRequest('sendNotification', notificationData);
+     
     }
   }
 
@@ -163,13 +174,23 @@ export class ProjectprofileComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      
       if(result) {
-        var template = this.project;
-        template.template_title = result;
-        this.databaseService.createRow('/templates', template).then(result => {
-          if(result.key) {
-            // this.message = "Template was saved successfully!";
-          }
+        
+        // var template = this.project;
+        // template.template_title = result;
+        // this.databaseService.createRow('/templates', template).then(result => {
+        //   if(result.key) {
+        //     // this.message = "Template was saved successfully!";
+        //   }
+        // });
+
+        var param = {
+          projectid: this.projectKey,
+          templatename: result,
+          userid: this.authService.afAuth.auth.currentUser.uid
+        }
+        this.projectprofileService.saveTemplate(param).subscribe(data => {
         });
       }
     });

@@ -176,13 +176,13 @@
           </mat-form-field>
       </div>
 
-      <div class="row">
+      <div class="row" *ngIf="!projectKey">
         <div class="bim-standard">
           <mat-label>BIM Standard</mat-label>
           <mat-form-field>
-              <mat-select name="bim_template" placeholder="" [(ngModel)]="project.bim_template" [disabled]="!isEditable">
-                <mat-option value="option">Default</mat-option>
-                <mat-option *ngFor="let template of templates | async" [value]="template">{{ template }}</mat-option>
+              <mat-select name="bim_template" placeholder="" [(ngModel)]="project.bim_template" [disabled]="!isEditable || projectKey">
+                <mat-option value="default">Default</mat-option>
+                <mat-option *ngFor="let template of templates" [value]="template.key">{{ template.templatename }}</mat-option>
               </mat-select>
               <mat-hint align="end">Note : BIM Standard can not be changed ones saved !</mat-hint>
           </mat-form-field>
@@ -196,7 +196,7 @@
           </div>
       </div>
   
-      <div *ngIf="projectRole == 1" class="actions">
+      <div *ngIf="projectRole == 1 || !projectKey" class="actions">
         <button mat-raised-button color="blue" *ngIf="isEditable" (click)="saveProject()">Save Project</button>
         <button mat-stroked-button color="blue" *ngIf="isEditable" (click)="cancel()">Cancel</button>
         <button mat-stroked-button color="blue" *ngIf="!isEditable" (click)="switchEditable()">Edit</button>
