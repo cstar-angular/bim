@@ -15,6 +15,7 @@ export class CellpickerComponent implements OnInit {
   @Input() projectId;
   @Input() configureId;
   @Input() currentUser;
+  @Input() isEditable;
 
   isOpen = false;
 

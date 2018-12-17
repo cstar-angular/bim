@@ -1,6 +1,6 @@
 <div class="cellpicker">
   <span class="showtext" (click)="toggle()" [ngStyle]="getShowTextColor()">{{ element.matrix[lod.key].status == "NA" ? element.matrix[lod.key].priority :  element.matrix[lod.key].status }}</span>
-  <div class="dropdown" *ngIf="isOpen && isAdmin">
+  <div class="dropdown" *ngIf="isOpen && isAdmin && isEditable">
     <div class="dropdown-item" (click)="changeStatus('High')">
       <span class="color-tile color-tile-high"></span>
       <span class="priority">High</span>
@@ -19,7 +19,7 @@
     </div>
   </div>
 
-  <div class="dropdown" *ngIf="isOpen && !isAdmin">
+  <div class="dropdown" *ngIf="isOpen && !isAdmin && isEditable">
     <div class="dropdown-item" (click)="changeStatus('In progress')">
       <span class="color-tile color-tile-prgress"></span>
       <span class="priority">In progress</span>
