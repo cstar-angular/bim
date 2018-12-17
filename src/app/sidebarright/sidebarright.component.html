@@ -28,8 +28,8 @@
         <input type="file" #files_for_send id="files-for-send" (change)="handleFileInputFile($event.target.files)">
         <mat-icon (click)="popupforImage()">photo_camera</mat-icon>
         <input type="file" #images_for_send accept="image/*" id="images-for-send" (change)="handleFileInput($event.target.files)">
-        <mat-icon (click)="isEmojji = !isEmojji">mood</mat-icon>
-        <emoji-mart (emojiClick)="addEmoji($event)" *ngIf="isEmojji" [style]="{ position: 'absolute', bottom: '20px', right: '20px' }"></emoji-mart>
+        <!-- <mat-icon (click)="isEmojji = !isEmojji">mood</mat-icon>
+        <emoji-mart (emojiClick)="addEmoji($event)" *ngIf="isEmojji" [style]="{ position: 'absolute', bottom: '20px', right: '20px' }"></emoji-mart> -->
       </div>
       <div class="send-button-tool">
         <div class="send-btn-round">

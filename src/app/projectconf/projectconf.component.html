@@ -47,7 +47,7 @@
     
           <!-- Code Column -->
           <ng-container matColumnDef="area">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Area(SqM) </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Area </th>
             <td mat-cell *matCellDef="let element"> 
               <span *ngIf="element.key != editableKey" class="bg-gray colored text-center">{{element.area }}</span>
               <mat-form-field *ngIf="element.key == editableKey">

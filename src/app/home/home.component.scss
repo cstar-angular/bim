@@ -15,6 +15,10 @@
         border-radius: 0;
         background: #262626;
 
+        &.add-card {
+            cursor: pointer;
+        }
+
         .mat-card-header {
             width: 100%;
             padding: 20px 10px;

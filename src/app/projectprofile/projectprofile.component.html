@@ -67,26 +67,22 @@
       </div>
       
       <div class="row">
-          <div class="country">
+          <div class="country" *ngIf="countries">
               <mat-label>* Country</mat-label>
               <mat-form-field>
-                  <mat-select name="country" placeholder="" [value]="project.country" [(ngModel)]="project.country" aria-required="true" [disabled]="!isEditable">
-                      <mat-option value="1">United States</mat-option>
-                      <mat-option value="2">United Kingdom</mat-option>
-                    <mat-option *ngFor="let country of countries | async" [value]="country">{{ country }}</mat-option>
+                  <mat-select name="country" placeholder="" [value]="project.country" [(ngModel)]="project.country" aria-required="true" [disabled]="!isEditable" (selectionChange)="countryChange()" required>
+                        <mat-option *ngFor="let country of countries" [value]="country.id">{{ country.name }}</mat-option>
                   </mat-select>
             </mat-form-field>
           </div>
       </div>
     
       <div class="row">
-          <div class="time-zone">
+          <div class="time-zone" *ngIf="timezones">
               <mat-label>* Project Time zone</mat-label>
               <mat-form-field>
-                  <mat-select name="timezone" placeholder="" [(ngModel)]="project.timezone" aria-required="true" [disabled]="!isEditable">
-                      <mat-option value="1">GMT -08</mat-option>
-                      <mat-option value="2">GMT -05</mat-option>
-                    <mat-option *ngFor="let timezone of timezones | async" [value]="timezone">{{ timezone }}</mat-option>
+                  <mat-select name="timezone" placeholder="" [(ngModel)]="project.timezone" aria-required="true" [disabled]="!isEditable" required>
+                        <mat-option *ngFor="let timezone of timezones" [value]="timezone.name">{{ timezone.name + "  (UTC " + timezone.offsetStr + ")" }}</mat-option>
                   </mat-select>
               </mat-form-field>
           </div>
