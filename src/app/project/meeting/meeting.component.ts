@@ -39,6 +39,21 @@ export class MeetingComponent implements OnInit {
 
   currentUser;
   projectRole;
+  teamMembers;
+
+  roles = [
+    {key: 0, val: 'Owner'},
+    {key: 1, val: 'Architect'},
+    {key: 2, val: 'Engineer'},
+    {key: 3, val: 'BIM Manager'},
+    {key: 4, val: 'BIM Coordinartor'},
+    {key: 5, val: 'BIM Modeller'},
+    {key: 6, val: 'Cost Estimator'},
+    {key: 7, val: 'MEP Engineer'},
+    {key: 0, val: 'Structural Engineer'},
+    {key: 0, val: 'Landscape Designer'},
+    {key: 0, val: 'Project Manager'}
+  ];
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -106,6 +121,11 @@ export class MeetingComponent implements OnInit {
       }
     });
 
+    this.databaseService.getLists('/teams/' + this.projectKey).valueChanges().subscribe(data => {
+      if (data && data.length) {
+        this.teamMembers = data;
+      }
+    });
   }
 
   switchEditable() {
@@ -255,6 +275,14 @@ export class MeetingComponent implements OnInit {
   
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  getOrganizerInfo(memberKey) {
+    this.databaseService.getRowDetails('/teams/' + this.projectKey, memberKey).valueChanges().subscribe(data => {
+      if (data) {
+        return data.company + '/' + this.roles[data.role].val;
+      }
+    });
   }
 }
 

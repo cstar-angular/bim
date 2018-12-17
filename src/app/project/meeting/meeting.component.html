@@ -75,9 +75,11 @@
           <ng-container matColumnDef="organizer">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Organizer </th>
             <td mat-cell *matCellDef="let element">
-              <span *ngIf="element.key != editableKey" class="gray-200">{{element.organizer}}</span>
+              <app-organizer *ngIf="element.key != editableKey" [projectid]="projectKey" [memberid]="element.organizer"></app-organizer>
               <mat-form-field *ngIf="element.key == editableKey">
-                <input matInput [(ngModel)]="element.organizer" required>
+                <mat-select name="meeting_frequency" placeholder="" [(ngModel)]="element.organizer" class="text-center" required aria-required="true">
+                  <mat-option *ngFor="let member of teamMembers" [value]="member.key">{{ member.company }} / {{ roles[member.role].val }}</mat-option>
+              </mat-select>
               </mat-form-field>
             </td>
           </ng-container>

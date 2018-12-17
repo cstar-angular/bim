@@ -27,6 +27,18 @@
     .mat-column-standards {
         width: 100px;
     }
+    .mat-column-remarks {
+        .remarks {
+            display: flex;
+            width: 100%;
+            overflow-x: scroll;
+
+            span {
+                display: flex;
+                // white-space: nowrap;
+            }
+        }
+    }
 
     .check-toggle > div {
         width: 30px;
