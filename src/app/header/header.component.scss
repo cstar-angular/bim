@@ -6,8 +6,8 @@
 }
 
 .sp-line{
-    margin: 0 50px;
-    font-size: 12px;
+    margin: 0;
+    font-size: 20px;
 }
 
 .header.mat-toolbar-row {
@@ -27,6 +27,11 @@
             strong {
                 font-size: 1.2em;
                 color: #ffffff;
+            }
+
+            img {
+                height: 50px;
+                margin-top: 10px;
             }
         }
     }

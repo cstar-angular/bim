@@ -7,9 +7,14 @@
 
     .project-thumb {
         background: #595959;
+        cursor: pointer;
         
         img {
             width: 100%;
+        }
+
+        img.camera {
+            padding: 40%;
         }
 
         .mat-icon {

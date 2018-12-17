@@ -92,7 +92,7 @@ button.primary {
 }
 
 *::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
 }
 
 *::-webkit-scrollbar-track {
@@ -541,3 +541,12 @@ app-header .mat-toolbar-multiple-rows {
   }
 }
 
+.stripe_checkout_app {
+  .Checkout .Header-logoWrap {
+    width: auto !important;
+  }
+  .Checkout .Header-logoBorder {
+    width: auto !important;
+    border-radius: 0;
+  }
+}

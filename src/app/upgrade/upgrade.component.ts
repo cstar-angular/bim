@@ -52,7 +52,7 @@ export class UpgradeComponent implements OnInit {
 
     this.handler = StripeCheckout.configure({
       key: environment.stripeKey,
-      image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+      image: '/assets/images/logo-stripe.png',
       locale: 'auto',
       token: token => {
         this.upgradeService.processPayment(token, this.amount * 50 * 100, this.value);

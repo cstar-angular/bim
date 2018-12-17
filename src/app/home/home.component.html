@@ -7,7 +7,7 @@
             </mat-card-header>
             <mat-card-content>
                 <img mat-card-image *ngIf="project.thumb_image" [src]="project.thumb_image" [alt]="project.name">
-              <img mat-card-image *ngIf="!project.thumb_image" src="https://material.angular.io/assets/img/examples/shiba2.jpg" [alt]="project.name">
+              <img mat-card-image *ngIf="!project.thumb_image" [alt]="project.name" class="empty">
             </mat-card-content>
         </mat-card>
     </div>
@@ -32,7 +32,7 @@
             </mat-card-header>
             <mat-card-content>
                 <img mat-card-image *ngIf="project.thumb_image" [src]="project.thumb_image" [alt]="project.name">
-                <img mat-card-image *ngIf="!project.thumb_image" src="https://material.angular.io/assets/img/examples/shiba2.jpg" [alt]="project.name">
+                <img mat-card-image *ngIf="!project.thumb_image" [alt]="project.name" class="empty">
             </mat-card-content>
         </mat-card>
     </div>
