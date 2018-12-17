@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   projects = [];
   invitedProjects = [];
   currentUser = this.authService.getAuthUser();
+  maxCount = 1;
 
   constructor(
     private router: Router,
@@ -32,25 +33,24 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
 
     // Decide the project count by membership
-    var maxCount = 5;
     if (this.currentUser && this.currentUser.membership) {
-      maxCount = this.currentUser.membership.type;
+      this.maxCount = this.currentUser.membership.type;
     }
 
     this.projectService.getProjectsList().snapshotChanges().pipe(
       map(changes => 
-        changes.map(c => ({ key: c.payload.key, ...c.payload.val() })).filter(proj => proj.created_by == this.currentUser.uid)
+        changes.map(c => ({ key: c.payload.key, ...c.payload.val() })).filter(proj => (proj.created_by == this.currentUser.uid && !proj.is_archive))
       )
     ).subscribe(data => {
       if(data) {
         
         // Check the count of the projects
-        if (data.length > maxCount) {
+        if (data.length > this.maxCount) {
           var projects = [];
 
           data.forEach(item => {
             
-            if (projects.length < maxCount) {
+            if (projects.length < this.maxCount) {
               projects.push(item);
             }
 
@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit {
         } else {
 
           this.projects = data;
-          var moreCount = maxCount - this.projects.length;
+          var moreCount = this.maxCount - this.projects.length;
 
           // Add the invited projects
           this.databaseService.getLists('/user-project').snapshotChanges().pipe(
@@ -93,6 +93,16 @@ export class HomeComponent implements OnInit {
   }
 
   gotourl(url) {
+    if (url == '/project/new') {
+      if ( this.maxCount <= (this.projects.length + this.invitedProjects.length) ) {
+        this.router.navigate(['/upgrade']);console.log(this.maxCount <= (this.projects.length + this.invitedProjects.length));
+        return;
+      } else {
+        // this.router.navigate([url]);
+      }      
+    } else {
+      // this.router.navigate([url]);
+    }
     this.router.navigate([url]);
   }
 

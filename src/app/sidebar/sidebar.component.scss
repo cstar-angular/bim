@@ -39,19 +39,21 @@
             span {
                 font-size: 16px;
                 text-transform: uppercase;
+                cursor: pointer;
             }
 
             &.active span {
                 font-weight: bold;
                 color: #ffffff;
                 display: flex;
-                align-items: baseline;
+                align-items: center;
 
                 &::after {
                     content: '';
                     width: 15px;
                     height: 15px;
-                    margin-left: 10px;
+                    margin-top: -1px;
+                    margin-left: 20px;
                     border-radius: 100%;
                     background: #4472C4;
                 }

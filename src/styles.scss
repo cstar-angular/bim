@@ -41,6 +41,10 @@ body{
   background-color: #0D0D0D;
 }
 
+a {
+  cursor: pointer;
+}
+
 strong {
   font-family: "AvenirNextLTPro-Bold";
 }
@@ -311,7 +315,8 @@ button.primary {
           span.colored {
               padding: 10px;
               width: 100%;
-              display: inline-block;
+              min-height: 38px;
+              display: flex;
               font-family: "AvenirLTStd-Book";
           }
   
@@ -422,7 +427,6 @@ app-header .mat-toolbar-multiple-rows {
   height: calc(100vh - 100px);
 
   .mat-form-field .mat-form-field-wrapper .mat-form-field-flex {
-    background: #3B3838;
     border-bottom: 1px solid #3B3838;
   }
 }
@@ -439,6 +443,7 @@ app-header .mat-toolbar-multiple-rows {
   .mat-card-title {
     font-size: 2.2em;
     color: #ffffff;
+    text-align: center;
 
     strong {
       font-size: 1em;
@@ -478,6 +483,14 @@ app-header .mat-toolbar-multiple-rows {
     padding: 20px 100px 30px;
   }
 
+  .mat-card-header-text {
+    width: 100%;
+  }
+  
+  .mat-card-title {
+    text-align: center;
+  }
+
   button {
     margin-bottom: 15px;
     border-radius: 0;
@@ -515,3 +528,16 @@ app-header .mat-toolbar-multiple-rows {
     }
   }
 }
+
+.right-panel {
+  .msg-sender {
+    .avatar {
+      .avatar-txt {
+          width: 35px !important;
+          height: 35px !important;
+          margin-top: 5px;
+      }
+    }
+  }
+}
+

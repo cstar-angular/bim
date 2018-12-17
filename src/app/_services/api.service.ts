@@ -14,4 +14,8 @@ export class ApiService {
   sendRequest(url, params = null) {
     return this.http.post(this.apiUrl + url, params);
   }
+
+  localGetRequest(url) {
+    return this.http.get(url);
+  }
 }

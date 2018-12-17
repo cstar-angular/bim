@@ -10,6 +10,8 @@ import { Observable, from } from 'rxjs';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { Evented, Event } from '../_services/evented';
 import { AuthService } from '../_services/auth.service';
+import { countryTimes } from './countries-timezones';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-projectprofile',
@@ -34,8 +36,8 @@ export class ProjectprofileComponent implements OnInit {
   templates: any[];
 
   // Define Country/timezones
-  countries: any[];
-  timezones: any[];
+  countries = [];
+  timezones = [];
 
   isEditable = true;
   message;
@@ -53,7 +55,8 @@ export class ProjectprofileComponent implements OnInit {
     private projectprofileService: ProjectprofileService,
     private dropdownService: DropdownService,
     private authService: AuthService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private http: HttpClient
   ) {
     this.projectKey = this.activedRoute.snapshot.params['id'];
     this.teamid = this.activedRoute.snapshot.params['teamid'];
@@ -100,6 +103,16 @@ export class ProjectprofileComponent implements OnInit {
       if(info && info.length) {
         this.projectRole = info[0].access;
       }
+    });
+
+    var countryIds = Object.keys(countryTimes.countries);
+    countryIds.forEach((item, index) => {
+      this.countries.push(countryTimes.countries[item]);
+    });
+    
+    var timezoneIds = Object.keys(countryTimes.timezones);
+    timezoneIds.forEach((item, index) => {
+      this.timezones.push(countryTimes.timezones[item]);
     });
 
     Evented.on('updateProjectImage', (e: Event<{imgUrl: any}>) => {
@@ -154,9 +167,12 @@ export class ProjectprofileComponent implements OnInit {
       this.projectprofileService.loadTemplate(params).subscribe(data => {
         this.router.navigate(['/project/profile/' + result.ref.key]);
       });
-      // this.apiService.sendRequest('sendNotification', notificationData);
      
     }
+  }
+
+  countryChange() {
+    this.project.timezone = countryTimes.countries[this.project.country]['timezones'][0];
   }
 
   deleteProject() {
@@ -205,7 +221,7 @@ export class ProjectprofileComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
         this.project.is_archive = true;
-        this.projectprofileService.updateProject(this.projectKey, this.project).then( res => console.log(res));
+        this.projectprofileService.updateProject(this.projectKey, this.project);
         
         var notificationData = {
           "sender": this.currentUser.uid,
@@ -214,6 +230,8 @@ export class ProjectprofileComponent implements OnInit {
           "project": this.projectKey
         }
         this.apiService.sendRequest('sendNotification', notificationData);
+
+        this.router.navigate(['/']);
       }
     });
   }
