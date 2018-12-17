@@ -2,7 +2,8 @@
     display: flex;
     height: calc(100% - 50px);
     margin-top: 20px;
-    padding: 20px 50px;
+    padding: 20px 20px;
+    flex-wrap: wrap;
     overflow-y: scroll;
 
     mat-label {
@@ -17,7 +18,7 @@
     }
 
     .general-info {
-        padding: 50px;
+        padding: 20px;
 
         .project-number input {
             text-transform: uppercase;
@@ -51,7 +52,7 @@
     }
 
     .details {
-        padding: 50px;
+        padding: 20px;
 
         .row > * {
             flex: 1 1 100%;
