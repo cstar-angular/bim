@@ -78,4 +78,8 @@ export class HeaderComponent implements OnInit {
       console.log(err);
     });
   }
+
+  gotohome() {
+    location.href = "/";
+  }
 }
