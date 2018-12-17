@@ -1,8 +1,8 @@
 <div class="msg-sender" *ngIf="user">
   <app-avatar [userProfile]="user" *ngIf="user"></app-avatar>
   <div class="msg-sender-detail">
-    <p class="name">{{user.name}}</p>
-    <p class="role">BIM Manager</p>
+    <p class="name">{{user.name}} / <span class="role">BIM Manager</span></p>
+    
   </div>
 </div>
 
