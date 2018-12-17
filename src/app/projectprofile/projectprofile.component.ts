@@ -76,27 +76,12 @@ export class ProjectprofileComponent implements OnInit {
     this.databaseService.getLists('/savedtemplates/' + this.currentUser.uid).valueChanges().subscribe(data => {
       this.templates = data;
     });
-    // Fetch project profile information
-    if (this.projectKey !== null && this.projectKey !== undefined) {
     
-      this.isEditable=false;
-
-      // Get the permission to edit the project
-      this.projectprofileService.getProjectProfile(this.projectKey).valueChanges().subscribe(data => {
-        this.project = data;
-        if (this.project.created_by == this.currentUser.uid) {
-          this.projectRole = 1;
-        }
-      });
-    } else {
-      this.project = new ProjectProfile();
-      this.project.created_by = this.authService.getAuthUser().uid;
-      this.project.bim_template = 'default';
-    }
-
     if (this.teamid) {
       this.databaseService.updateRow('/teams/' + this.projectKey, this.teamid, {uid: this.currentUser.userid});
     }
+
+    this.loadData();
 
     // Get the permission to edit the project
     this.projectprofileService.getProjectRoleInfo(this.currentUser.uid, this.projectKey).valueChanges().subscribe((info: any) => {
@@ -121,6 +106,26 @@ export class ProjectprofileComponent implements OnInit {
     });
   }
 
+  loadData() {
+    // Fetch project profile information
+    if (this.projectKey !== null && this.projectKey !== undefined) {
+        
+      this.isEditable=false;
+
+      // Get the permission to edit the project
+      this.projectprofileService.getProjectProfile(this.projectKey).valueChanges().subscribe(data => {
+        this.project = data;
+        if (this.project.created_by == this.currentUser.uid) {
+          this.projectRole = 1;
+        }
+      });
+    } else {
+      this.project = new ProjectProfile();
+      this.project.created_by = this.authService.getAuthUser().uid;
+      this.project.bim_template = 'default';
+    }
+  }
+
   switchEditable() {
     this.isEditable = !this.isEditable;
     
@@ -132,6 +137,7 @@ export class ProjectprofileComponent implements OnInit {
   cancel() {
     if (this.projectKey !== null && this.projectKey !== undefined) {
       this.switchEditable();
+      this.loadData();
     } else {
       this.location.back();
     }

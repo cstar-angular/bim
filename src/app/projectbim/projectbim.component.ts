@@ -157,6 +157,7 @@ export class ProjectbimComponent implements OnInit {
       this.selectedKey = null;
 
       this.elements = this.elements.filter(ele => ele.key != "newRow");
+      this.loadData();
       this.dataSource = new MatTableDataSource(this.elements);
     }
   }

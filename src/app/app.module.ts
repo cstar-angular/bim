@@ -52,6 +52,7 @@ import { NotificationComponent } from './notification/notification.component';
 import { NotificationItemComponent } from './notification/notification-item/notification-item.component';
 import { CellpickerComponent } from './project/matrix/cellpicker/cellpicker.component';
 import { InviteComponent } from './project/team/invite/invite.component';
+import { OrganizerComponent } from './project/meeting/organizer/organizer.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { InviteComponent } from './project/team/invite/invite.component';
     NotificationComponent,
     NotificationItemComponent,
     CellpickerComponent,
-    InviteComponent
+    InviteComponent,
+    OrganizerComponent
   ],
   imports: [
     BrowserModule,

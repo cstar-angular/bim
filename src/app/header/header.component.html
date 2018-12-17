@@ -1,8 +1,8 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row style="justify-content: space-between;" class="header">
     <div class=left-group>
-      <span class="logo"><a (click)="gotourl('/')"><img src="/assets/images/BIMVULOGOLARGEWHITE.png"></a></span>
-      <span class="sp-line"> |</span> 
+      <span class="logo"><a href="/"><img src="/assets/images/BIMVULOGOLARGEWHITE.png"></a></span>
+      <span class="sp-line">|</span> 
       <span class="page-title"></span>
     </div>
     <div class="right-group">
@@ -10,9 +10,9 @@
             <span *ngIf="url == '/signin'" class="nav-item-createaccount" (click)="gotourl('/signup')">CREATE ACCOUNT</span>
             <span *ngIf="url == '/signup'" class="nav-item-signinaccount" (click)="gotourl('/home')">SIGN IN</span>
             <span (click)="openDialog()" *ngIf="isAuth && userProfile" style="margin-right: 10px;">Hi {{userProfile.name}}</span>
-            <app-avatar *ngIf="userProfile" [userProfile]="userProfile" (click)="openDialog()"></app-avatar>
+            <app-avatar *ngIf="isAuth && userProfile" [userProfile]="userProfile" (click)="openDialog()"></app-avatar>
         </div>
-        <app-notification></app-notification>
+        <app-notification *ngIf="isAuth"></app-notification>
         <button mat-flat-button color="white" (click)="gotourl('/upgrade')">Upgrade</button>
         <mat-icon>help</mat-icon>
         <mat-icon (click)="signout()">cancel</mat-icon>  
