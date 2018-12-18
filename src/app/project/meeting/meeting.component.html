@@ -78,7 +78,7 @@
               <app-organizer *ngIf="element.key != editableKey" [projectid]="projectKey" [memberid]="element.organizer"></app-organizer>
               <mat-form-field *ngIf="element.key == editableKey">
                 <mat-select name="meeting_frequency" placeholder="" [(ngModel)]="element.organizer" class="text-center" required aria-required="true">
-                  <mat-option *ngFor="let member of teamMembers" [value]="member.key">{{ member.company }} / {{ roles[member.role].val }}</mat-option>
+                  <mat-option *ngFor="let member of teamMembers" [value]="member.key">{{ member.name }} / {{ roles[member.role].val }}</mat-option>
               </mat-select>
               </mat-form-field>
             </td>
