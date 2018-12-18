@@ -109,6 +109,20 @@ export class AuthService {
     })    
   }
 
+  sendResetPasswordRequest(email) {
+    return new Promise<any>((resolve, reject) => {
+      firebase.auth().sendPasswordResetEmail(email).then(
+        (success) => {
+          resolve(success);
+        } 
+      ).catch(
+        (err) => {
+          reject(err)
+        }
+      )
+    })    
+  }
+
   getUserProfile() {
     return this.databaseService.getRowDetails('/users', firebase.auth().currentUser.uid);
   }

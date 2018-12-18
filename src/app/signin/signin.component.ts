@@ -22,7 +22,7 @@ export class SigninComponent implements OnInit {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer
   ) { 
-    if (localStorage.getItem('currentUser') !== 'undefined' && localStorage.getItem('currentUser') !== null) {
+    if (!this.authService.authUser) {
       this.router.navigate(['/']);
     }
 
