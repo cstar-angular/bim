@@ -19,6 +19,7 @@
 
     .general-info {
         padding: 20px;
+        width: 40%;
 
         .project-number input {
             text-transform: uppercase;
@@ -53,6 +54,7 @@
 
     .details {
         padding: 20px;
+        width: 60%;
 
         .row > * {
             flex: 1 1 100%;
