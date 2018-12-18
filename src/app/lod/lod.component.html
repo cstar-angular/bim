@@ -18,8 +18,8 @@
             <mat-form-field color="white">
                   <mat-select placeholder="Lod" [(ngModel)]="lodFilter" (selectionChange)="filterBySelection()">
                       <mat-option value="">All</mat-option>
-                      <mat-option *ngFor="let lod of lodDropdown" [value]="lod.key">
-                        {{lod.disciple}}
+                      <mat-option *ngFor="let lod of dropdowns" [value]="lod">
+                        {{lod}}
                       </mat-option>
                   </mat-select>
             </mat-form-field>

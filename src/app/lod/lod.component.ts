@@ -5,6 +5,7 @@ import { ApiService } from '../_services/api.service';
 import { ProjectprofileService } from '../projectprofile/projectprofile.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../_services/auth.service';
+import { jsonpCallbackContext } from '@angular/common/http/src/module';
 
 @Component({
   selector: 'app-lod',
@@ -29,7 +30,6 @@ export class LodComponent implements OnInit {
 
   dropdowns = ['NA', '100', '200', '300', '400', '500'];
   stageDropdown = [];
-  lodDropdown = [];
 
   displayedColumns = [];
   dataSource = new MatTableDataSource(this.elements);
@@ -92,11 +92,12 @@ export class LodComponent implements OnInit {
     });
 
     this.databaseService.getLists(this.tablePath).valueChanges().subscribe(data => {
-      this.elements = data;
-      this.lodDropdown = data;
+      if (data) {
+        this.elements = data;
 
-      if(this.lodFilter) {
-        this.elements = this.elements.filter(ele => ele.key == this.lodFilter)
+        if(this.lodFilter) {
+          this.elements = this.elements.filter(ele => JSON.stringify(ele.stages).includes(this.lodFilter));
+        }
       }
 
       this.sortRecords();
