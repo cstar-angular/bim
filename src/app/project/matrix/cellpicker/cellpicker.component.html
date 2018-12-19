@@ -1,5 +1,5 @@
 <div class="cellpicker">
-  <span class="showtext" (click)="toggle()" [ngStyle]="getShowTextColor()">{{ element.matrix[lod.key].status == "NA" ? element.matrix[lod.key].priority :  element.matrix[lod.key].status }}</span>
+  <span class="showtext" (click)="toggle()" [ngStyle]="getShowTextColor()">{{ element.matrix[lod.key].status == "NA" ? (element.matrix[lod.key].priority == "NA" ? relationtext : element.matrix[lod.key].priority):  element.matrix[lod.key].status }}</span>
   <div class="dropdown" *ngIf="isOpen && isAdmin && isEditable">
     <div class="dropdown-item" (click)="changeStatus('High')">
       <span class="color-tile color-tile-high"></span>
