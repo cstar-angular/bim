@@ -3,8 +3,11 @@ import { Options } from 'ng5-slider';
 import { UpgradeService } from '../_services/upgrade.service';
 import { AuthService } from '../_services/auth.service';
 import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
 import { environment } from '../../environments/environment';
+
 declare var StripeCheckout: any;
+
 @Component({
   selector: 'app-upgrade',
   templateUrl: './upgrade.component.html',
@@ -28,14 +31,13 @@ export class UpgradeComponent implements OnInit {
   handler: any;
   amount: number = 500;
   
+  userProfile;
 
   constructor(
     private upgradeService: UpgradeService,
     private authService: AuthService,
     private afAuth: AngularFireAuth
-  ) {
-    
-   }
+  ) {}
 
   ngOnInit() {
     this.authUser = this.afAuth.auth.currentUser;

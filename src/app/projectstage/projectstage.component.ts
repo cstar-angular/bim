@@ -13,7 +13,7 @@ import { AuthService } from '../_services/auth.service';
 })
 export class ProjectstageComponent implements OnInit {
 
-  projectKey = null;
+  projectId = null;
   tablePath = '/stages';
 
   isEditable = false;
@@ -26,10 +26,9 @@ export class ProjectstageComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  projectId;
-
   currentUser;
   projectRole;
+  projectProfile;
 
   constructor(
     private activedRoute: ActivatedRoute,
@@ -39,18 +38,12 @@ export class ProjectstageComponent implements OnInit {
     private authService: AuthService,
     private router: Router
   ) {
-    this.projectKey = this.activedRoute.snapshot.params['id'];
+    this.projectId = this.activedRoute.snapshot.params['id'];
     this.currentUser = this.authService.getAuthUser();
   }
 
   ngOnInit() {
-
-    var url = this.router.url;
-    var urlItems = url.split('/');
-
-    if(urlItems.length >= 4) {
-      this.projectId = urlItems[3];
-
+    if(this.projectId) {
       this.databaseService.getRowDetails('projects' , this.projectId).valueChanges().subscribe(data => {
        if (data) {
          this.tablePath = this.tablePath + '/' + this.projectId;
@@ -78,17 +71,21 @@ export class ProjectstageComponent implements OnInit {
   
     
     // Get the permission to edit the project
-    if (this.projectKey !== null) {
+    if (this.projectId !== null) {
 
-      this.projectprofileService.getProjectProfile(this.projectKey).valueChanges().subscribe(data => {
-        if (data.created_by == this.currentUser.uid) {
-          this.projectRole = 1;
+      this.projectprofileService.getProjectProfile(this.projectId).valueChanges().subscribe(data => {
+        if (data) {
+          if (data.created_by == this.currentUser.uid) {
+            this.projectRole = 1;
+          }
+  
+          this.projectProfile = data;
         }
       });
       
     }
 
-    this.projectprofileService.getProjectRoleInfo(this.currentUser.uid, this.projectKey).valueChanges().subscribe((info: any) => {
+    this.projectprofileService.getProjectRoleInfo(this.currentUser.uid, this.projectId).valueChanges().subscribe((info: any) => {
       if(info && info.length) {
         this.projectRole = info[0].access;
       }
@@ -169,8 +166,8 @@ export class ProjectstageComponent implements OnInit {
         var notificationData = {
           "sender": this.currentUser.uid,
           "type": "add",
-          "message": "The new Project Stage was added.",
-          "project": this.projectKey
+          "message": this.projectProfile.number + " - Project Stage",
+          "project": this.projectId
         }
         this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {});
       }
@@ -181,8 +178,8 @@ export class ProjectstageComponent implements OnInit {
         var notificationData = {
           "sender": this.currentUser.uid,
           "type": "update",
-          "message": "The Project Stage data was updated.",
-          "project": this.projectKey
+          "message": this.projectProfile.number + " - Project Stage",
+          "project": this.projectId
         }
         this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {});
       }

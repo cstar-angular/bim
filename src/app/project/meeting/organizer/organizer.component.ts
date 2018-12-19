@@ -22,19 +22,23 @@ export class OrganizerComponent implements OnInit {
     {key: 5, val: 'BIM Modeller'},
     {key: 6, val: 'Cost Estimator'},
     {key: 7, val: 'MEP Engineer'},
-    {key: 0, val: 'Structural Engineer'},
-    {key: 0, val: 'Landscape Designer'},
-    {key: 0, val: 'Project Manager'}
+    {key: 8, val: 'Structural Engineer'},
+    {key: 9, val: 'Landscape Designer'},
+    {key: 10, val: 'Project Manager'}
   ];
 
   constructor(private databaseService: DatabaseService) { }
 
   ngOnInit() {
-    this.databaseService.getRowDetails('/teams/' + this.projectid, this.memberid).valueChanges().subscribe(data => {
-      if (data) {
-        this.organizer = data;
-      }
-    });
+    
+    if (this.memberid) {
+      this.databaseService.getRowDetails('/teams/' + this.projectid, this.memberid).valueChanges().subscribe(data => {
+        if (data) {
+          this.organizer = data;
+        }
+      });
+    }
+    
   }
 
 }

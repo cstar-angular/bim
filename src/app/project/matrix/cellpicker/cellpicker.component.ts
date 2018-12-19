@@ -13,6 +13,7 @@ export class CellpickerComponent implements OnInit {
   @Input() lod;
   @Input() isAdmin;
   @Input() projectId;
+  @Input() projectProfile;
   @Input() configureId;
   @Input() currentUser;
   @Input() isEditable;
@@ -102,8 +103,8 @@ export class CellpickerComponent implements OnInit {
 
     var notificationData = {
       "sender": this.currentUser.uid,
-      "type": "add",
-      "message": "The new Meeting was added.",
+      "type": "update",
+      "message": this.projectProfile.number + " - Clash Matrix",
       "project": this.projectId
     }
     this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {});

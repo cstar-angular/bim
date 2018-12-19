@@ -547,3 +547,15 @@ app-header .mat-toolbar-multiple-rows {
     border-radius: 0;
   }
 }
+
+.upgrade {
+  app-avatar.user-avartar {
+    .avatar {
+      .avatar-txt {
+        width: 100px;
+        height: 100px;
+        font-size: 35px;
+      }
+    }
+  }
+}

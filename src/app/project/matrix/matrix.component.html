@@ -45,7 +45,7 @@
           </th>
           <td mat-cell *matCellDef="let element">
             <!-- <span *ngIf="!isEditable" [style.background]="lod.code_color">{{lod.code}}</span> -->
-            <app-cellpicker [isEditable]="isEditable" [element]="element" [lod]="lod" [isAdmin]="projectRole == 1 ? true : false" [projectId]="projectId" [configureId]="selectedConfiguration" [currentUser]="currentUser"></app-cellpicker>
+            <app-cellpicker [isEditable]="isEditable" [element]="element" [lod]="lod" [isAdmin]="projectRole == 1 ? true : false" [projectId]="projectId" [projectProfile]="projectProfile" [configureId]="selectedConfiguration" [currentUser]="currentUser"></app-cellpicker>
           </td>
         </ng-container>
     

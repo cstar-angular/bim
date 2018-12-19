@@ -36,25 +36,22 @@ export class HeaderComponent implements OnInit {
   ) {
     this.router.events.subscribe((val) => {
       this.url = val['url'];
-      // console.log(this.url);
-      
-      
+      var url = this.router.url;
+      var urlItems = url.split('/');
+      if(urlItems.length >= 4) {
+        this.projectId = urlItems[3];
+        this.databaseService.getRowDetails('projects' , this.projectId).valueChanges().subscribe(data => {
+          if (data) {
+            
+            this.projecttitle = data.number + ' - ' + data.name
+          }else {
+            this.projecttitle = '';
+          }
+          });
+      }
     });
 
-    var url = this.router.url;
-    var urlItems = url.split('/');
-    if(urlItems.length >= 4) {
-      this.projectId = urlItems[3];
-      this.databaseService.getRowDetails('projects' , this.projectId).valueChanges().subscribe(data => {
-        if (data) {
-          console.log(data);
-          
-          this.projecttitle = data.number + ' - ' + data.name
-        }else {
-          this.projecttitle = '';
-        }
-        });
-    }
+    
 
 
     var me = this;

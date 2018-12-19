@@ -27,6 +27,7 @@ export class MatrixComponent implements OnInit {
   
   currentUser;
   projectRole;
+  projectProfile;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -59,8 +60,12 @@ export class MatrixComponent implements OnInit {
         if (this.projectKey !== null) {
 
           this.projectprofileService.getProjectProfile(this.projectKey).valueChanges().subscribe(data => {
-            if (data.created_by == this.currentUser.uid) {
-              this.projectRole = 1;
+            if (data) {
+              if (data.created_by == this.currentUser.uid) {
+                this.projectRole = 1;
+              }
+  
+              this.projectProfile = data;
             }
           });
           

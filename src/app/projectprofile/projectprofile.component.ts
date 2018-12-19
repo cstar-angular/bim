@@ -20,7 +20,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProjectprofileComponent implements OnInit {
 
-  projectKey = null;
+  projectId = null;
 
   // Create new project profile object
   project = new ProjectProfile();
@@ -58,7 +58,7 @@ export class ProjectprofileComponent implements OnInit {
     public dialog: MatDialog,
     private http: HttpClient
   ) {
-    this.projectKey = this.activedRoute.snapshot.params['id'];
+    this.projectId = this.activedRoute.snapshot.params['id'];
     this.teamid = this.activedRoute.snapshot.params['teamid'];
   }
 
@@ -78,13 +78,13 @@ export class ProjectprofileComponent implements OnInit {
     });
     
     if (this.teamid) {
-      this.databaseService.updateRow('/teams/' + this.projectKey, this.teamid, {uid: this.currentUser.userid});
+      this.databaseService.updateRow('/teams/' + this.projectId, this.teamid, {uid: this.currentUser.userid});
     }
 
     this.loadData();
 
     // Get the permission to edit the project
-    this.projectprofileService.getProjectRoleInfo(this.currentUser.uid, this.projectKey).valueChanges().subscribe((info: any) => {
+    this.projectprofileService.getProjectRoleInfo(this.currentUser.uid, this.projectId).valueChanges().subscribe((info: any) => {
       if(info && info.length) {
         this.projectRole = info[0].access;
       }
@@ -108,12 +108,12 @@ export class ProjectprofileComponent implements OnInit {
 
   loadData() {
     // Fetch project profile information
-    if (this.projectKey !== null && this.projectKey !== undefined) {
+    if (this.projectId !== null && this.projectId !== undefined) {
         
       this.isEditable=false;
 
       // Get the permission to edit the project
-      this.projectprofileService.getProjectProfile(this.projectKey).valueChanges().subscribe(data => {
+      this.projectprofileService.getProjectProfile(this.projectId).valueChanges().subscribe(data => {
         this.project = data;
         if (this.project.created_by == this.currentUser.uid) {
           this.projectRole = 1;
@@ -135,23 +135,24 @@ export class ProjectprofileComponent implements OnInit {
   }
 
   cancel() {
-    if (this.projectKey !== null && this.projectKey !== undefined) {
+    if (this.projectId !== null && this.projectId !== undefined) {
       this.switchEditable();
       this.loadData();
     } else {
       this.location.back();
     }
   }
+
   saveProject() {
-    if (this.projectKey !== null && this.projectKey !== undefined) {
-      this.projectprofileService.updateProject(this.projectKey, this.project);
+    if (this.projectId !== null && this.projectId !== undefined) {
+      this.projectprofileService.updateProject(this.projectId, this.project);
       this.switchEditable();
       
       var notificationData = {
         "sender": this.currentUser.uid,
         "type": "update",
-        "message": "The Project was updated.",
-        "project": this.projectKey
+        "message": this.project.number + " - Project Profile",
+        "project": this.projectId
       }
       this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {
       });
@@ -161,8 +162,8 @@ export class ProjectprofileComponent implements OnInit {
       var notificationData = {
         "sender": this.currentUser.uid,
         "type": "add",
-        "message": "The new Project was added.",
-        "project": this.projectKey
+        "message": this.project.number + " - Project Profile",
+        "project": this.projectId
       }
 
       var params = {
@@ -182,7 +183,7 @@ export class ProjectprofileComponent implements OnInit {
   }
 
   deleteProject() {
-    this.projectprofileService.deleteProject(this.projectKey);
+    this.projectprofileService.deleteProject(this.projectId);
   } 
 
   deleteAllProjects() {
@@ -208,7 +209,7 @@ export class ProjectprofileComponent implements OnInit {
         // });
 
         var param = {
-          projectid: this.projectKey,
+          projectid: this.projectId,
           templatename: result,
           userid: this.authService.afAuth.auth.currentUser.uid
         }
@@ -221,19 +222,19 @@ export class ProjectprofileComponent implements OnInit {
   archiveProjectDialog() {
     const dialogRef = this.dialog.open(ArchiveDialog, {
       width: '500px',
-      data: {key: this.projectKey, project: this.project}
+      data: {key: this.projectId, project: this.project}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
         this.project.is_archive = true;
-        this.projectprofileService.updateProject(this.projectKey, this.project);
+        this.projectprofileService.updateProject(this.projectId, this.project);
         
         var notificationData = {
           "sender": this.currentUser.uid,
           "type": "archived",
-          "message": "The Project was archived.",
-          "project": this.projectKey
+          "message": this.project.number + " - The Project was archived.",
+          "project": this.projectId
         }
         this.apiService.sendRequest('sendNotification', notificationData);
 
