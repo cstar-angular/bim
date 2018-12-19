@@ -1,5 +1,6 @@
 <div class="upgrade" *ngIf="!isLoading">
-  <img [src]="user.avatar == ''? '/assets/images/avatar.png' : user.avatar" alt="" class="user-avartar">
+  <!-- <img [src]="user.avatar == ''? '/assets/images/avatar.png' : user.avatar" alt="" class="user-avartar"> -->
+  <app-avatar *ngIf="user" [userProfile]="user" class="user-avartar"></app-avatar>
   <p style="margin-top: 30px;">
     <span style="font-size: 30px;color: white;"><strong style="font-size: 30px;color: white;">BIM</strong> . VU</span>
   </p>
