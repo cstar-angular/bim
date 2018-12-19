@@ -84,16 +84,13 @@ export class QualityComponent implements OnInit {
       this.sortRecords();
 
       this.dataSource = new MatTableDataSource(this.elements);
+      this.dataSource.sort = this.sort;
       
       for (let element of this.elements) {
         this.assignedUsers.push(this.getUserData(element.checked_by));
       }
 
     });
-    
-    if(this.dataSource) {
-      this.dataSource.sort = this.sort;
-    }
     
     // Get the permission to edit the project
     if (this.projectKey !== null) {

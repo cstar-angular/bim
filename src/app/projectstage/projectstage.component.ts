@@ -72,11 +72,10 @@ export class ProjectstageComponent implements OnInit {
       this.sortRecords();
 
       this.dataSource = new MatTableDataSource(this.elements);
+      this.dataSource.sort = this.sort;
     });
     
-    if(this.dataSource) {
-      this.dataSource.sort = this.sort;
-    }
+  
     
     // Get the permission to edit the project
     if (this.projectKey !== null) {
