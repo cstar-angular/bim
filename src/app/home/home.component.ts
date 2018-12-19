@@ -25,17 +25,18 @@ export class HomeComponent implements OnInit {
   ) { 
     if (this.currentUser) {
       this.databaseService.getRowDetails('/users', this.currentUser.uid).valueChanges().subscribe(data => {
-        this.currentUser = data;
+        
+        if (data && data.membership) {
+          this.currentUser = data;
+          this.maxCount = this.currentUser.membership.type;
+        }
       });
     }
   }
 
   ngOnInit() {
-
     // Decide the project count by membership
-    if (this.currentUser && this.currentUser.membership) {
-      this.maxCount = this.currentUser.membership.type;
-    }
+    
 
     this.projectService.getProjectsList().snapshotChanges().pipe(
       map(changes => 
