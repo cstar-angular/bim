@@ -16,6 +16,10 @@
     }
     .mat-column-format {
         width: 350px;
+
+        span {
+            white-space: nowrap;
+        }
     }
 
     .check-toggle {
