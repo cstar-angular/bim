@@ -193,7 +193,8 @@ export class TeamComponent implements OnInit {
           // send invite email
           var param = {
             "teamid": element.key,
-            "project": this.projectId
+            "project": this.projectId,
+            "sender": this.currentUser.uid 
           };
           this.apiService.sendRequest("sendInvitation",param).subscribe(result => {});
           // create fake account or insert key into team member
@@ -219,7 +220,15 @@ export class TeamComponent implements OnInit {
 
   deleteRow() {
     if(this.selectedKey) {
-      this.databaseService.deleteRow(this.tablePath, this.selectedKey);
+      var param = {
+        "teamid": this.selectedKey,
+        "projectid": this.projectId,
+        "sender": this.currentUser.uid 
+      };
+      this.apiService.sendRequest('deleteTeamMember', param).subscribe(result => {
+        this.databaseService.deleteRow(this.tablePath, this.selectedKey);
+      });
+      
     }
 
     if(this.selectedKey == 'newRow') {

@@ -220,7 +220,7 @@ export class LodComponent implements OnInit {
           var notificationData = {
             "sender": this.currentUser.uid,
             "type": "update",
-            "message": "The new LOD data was updated.",
+            "message": this.projectProfile.number + " - Lod",
             "project": this.projectId
           }
           this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {});
