@@ -113,14 +113,9 @@ export class TeamComponent implements OnInit {
       if(this.accessFilter != null && this.accessFilter != undefined) {
         this.elements = this.elements.filter(ele => ele.access == this.accessFilter)
       }
-
-      // this.sortRecords();
       this.dataSource = new MatTableDataSource(this.elements);
-    });
-    
-    if(this.dataSource) {
       this.dataSource.sort = this.sort;
-    }
+    });
     
     // Get the permission to edit the project
     if (this.projectKey !== null) {

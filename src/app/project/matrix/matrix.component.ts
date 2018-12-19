@@ -137,6 +137,7 @@ export class MatrixComponent implements OnInit {
       elements.push(element)
     });
    this.dataSource = new MatTableDataSource(elements);
+   this.dataSource.sort = this.sort;
   }
 
   getCell(row, columnNo){

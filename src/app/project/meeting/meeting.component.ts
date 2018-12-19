@@ -98,11 +98,8 @@ export class MeetingComponent implements OnInit {
       this.sortRecords();
 
       this.dataSource = new MatTableDataSource(this.elements);
-    });
-    
-    if(this.dataSource) {
       this.dataSource.sort = this.sort;
-    }
+    });
     
     // Get the permission to edit the project
     if (this.projectKey !== null) {
