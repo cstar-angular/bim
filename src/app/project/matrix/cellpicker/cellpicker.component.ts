@@ -18,7 +18,7 @@ export class CellpickerComponent implements OnInit {
   @Input() isEditable;
 
   isOpen = false;
-
+  relationtext = ''
   constructor(
     private databaseService: DatabaseService,
     private apiService: ApiService,
@@ -26,6 +26,10 @@ export class CellpickerComponent implements OnInit {
 
   ngOnInit() {
     // document.addEventListener('click', this.onDocumentClick.bind(this), true);
+    var row = this.element.no.slice(1);
+    var column = this.lod.number;
+    this.relationtext = "R" + row + column;
+    
   }
 
   toggle() {

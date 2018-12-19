@@ -135,7 +135,7 @@ export class MatrixComponent implements OnInit {
       element['key'] = row.key;
       element['matrix'] = tempRow;
       elements.push(element)
-    });console.log(this.lods);
+    });
    this.dataSource = new MatTableDataSource(elements);
   }
 

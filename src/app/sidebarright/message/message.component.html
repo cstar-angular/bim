@@ -8,11 +8,11 @@
 
 <div class="msg-content" *ngIf="user">
   <span *ngIf="message.type == 'txt'">{{message.message}}</span>
-  <a [href]='message.message' *ngIf="message.type == 'img'">
+  <a target="_blank" [href]='message.message' *ngIf="message.type == 'img'">
     <img [src]="message.message" class="chat-img">
   </a>
 
-  <a [href]='message.message' *ngIf="message.type == 'file'" class="msg-attach-item">
+  <a target="_blank" [href]='message.message' *ngIf="message.type == 'file'" class="msg-attach-item">
     <mat-icon>attach_file</mat-icon>{{message.name}}
   </a>
 </div>
