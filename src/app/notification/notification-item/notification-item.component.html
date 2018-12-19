@@ -8,6 +8,7 @@
         <span class="noti-type-comment" *ngIf="notification.type == 'comment'"> commented on</span>
         <span class="noti-type-comment" *ngIf="notification.type == 'add'"> added on</span>
         <span class="noti-type-comment" *ngIf="notification.type == 'update'"> updated on</span>
+        <span class="noti-type-invite" *ngIf="notification.type == 'delete'"> Removed from</span>
       </div>
       <div>
         {{notification.message}}

@@ -6,6 +6,7 @@ import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask 
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { ApiService } from '../_services/api.service';
+import { ProjectprofileService } from '../projectprofile/projectprofile.service';
 
 @Component({
   selector: 'app-sidebarright',
@@ -28,6 +29,7 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
   ref: AngularFireStorageReference;
   task: AngularFireUploadTask;
   authUser: firebase.User;
+  projectProfile: any;
 
   @ViewChild('feedContainer') feedContainer: ElementRef;
   @ViewChild('images_for_send') images_for_send: ElementRef;
@@ -38,7 +40,8 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
     private chatService: ChatService,
     private afStorage: AngularFireStorage,
     private auth: AngularFireAuth,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private projectprofileService: ProjectprofileService
   ) { 
     this.routerEvent = this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
@@ -51,6 +54,16 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
         this.projectId = this.url.split('/')[3];
         this.urlType = this.url.split('/')[2];
         this.loadMessages();
+
+        if (this.projectId !== null) {
+
+          this.projectprofileService.getProjectProfile(this.projectId).valueChanges().subscribe(data => {
+            if (data) {
+              this.projectProfile = data;
+            }
+          });
+    
+        }
       } 
     });
 
@@ -94,7 +107,7 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
       var notificationData = {
         "sender": this.authUser.uid,
         "type": "comment",
-        "message": "Project commented",
+        "message": this.projectProfile.number + ' - ' + this.projectProfile.name,
         "project": this.projectId
       }
 
@@ -155,7 +168,7 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
         var notificationData = {
           "sender": me.authUser.uid,
           "type": "comment",
-          "message": "Project commented",
+          "message": this.projectProfile.number + ' - ' + this.projectProfile.name,
           "project": me.projectId
         }
   
@@ -188,7 +201,7 @@ export class SidebarrightComponent implements OnInit, AfterViewChecked  {
         var notificationData = {
           "sender": me.authUser.uid,
           "type": "comment",
-          "message": "Project commented",
+          "message": this.projectProfile.number + ' - ' + this.projectProfile.name,
           "project": me.projectId
         }
   

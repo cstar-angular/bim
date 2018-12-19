@@ -165,7 +165,7 @@ export class ProjectconfComponent implements OnInit {
         var notificationData = {
           "sender": this.currentUser.uid,
           "type": "add",
-          "message": this.projectProfile.number + "Configuration",
+          "message": this.projectProfile.number + " - Configuration",
           "project": this.projectId
         }
         this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {});
@@ -177,7 +177,7 @@ export class ProjectconfComponent implements OnInit {
         var notificationData = {
           "sender": this.currentUser.uid,
           "type": "update",
-          "message": this.projectProfile.number + "Configuration",
+          "message": this.projectProfile.number + " - Configuration",
           "project": this.projectId
         }
         this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {});
