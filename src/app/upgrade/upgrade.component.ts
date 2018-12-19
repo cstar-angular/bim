@@ -56,6 +56,7 @@ export class UpgradeComponent implements OnInit {
       locale: 'auto',
       token: token => {
         this.upgradeService.processPayment(token, this.amount * 50 * 100, this.value);
+        location.href = '/';
       }
     })
   }

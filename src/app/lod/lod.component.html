@@ -18,8 +18,8 @@
             <mat-form-field color="white">
                   <mat-select placeholder="Lod" [(ngModel)]="lodFilter" (selectionChange)="filterBySelection()">
                       <mat-option value="">All</mat-option>
-                      <mat-option *ngFor="let lod of lodDropdown" [value]="lod.key">
-                        {{lod.disciple}}
+                      <mat-option *ngFor="let lod of dropdowns" [value]="lod">
+                        {{lod}}
                       </mat-option>
                   </mat-select>
             </mat-form-field>
@@ -69,7 +69,8 @@
                 <span *ngIf="!isEditable && (element.key != editableKey)" [style.background]="element.code_color" class="colored text-center">{{element.code}}</span>
 
                 <div *ngIf="isEditable" class="discipline-code">
-                    <span  [(colorPicker)]="element.code_color" [style.background]="element.code_color" class="color-picker-selector"></span>
+                    <span *ngIf="element.key != editableKey" [style.background]="element.code_color" class="color-picker-selector"></span>
+                    <span *ngIf="element.key == editableKey" [(colorPicker)]="element.code_color" [style.background]="element.code_color" class="color-picker-selector"></span>
                     <span *ngIf="element.key != editableKey" class="discipline-code-label colored text-center gray-100">{{element.code}}</span>
                     <mat-form-field *ngIf="element.key == editableKey">
                         <input matInput [(ngModel)]="element.code" required>
