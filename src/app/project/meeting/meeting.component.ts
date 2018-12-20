@@ -188,11 +188,11 @@ export class MeetingComponent implements OnInit {
   }
 
   saveRow() {
-    for (let stage of this.elements){
-      if(stage.key == 'newRow') {
-        var result = this.databaseService.createRow(this.tablePath, stage);
-        stage.key = result.key;
-        this.databaseService.updateRow(this.tablePath, result.key, stage);
+    for (let element of this.elements){
+      if(element.key == 'newRow') {
+        var result = this.databaseService.createRow(this.tablePath, element);
+        element.key = result.key;
+        this.databaseService.updateRow(this.tablePath, result.key, element);
         
         var notificationData = {
           "sender": this.currentUser.uid,
@@ -203,8 +203,8 @@ export class MeetingComponent implements OnInit {
         this.apiService.sendRequest('sendNotification', notificationData).subscribe(result => {});
       }
 
-      if(stage.key == this.editableKey) {
-        this.databaseService.updateRow(this.tablePath, this.editableKey, stage);
+      if(element.key == this.editableKey) {
+        this.databaseService.updateRow(this.tablePath, this.editableKey, element);
         
         var notificationData = {
           "sender": this.currentUser.uid,
