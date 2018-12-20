@@ -42,7 +42,7 @@
                     }
 
                     &:nth-child(2) {
-                        left: 96px !important;
+                        left: 108px !important;
                         width: 150px;
                         border-right: 1px solid #e0e0e0;
                     }
@@ -99,5 +99,10 @@
     flex-direction: column;
     align-items: center;
     padding-bottom: 5px;
+
+    .d-title{
+        font-weight: bold;
+        font-family: "AvenirNextLTPro-Bold";
+    }
 }
  
