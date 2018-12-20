@@ -24,7 +24,7 @@
         <table mat-table color="white" [dataSource]="dataSource" matSort>
       
           <!-- No. Column -->
-          <ng-container matColumnDef="number">
+          <ng-container matColumnDef="number" sticky>
             <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
             <td mat-cell *matCellDef="let element">
               Q{{("00"+element.number).slice(-2)}}
@@ -33,7 +33,7 @@
           </ng-container>
     
           <!-- Disciple Column -->
-          <ng-container matColumnDef="discipline">
+          <ng-container matColumnDef="discipline" sticky>
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Discipline </th>
             <td mat-cell *matCellDef="let element"> 
               <span *ngIf="element.key != editableKey" [style.background]="getDiscipline(element.discipline).code_color">
@@ -48,7 +48,7 @@
           </ng-container>
     
           <!-- Disciple Column -->
-          <ng-container matColumnDef="checked_by">
+          <ng-container matColumnDef="checked_by" sticky>
               <th mat-header-cell *matHeaderCellDef mat-sort-header> User </th>
               <td mat-cell *matCellDef="let element"> 
                 <!-- <span>{{ getUserData(element.checked_by) }}</span> -->
