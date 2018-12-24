@@ -377,6 +377,12 @@ button.primary {
           }
         }
       }
+
+      .mat-column-start, .mat-column-end {
+        span.colored {
+          white-space: nowrap;
+        }
+      }
     }
   }
 

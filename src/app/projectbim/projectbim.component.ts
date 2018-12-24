@@ -111,9 +111,9 @@ export class ProjectbimComponent implements OnInit {
         this.elements = this.elements.filter(ele => ele.software == this.softwareFilter)
       }
 
-      if(this.versionFilter) {
-        this.elements = this.elements.filter(ele => ele.version == this.versionFilter)
-      }
+      // if(this.versionFilter) {
+      //   this.elements = this.elements.filter(ele => ele.version == this.versionFilter)
+      // }
 
       this.sortRecords();
 

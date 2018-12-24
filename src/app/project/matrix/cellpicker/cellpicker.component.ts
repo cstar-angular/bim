@@ -34,7 +34,10 @@ export class CellpickerComponent implements OnInit {
   }
 
   toggle() {
-    this.isOpen = !this.isOpen;
+    if(this.isEditable) {
+      this.isOpen = !this.isOpen;
+    }
+    
   }
 
   onDocumentClick(event) {

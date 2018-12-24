@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { DatabaseService } from '../_services/database.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-notification',
@@ -12,7 +13,7 @@ export class NotificationComponent implements OnInit {
   isShow = false;
   userId;
   tablePath = '/notifications';
-  notifications;
+  notifications = [];
   badge = 0;
   isLoading = true;
   constructor(
@@ -30,7 +31,12 @@ export class NotificationComponent implements OnInit {
 
     this.databaseService.getLists(this.tablePath).valueChanges().subscribe(data => {
       this.isLoading = false;
+      
      this.notifications = data;
+
+     if (this.notifications) {
+       this.notifications.sort((left, right) => right.created - left.created);
+     }
      this.badge = 0;
      this.notifications.map(noti => {
        if(!noti.isread) {

@@ -28,6 +28,7 @@ export class MatrixComponent implements OnInit {
   currentUser;
   projectRole;
   projectProfile;
+  isAdmin = false;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -61,14 +62,17 @@ export class MatrixComponent implements OnInit {
 
           this.projectprofileService.getProjectProfile(this.projectKey).valueChanges().subscribe(data => {
             if (data) {
+              
               if (data.created_by == this.currentUser.uid) {
                 this.projectRole = 1;
+                this.isAdmin = true;
+              } else {
+                this.isAdmin = false;
               }
   
               this.projectProfile = data;
             }
           });
-          
         }
 
         this.projectprofileService.getProjectRoleInfo(this.currentUser.uid, this.projectKey).valueChanges().subscribe((info: any) => {

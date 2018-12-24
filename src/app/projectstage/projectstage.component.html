@@ -74,7 +74,7 @@
           <ng-container matColumnDef="remarks">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Remarks </th>
             <td mat-cell *matCellDef="let element">
-              <span *ngIf="element.key != editableKey" class="gray-200">{{element.remarks}}</span>
+              <span *ngIf="element.key != editableKey" class="gray-200" style="white-space: nowrap;">{{element.remarks}}</span>
               <mat-form-field *ngIf="element.key == editableKey">
                 <input matInput [(ngModel)]="element.remarks" required>
               </mat-form-field>
